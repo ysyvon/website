@@ -3,30 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yiskah Yvonne</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>if you are afraid, we will look together</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333;
+        }
+        .mp3-player {
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="info">
-                <div class="profile-picture">
-                    <img src="profilephoto.jpeg" alt="Yiskah Yvonne">
-                </div>
-                <h1>Yiskah Yvonne</h1>
-                <p>As a Mathematics undergraduate at Florida Gulf Coast University, I am deeply passionate about cryptography, computer science, and machine learning. My academic focus includes studying algorithms and cryptographic principles to design security frameworks that address contemporary challenges.</p>
-
-                <p>I am particularly interested in applying these principles within blockchain and quantum  technologies to enhance data privacy, fortify digital defence mechanisms, and ensure secure transactions. My goal is to develop robust, scalable solutions that safeguard communications and data across diverse technological environments.</p>
-
-                <p>By integrating advanced cryptographic algorithms and multiple technologies, I hope to engineer cohesive security systems that can withstand the dynamic and ever-changing landscape of cybersecurity threats.</p>
-
-
-                <p>Check out my work on <a href="https://github.com/yisyvonne" target="_blank" class="contact-link">GitHub</a>.</p>
-                
-                <p><a href="music.html">Listen to my music here</a>.</p>
-                <p><a href="mailto:woven_rocket_0l@icloud.com" class="contact-link">Send an email.</a></p>
-            </div>
-        </div>
-    </header>
+    <img src="ifyouareafraid.jpg" width="200" height="200"/>
+    <p>if you are afraid, we will look together</p>
+    <p>recorded april-may 2024 in florida by yiskah ©2024</p>
+    <a href="index.html" class="home-link">back to main page</a>
+    <div class="mp3-player">
+        <audio controls>
+            <source src="ifyouarearafraidwewilllooktogether.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 </body>
 </html>
