@@ -7,32 +7,66 @@
     <style>
         body {
             font-family: monospace;
-            margin-top: 10px;
-            margin-bottom: 10x;
-            margin-left: 10x;
-            margin-right: 10x;
-            padding: 10x;
+            margin: 0;
+            padding: 20px; /* Added padding for easier reading */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
             background-color: #f0f0f0;
+        }
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333;
+        }
+        .mp3-player {
+            margin-top: 50px;
+        }
+        .image-container {
+            display: flex;
+            gap: 20px; /* Space between images */
+            margin-top: 20px;
+        }
+        .image-item {
+            position: relative;
+            text-align: center;
+        }
+        .image-item img {
+            width: 200px;
+            height: 200px;
+        }
+        .image-item p {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5); /* Slight background for readability */
+            padding: 5px;
+            font-size: 0.9em;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <p>ys</p>
     <img src="ys.jpg" width="300" height="300"/>
-    <p>“we are asleep. our Life is a dream. but we wake up sometimes, just enough to know that we are dreaming.” - ludwig wittgenstein</p>
+    <p>“we are asleep. our life is a dream. but we wake up sometimes, just enough to know that we are dreaming.” - ludwig wittgenstein</p>
     <p>"it is no nation that we inhabit, but a language. make no mistake; our native tongue is our true fatherland." ― emil cioran</p>
     <p>the sounds you experience here are born from memories—echoes of places, fragments of moments, impressions that linger without form. they drift without conclusion, layering like recollections, shaping no narrative but offering an exploration. in the space between notes, language emerges—not as words but as essence, shaping thought as deeply as memory itself. we inhabit these sounds as we do a native tongue, for it is not place but language that forms the truest home, framing how we perceive, remember, and understand. ~ ys</p>
     <p>listen below</p>
-    <p><a href="wewilllooktogether.html"><img src="ifyouareafraid.jpg" width="200" height="200"/></a></p>
-    <p>if you are afraid, we will look together</p>
-    <p><a href="thruaglass.html"><img src="mary.png" width="200" height="200"/></a></p>
-    <p>through a glass</p>
-    
+
+    <div class="image-container">
+        <div class="image-item">
+            <a href="wewilllooktogether.html"><img src="ifyouareafraid.jpg" alt="if you are afraid, we will look together"></a>
+            <p>if you are afraid, we will look together</p>
+        </div>
+        <div class="image-item">
+            <a href="thruaglass.html"><img src="mary.png" alt="through a glass"></a>
+            <p>through a glass</p>
+        </div>
     </div>
+    
 </body>
 </html>
