@@ -8,11 +8,11 @@
         body {
             font-family: monospace;
             margin: 0;
-            padding: 20px; /* Added padding for easier reading */
+            padding: 20px;
+            background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #f0f0f0;
         }
         .home-link {
             position: absolute;
@@ -22,12 +22,29 @@
             text-decoration: none;
             color: #333;
         }
-        .mp3-player {
-            margin-top: 50px;
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 900px;
+        }
+        .text-section {
+            max-width: 500px;
+            margin-right: auto;
+            padding-left: 20px;
+        }
+        .text-section p {
+            margin: 10px 0;
+        }
+        .image-section img {
+            width: 300px;
+            height: 300px;
         }
         .image-container {
             display: flex;
-            gap: 20px; /* Space between images */
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
         }
         .image-item {
@@ -43,7 +60,7 @@
             top: 0;
             width: 100%;
             color: white;
-            background-color: rgba(0, 0, 0, 0.5); /* Slight background for readability */
+            background-color: rgba(0, 0, 0, 0.5);
             padding: 5px;
             font-size: 0.9em;
             text-align: center;
@@ -51,11 +68,19 @@
     </style>
 </head>
 <body>
-    <img src="ys.jpg" width="300" height="300"/>
-    <p>“we are asleep. our life is a dream. but we wake up sometimes, just enough to know that we are dreaming.” - ludwig wittgenstein</p>
-    <p>"it is no nation that we inhabit, but a language. make no mistake; our native tongue is our true fatherland." ― emil cioran</p>
-    <p>the sounds you experience here are born from memories—echoes of places, fragments of moments, impressions that linger without form. they drift without conclusion, layering like recollections, shaping no narrative but offering an exploration. in the space between notes, language emerges—not as words but as essence, shaping thought as deeply as memory itself. we inhabit these sounds as we do a native tongue, for it is not place but language that forms the truest home, framing how we perceive, remember, and understand. ~ ys</p>
-    <p>listen below</p>
+    <a href="index.html" class="home-link">Home</a>
+
+    <div class="content-wrapper">
+        <div class="image-section">
+            <img src="ys.jpg" alt="ys image">
+        </div>
+        <div class="text-section">
+            <p>“we are asleep. our life is a dream. but we wake up sometimes, just enough to know that we are dreaming.” - ludwig wittgenstein</p>
+            <p>"it is no nation that we inhabit, but a language. make no mistake; our native tongue is our true fatherland." ― emil cioran</p>
+            <p>the sounds you experience here are born from memories—echoes of places, fragments of moments, impressions that linger without form. they drift without conclusion, layering like recollections, shaping no narrative but offering an exploration. in the space between notes, language emerges—not as words but as essence, shaping thought as deeply as memory itself. we inhabit these sounds as we do a native tongue, for it is not place but language that forms the truest home, framing how we perceive, remember, and understand. ~ ys</p>
+            <p>listen below</p>
+        </div>
+    </div>
 
     <div class="image-container">
         <div class="image-item">
@@ -78,6 +103,6 @@
             event.preventDefault();
         });
     </script>
-    
+
 </body>
 </html>
