@@ -14,6 +14,8 @@
       padding: 10px;
       width: 300px;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      text-align: center;
     }
     #reference {
       text-align: right;
@@ -32,29 +34,36 @@
     // Replace with your API key
     const API_KEY = "76c644dd784f85ce960f161aa00f7ddb";
 
-    // Replace with your API endpoint
-    const API_URL = "https://api.bible/v1/verses/random?translation=KJV";
+    // Replace with your API endpoint (check documentation for the correct URL)
+    const API_URL = "https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-02/verses/random";
 
     async function fetchBibleVerse() {
       try {
+        console.log("Fetching data from API...");
         const response = await fetch(API_URL, {
           headers: {
             "Authorization": `Bearer ${API_KEY}`
           }
         });
 
+        console.log("Response received:", response);
+
         if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log("Data fetched:", data);
 
-        // Update the widget with the fetched verse
-        document.getElementById('verse').textContent = data.text;
-        document.getElementById('reference').textContent = `${data.book} ${data.chapter}:${data.verse}`;
+        // Assuming the API returns verse text and reference in the following structure:
+        // data.data.content: The verse text
+        // data.data.reference: The reference (e.g., "John 3:16")
+        document.getElementById('verse').textContent = data.data.content;
+        document.getElementById('reference').textContent = data.data.reference;
       } catch (error) {
         console.error("Error fetching Bible verse:", error);
         document.getElementById('verse').textContent = "Unable to load verse.";
+        document.getElementById('reference').textContent = "";
       }
     }
 
