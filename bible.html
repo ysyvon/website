@@ -1,3 +1,65 @@
-<script type="text/javascript">
-document.write("<iframe src=\"https://www.kingjamesbibleonline.org/popular-bible-verses-widget.php\" style=\"width: 200px; height: 240px; border: 0px solid #ffffff;\"></iframe>");
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible Verse Widget</title>
+  <style>
+    #bible-widget {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 300px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    #reference {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="bible-widget">
+    <div id="verse">Loading...</div>
+    <div id="reference"></div>
+  </div>
+
+  <script>
+    // Replace with your API key
+    const API_KEY = "76c644dd784f85ce960f161aa00f7ddb";
+
+    // Replace with your API endpoint
+    const API_URL = "https://api.bible/v1/verses/random?translation=KJV";
+
+    async function fetchBibleVerse() {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Update the widget with the fetched verse
+        document.getElementById('verse').textContent = data.text;
+        document.getElementById('reference').textContent = `${data.book} ${data.chapter}:${data.verse}`;
+      } catch (error) {
+        console.error("Error fetching Bible verse:", error);
+        document.getElementById('verse').textContent = "Unable to load verse.";
+      }
+    }
+
+    // Call the function to fetch a verse on page load
+    fetchBibleVerse();
+  </script>
+</body>
+</html>
