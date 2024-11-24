@@ -31,10 +31,7 @@
   </div>
 
   <script>
-    // Replace with your API key
     const API_KEY = "76c644dd784f85ce960f161aa00f7ddb";
-
-    // Replace with your API endpoint (check documentation for the correct URL)
     const API_URL = "https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-02/verses/random";
 
     async function fetchBibleVerse() {
@@ -55,9 +52,6 @@
         const data = await response.json();
         console.log("Data fetched:", data);
 
-        // Assuming the API returns verse text and reference in the following structure:
-        // data.data.content: The verse text
-        // data.data.reference: The reference (e.g., "John 3:16")
         document.getElementById('verse').textContent = data.data.content;
         document.getElementById('reference').textContent = data.data.reference;
       } catch (error) {
@@ -67,7 +61,6 @@
       }
     }
 
-    // Call the function to fetch a verse on page load
     fetchBibleVerse();
   </script>
 </body>
