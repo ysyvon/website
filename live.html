@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>live in florida - 2016</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333;
+        }
+        .mp3-player {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <img src="Unknown.jpg" style="max-width: 400px; height: auto;"/>
+  <div class="mp3-player">
+        <audio controls controlsList="nodownload">
+            <source src="live.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <p>People only have substance within the memories of others.</p>
+    <p>live in florida - 2016</p>
+    
+   <a href="index.html" class="home-link">back to main page</a>
+    <!--<div class="mp3-player">
+        <audio controls>
+            <source src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>-->
+
+    <script>
+        // Disable right-click on the entire page
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
+    </script>
+
+</body>
+</html>
