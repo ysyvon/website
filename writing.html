@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ys - writing</title>
+    <a href="index.html" class="home-link">back to main page</a>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .book-section {
+            max-width: 300px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .book-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .book-section p {
+            margin-top: 10px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .book-section {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-link">back to main page</a>
+
+    <div class="book-section">
+        <img src="thelightbetween.png" alt="The Light Between - A Novella">
+        <p><a href="https://www.wattpad.com/story/395624210-the-light-between">The Light Between – A Novella</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
+    </script>
+
+</body>
+</html>
