@@ -24,6 +24,7 @@
         }
         .content-wrapper {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: flex-start;
             width: 100%;
@@ -38,9 +39,11 @@
             margin: 10px 0;
         }
         .image-section img {
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
         }
+
         .image-container {
             display: flex;
             justify-content: center;
@@ -48,8 +51,9 @@
             margin-top: 20px;
         }
         .image-item {
-            position: relative;
-            text-align: center;
+            width: 100%;
+            max-width: 200px;
+            height: auto;
         }
         .image-item img {
             width: 200px;
@@ -65,6 +69,31 @@
             font-size: 0.9em;
             text-align: center;
         }
+        @media (max-width: 600px) {
+        .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10px;
+        }
+
+        .text-section {
+        padding-left: 0;
+        margin: 0;
+        max-width: 100%;
+        }
+
+        .image-container {
+        flex-direction: column;
+        align-items: center;
+        }
+
+        .image-item {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+        }
+        }
+
     </style>
 </head>
 <body>
