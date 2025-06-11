@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ys</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 900px;
+        }
+        .text-section {
+            max-width: 500px;
+            margin-right: auto;
+            padding-left: 20px;
+        }
+        .text-section p {
+            margin: 10px 0;
+        }
+        .image-section img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-item {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+        }
+        .image-item img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border-radius: 4px; /* optional: for soft corners */
+        }
+
+        .image-item p {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+        .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10px;
+        }
+
+        .text-section {
+        padding-left: 0;
+        margin: 0;
+        max-width: 100%;
+        }
+
+        .image-container {
+        flex-direction: column;
+        align-items: center;
+        }
+
+        .image-item {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+        }
+        }
+
+    </style>
+</head>
+<body>
+
+        <div class="text-section">
+           <p>"it is no nation that we inhabit, but a language. make no mistake; our native tongue is our true fatherland."</i></p> 
+                <p> - emil cioran</p>
+            <p></p>
+            <p><i>the sounds you experience here are born from memories: echoes of places, fragments of moments, impressions that linger without form. they drift without conclusion, layering like recollections, shaping no narrative but offering an exploration. in the space between notes, language emerges, not as words but as essence, shaping thought as deeply as memory itself. we inhabit these sounds as we do a native tongue, for it is not place but language that forms the truest home, framing how we perceive, remember, and understand.</i></p> 
+            <p>~ ys goldt</p>
+            <p></p>
+            <p>listen below</p>
+        </div>
+    </div>
+
+    <div class="image-container">
+        <div class="image-item">
+            <a href="wewilllooktogether.html"><img src="ifyouareafraid.jpg" alt="if you are afraid, we will look together"></a>
+        </div>
+         <a href="wewilllooktogether.html">if you are afraid, we will look together</a>
+        <div class="image-item">
+            <a href="thepast.html"><img src="ys.jpg" alt="you can easily return to the past"></a>
+        </div>
+        <a href="thepast.html">you can easily return to the past, but no one is there anymore</a>
+        <div class="image-item">
+            <a href="live.html"><img src="Unknown.jpg" alt="live in florida"></a>
+        </div>
+        <a href="live.html">live in florida</a>
+    </div>
+
+    <script>
+        // Disable right-click on the entire page
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
+    </script>
+
+</body>
+</html>
