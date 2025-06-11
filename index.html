@@ -56,9 +56,14 @@
             height: auto;
         }
         .image-item img {
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border-radius: 4px; /* optional: for soft corners */
         }
+
         .image-item p {
             position: absolute;
             top: 0;
