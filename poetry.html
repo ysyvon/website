@@ -24,56 +24,51 @@
             color: #333;
         }
 
-        .content-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            width: 100%;
-            max-width: 900px;
-            gap: 20px;
-        }
-
-        .image-section {
+        .book-section {
             max-width: 300px;
-            flex: 1;
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .image-section img {
+        .book-section img {
             width: 100%;
             height: auto;
             border-radius: 4px;
         }
 
-        .image-section a {
+        .book-section a {
             display: block;
-            text-align: center;
-            margin-top: 8px;
+            margin-top: 10px;
             text-decoration: none;
             color: #333;
         }
 
-        .poem-section {
-            flex: 2;
-            max-width: 600px;
+        .poems-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
         }
 
-        .poem-section p {
+        .poem {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .poem p {
             margin: 10px 0;
             line-height: 1.6;
         }
 
-        @media (max-width: 600px) {
-            .content-wrapper {
+        @media (max-width: 700px) {
+            .poems-container {
                 flex-direction: column;
                 align-items: center;
             }
 
-            .poem-section {
-                max-width: 100%;
-            }
-
-            .image-section {
+            .poem {
                 max-width: 100%;
             }
         }
@@ -83,17 +78,17 @@
 
     <a href="index.html" class="home-link">back to main page</a>
 
-    <div class="content-wrapper">
-        <div class="image-section">
-            <a href="https://www.lulu.com/shop/yiskah-goldt-anderson/shelves-of-memory/paperback/product-nv994yv.html?page=1&pageSize=4">
-                <img src="shelvesofmemory.jpg" alt="shelves of memory - a poetry collection">
-            </a>
-            <a href="https://www.lulu.com/shop/yiskah-goldt-anderson/shelves-of-memory/paperback/product-nv994yv.html?page=1&pageSize=4">
-                shelves of memory – a poetry collection
-            </a>
-        </div>
+    <div class="book-section">
+        <a href="https://www.lulu.com/shop/yiskah-goldt-anderson/shelves-of-memory/paperback/product-nv994yv.html?page=1&pageSize=4">
+            <img src="shelvesofmemory.jpg" alt="shelves of memory - a poetry collection">
+        </a>
+        <a href="https://www.lulu.com/shop/yiskah-goldt-anderson/shelves-of-memory/paperback/product-nv994yv.html?page=1&pageSize=4">
+            shelves of memory – a collection of poems – purchase the book here
+        </a>
+    </div>
 
-        <div class="poem-section">
+    <div class="poems-container">
+        <div class="poem">
             <p><strong>The Ballad of Melancholia</strong></p>
 
             <p>
@@ -123,7 +118,9 @@
             But I still bled to be with you,<br>
             And named the sorrow, being known.
             </p>
+        </div>
 
+        <div class="poem">
             <p><strong>Drawer of Silence</strong></p>
 
             <p>
