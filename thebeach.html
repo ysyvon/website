@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://ysyvon.github.io/website/afraidcover.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
+
+    <title>i'll be waiting for you on the beach</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333;
+        }
+        .mp3-player {
+            margin-top: 50px;
+        }
+        img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+        }
+        @media (max-width: 600px) {
+        body {
+            padding: 10px;
+        }
+
+        .home-link {
+            font-size: 1em;
+            top: 5px;
+            left: 5px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 0.95em;
+            margin: 10px 0;
+        }
+
+        .mp3-player {
+        margin-top: 20px;
+        }
+        }
+        
+    </style>
+</head>
+<body>
+    <div style="display: flex; gap: 20px; justify-content: center;">
+  <a href="onthebeachcover.jpg" target="_blank">
+    <img src="onthebeachcover.jpg" alt="coverart" style="width: 300px; height: auto; cursor: pointer;">
+  </a>
+  <a href="onthebeachinsert.jpg" target="_blank">
+    <img src="onthebeachinsert.jpg" alt="insert" style="width: 300px; height: auto; cursor: pointer;">
+  </a>
+</div>
+    <p>i'll be waiting for you on the beach</p>
+    <a href="index.html" class="home-link">back to main page</a>
+    <center><div class="mp3-player">
+    <audio controls style="width: 100%; max-width: 300px;">
+        <source src="onthebeach.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <p>recorded june 2025 @ 25.880658, -81.702693 by ys ©2024</p>
+    <p>mastered by Circuits of Creation</p>
+</div></center>
+    </div>
+
+    <script>
+        // Disable right-click on the entire page
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
+    </script>
+    
+</body>
+</html>
