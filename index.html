@@ -1,204 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ys Goldt – writer & sound artist</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="description" content="Official site of Ys Goldt, writer and sound artist. Author of The Strange Mercy of Listening and other quiet, obsessive works in sound, image, words, and memory.">
+  <title>Ys Goldt – novelist & writer</title>
+  <meta name="description" content="Official site of Ys Goldt, novelist and writer. Author of The Strange Mercy of Listening." />
 
-    <style>
-        body {
-            font-family: monospace;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+  <style>
+    body {
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        /* simple top nav */
-        .site-header {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    .site-header {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-        .site-title {
-            font-size: 1.4em;
-            letter-spacing: 0.04em;
-        }
+    .site-title {
+      font-size: 1.4em;
+      letter-spacing: 0.04em;
+      margin: 0;
+    }
 
-        .nav-links a {
-            margin-left: 15px;
-            text-decoration: none;
-            color: #333;
-        }
+    .nav-links a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #333;
+    }
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
 
-        .intro-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 30px;
-            width: 100%;
-            max-width: 900px;
-            margin-bottom: 40px;
-        }
+    .intro-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 30px;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
 
-        .intro-image {
-            max-width: 200px;
-            flex: 0 0 auto;
-        }
+    .intro-image {
+      max-width: 200px;
+      flex: 0 0 auto;
+    }
 
-        .intro-image img {
-            width: 100%;
-            height: auto;
-        }
+    .intro-image img {
+      width: 100%;
+      height: auto;
+    }
 
-        .intro-text {
-            max-width: 600px;
-        }
+    .intro-text {
+      max-width: 600px;
+    }
 
-        .intro-text p {
-            margin: 10px 0;
-        }
+    .intro-text p {
+      margin: 10px 0;
+    }
 
-        .image-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 900px;
-        }
+    hr {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: 1px;
+      border: none;
+      background-color: #666;
+      margin: 40px auto;
+    }
 
-        .image-item {
-            width: 100%;
-            max-width: 300px;
-        }
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
 
-        .image-item img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            aspect-ratio: 1 / 1;
-            border-radius: 4px;
-        }
+      .intro-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
 
-        .image-item p {
-            margin-top: 8px;
-            font-size: 0.95em;
-            text-align: center;
-            color: #333;
-        }
+      .intro-text {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+    }
+  </style>
 
-        hr {
-            display: block;
-            width: 100%;
-            max-width: 600px;
-            height: 1px;
-            border: none;
-            background-color: #666;
-            margin: 40px auto;
-        }
+  <!-- Author-first structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://ysyvon.github.io/website/#ys-goldt",
+    "name": "Ys Goldt",
+    "url": "https://ysyvon.github.io/website/",
+    "image": "https://ysyvon.github.io/website/ysgoldt.png",
+    "jobTitle": ["Novelist", "Writer", "Author"],
+    "sameAs": [
+      "https://www.amazon.com/stores/Ys-Goldt/author/B0FPG632CS",
+      "https://www.instagram.com/ysgoldtwrites/"
+    ]
+  }
+  </script>
 
-        @media (max-width: 600px) {
-            .site-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-
-            .intro-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .intro-text {
-                max-width: 100%;
-                padding: 0 10px;
-            }
-
-            .image-item {
-                max-width: 300px;
-                margin-bottom: 20px;
-            }
-        }
-    </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": "https://ysyvon.github.io/website/#ys-goldt",
-  "name": "Ys Goldt",
-  "url": "https://ysyvon.github.io/website/",
-  "image": "https://ysyvon.github.io/website/ysgoldt.jpg",
-  "jobTitle": ["Sound artist", "Composer", "Author"],
-  "sameAs": [
-    "https://ysgoldt.bandcamp.com",
-    "https://www.discogs.com/artist/17130970-Ys-Goldt",
-    "https://www.amazon.com/stores/Ys-Goldt/author/B0FPG632CS",
-    "https://www.instagram.com/ysgoldt/"
-    "https://www.instagram.com/ysgoldtwrites/"
-  ]
-}
-</script>
+  <!-- Work/Book entity (optional but helpful) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "The Strange Mercy of Listening",
+    "author": {
+      "@type": "Person",
+      "@id": "https://ysyvon.github.io/website/#ys-goldt"
+    },
+    "url": "https://www.amazon.com/stores/Ys-Goldt/author/B0FPG632CS",
+    "sameAs": "https://www.amazon.com/dp/REPLACE_WITH_YOUR_ASIN_OR_BOOK_URL"
+  }
+  </script>
 
 </head>
 <body>
 
-    <header class="site-header">
-        <h1 class="site-title">ys goldt</h1>
-        <nav class="nav-links">
-            <a href="https://www.amazon.com/stores/Ys-Goldt/author/B0FPG632CS?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=004b4a6f-fcf1-4fe1-8e7f-d09eb9f99358">books</a>
-            <a href="https://ysgoldt.bandcamp.com/">music</a>
-            <!-- add more later if you like -->
-        </nav>
-    </header>
+  <header class="site-header">
+    <h1 class="site-title">ys goldt</h1>
+    <nav class="nav-links">
+      <a href="https://www.amazon.com/stores/Ys-Goldt/author/B0FPG632CS">books</a>
+      <a href="https://www.instagram.com/ysgoldtwrites/">instagram</a>
+    </nav>
+  </header>
 
-    <div class="intro-wrapper">
-        <div class="intro-image">
-            <img src="ysgoldt.jpg" alt="Ys Goldt portrait">
-        </div>
-        <div class="intro-text">
-            <p>Ys Goldt is a sound artist, composer, and author working across music, math, and words.</p>
-            
-            <p>“We are asleep. Our life is a dream. But we wake up sometimes, just enough to know that we are dreaming.”</p>
-
-            <p>Ys Goldt works in sound, image, and words, shaping quiet artefacts from signal, static, and silence. Her compositions emerge from layered field recordings, decaying transmissions, morse rhythms, and fragments of forgotten speech, forming slow-moving collages that linger at the edges of recognition.</p>
-
-            <p>Much of her work begins in listening, deep, prolonged, and often solitary. She gathers sounds from radio drift, forest floors, machine hums, archival reels. These elements are processed through analogue tools, mathematical filters, and intuition, stitched together not to narrate, but to haunt.</p>
-
-            <p>Alongside sound, she crafts visual pieces and writes fiction and poetry that mirror this logic of residue and reconstruction, where pattern is a form of memory, and noise is a form of meaning. Her latest literary work is the dark romantic novel <em><a href="https://a.co/d/7cdNhR3">The Strange Mercy of Listening</a></em>.</p>
-
-            <p>To get in touch, you can find her on <a href="https://ysgoldt.bandcamp.com/">Bandcamp</a> and Instagram <a href="https://www.instagram.com/ysgoldt/">@ysgoldt</a> or send an email to ysyvon @ proton.me.</p>
-        </div>
+  <div class="intro-wrapper">
+    <div class="intro-image">
+      <img src="ysgoldt.jpg" alt="Ys Goldt portrait">
     </div>
 
-    <!-- optional: a simple area for a couple of images / covers later -->
-    <!--
-    <hr>
+    <div class="intro-text">
+      <p><strong>Ys Goldt is a novelist and writer of speculative and literary fiction.</strong></p>
 
-    <div class="image-container">
-        <div class="image-item">
-            <img src="strange-mercy-cover.jpg" alt="The Strange Mercy of Listening cover">
-            <p><em>The Strange Mercy of Listening</em> – dark romantic novella</p>
-        </div>
-        <div class="image-item">
-            <img src="album-cover.jpg" alt="Album art">
-            <p>Selected pieces in sound</p>
-        </div>
+      <p>“We are asleep. Our life is a dream. But we wake up sometimes, just enough to know that we are dreaming.”</p>
+
+      <p>Her work centres on memory, residue, and the quiet violence of love—stories that move slowly, hold tension, and linger.</p>
+
+      <p>Latest: <em><a href="https://www.amazon.com/stores/Ys-Goldt/author/B0FPG632CS">The Strange Mercy of Listening</a></em>.</p>
+
+      <p>For updates and excerpts: <a href="https://www.instagram.com/ysgoldtwrites/">@ysgoldtwrites</a>. Contact: ysyvon @ proton.me.</p>
     </div>
-    -->
+  </div>
 
 </body>
 </html>
