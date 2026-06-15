@@ -31,6 +31,23 @@ body{
   line-height:1.55;
   color:var(--phos);
   -webkit-font-smoothing:none;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+
+a,
+img,
+button,
+#screen,
+#out{
+  -webkit-touch-callout:none;
+}
+
+input,
+textarea{
+  -webkit-user-select:text;
+  user-select:text;
 }
 
 /* ---- physical screen ---- */

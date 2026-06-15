@@ -40,6 +40,11 @@
     ev.stopPropagation();
   }, true);
 
+  document.addEventListener("dragstart", function (ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }, true);
+
   function authEvent(key) {
     return {
       key: key,
