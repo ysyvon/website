@@ -8,30 +8,21 @@
   // ---------- elements ----------
   const out   = document.getElementById("out");
   const cmd   = document.getElementById("cmd");
+  const ps1   = document.getElementById("ps1");
   const clock = document.getElementById("clock");
   const hush  = document.getElementById("hush");
   const promptLine = document.getElementById("prompt-line");
   const screen = document.getElementById("screen");
-  const softInput = document.createElement("input");
-
-  softInput.type = "text";
-  softInput.className = "soft-keyboard-bridge";
-  softInput.autocomplete = "off";
-  softInput.autocapitalize = "characters";
-  softInput.autocorrect = "off";
-  softInput.spellcheck = false;
-  softInput.setAttribute("aria-hidden", "true");
-  screen.appendChild(softInput);
-
-  let softKeyHandler = null;
-  let softKeyValue = "";
+  let authKeyHandler = null;
+  let authKeyValue = "";
+  let authPromptLabel = "auth>";
 
   document.addEventListener("contextmenu", function (ev) {
     ev.preventDefault();
     ev.stopPropagation();
   }, true);
 
-  function softEvent(key) {
+  function authEvent(key) {
     return {
       key: key,
       preventDefault: function () {},
@@ -39,51 +30,53 @@
     };
   }
 
-  function focusSoftInput() {
-    if (!softKeyHandler) return;
-    softInput.value = "";
-    softKeyValue = "";
+  function focusAuthInput() {
+    if (!authKeyHandler) return;
+    cmd.value = "";
+    authKeyValue = "";
     setTimeout(function () {
-      if (!softKeyHandler) return;
-      try { softInput.focus({ preventScroll: true }); }
-      catch (_) { softInput.focus(); }
+      if (!authKeyHandler) return;
+      try { cmd.focus({ preventScroll: true }); }
+      catch (_) { cmd.focus(); }
     }, 0);
   }
 
-  function setSoftKeyHandler(handler) {
-    softKeyHandler = handler;
-    softInput.value = "";
-    softKeyValue = "";
-    if (handler) focusSoftInput();
-    else softInput.blur();
+  function setAuthKeyHandler(handler, label) {
+    authKeyHandler = handler;
+    authPromptLabel = label || "auth>";
+    cmd.value = "";
+    authKeyValue = "";
+    if (handler) {
+      ps1.textContent = authPromptLabel;
+      promptLine.classList.remove("hidden");
+      cmd.disabled = false;
+      focusAuthInput();
+    } else {
+      ps1.textContent = "archive>";
+      cmd.value = "";
+      cmd.blur();
+    }
   }
 
-  softInput.addEventListener("keydown", function (ev) {
-    if (!softKeyHandler) return;
-    if (ev.key === "Enter" || ev.key === "Backspace" || ev.key === "Escape") {
-      softKeyHandler(ev);
-    }
-  });
-
-  softInput.addEventListener("input", function () {
-    if (!softKeyHandler) return;
-    const next = softInput.value || "";
-    if (next.length < softKeyValue.length) {
-      for (let i = 0; i < (softKeyValue.length - next.length); i++) softKeyHandler(softEvent("Backspace"));
-    } else if (next.length > softKeyValue.length) {
-      next.slice(softKeyValue.length).split("").forEach(function (ch) {
-        softKeyHandler(softEvent(ch));
+  cmd.addEventListener("input", function () {
+    if (!authKeyHandler) return;
+    const next = cmd.value || "";
+    if (next.length < authKeyValue.length) {
+      for (let i = 0; i < (authKeyValue.length - next.length); i++) authKeyHandler(authEvent("Backspace"));
+    } else if (next.length > authKeyValue.length) {
+      next.slice(authKeyValue.length).split("").forEach(function (ch) {
+        authKeyHandler(authEvent(ch));
       });
     }
-    softKeyValue = softInput.value || "";
-    if (softKeyValue.length > 24) {
-      softInput.value = "";
-      softKeyValue = "";
+    authKeyValue = cmd.value || "";
+    if (authKeyValue.length > 24) {
+      cmd.value = "";
+      authKeyValue = "";
     }
   });
 
   window.addEventListener("pointerdown", function () {
-    if (softKeyHandler) focusSoftInput();
+    if (authKeyHandler) focusAuthInput();
   }, true);
 
   // ====================================================================
@@ -1082,6 +1075,10 @@
 
   // ---------- input wiring ----------
   cmd.addEventListener("keydown", function (ev) {
+    if (authKeyHandler) {
+      if (ev.key === "Enter" || ev.key === "Backspace" || ev.key === "Escape") authKeyHandler(ev);
+      return;
+    }
     if (ev.key === "Enter") { const v = cmd.value; cmd.value = ""; run(v); }
     else if (ev.key === "ArrowUp") { if (history.length) { hpos = Math.max(0, hpos - 1); cmd.value = history[hpos] || ""; } ev.preventDefault(); }
     else if (ev.key === "ArrowDown") { if (history.length) { hpos = Math.min(history.length, hpos + 1); cmd.value = history[hpos] || ""; } ev.preventDefault(); }
@@ -1382,10 +1379,10 @@
       }
       function cleanup() {
         document.removeEventListener("keydown", onKey, true);
-        setSoftKeyHandler(null);
+        setAuthKeyHandler(null);
       }
       document.addEventListener("keydown", onKey, true);
-      setSoftKeyHandler(onKey);
+      setAuthKeyHandler(onKey, "ack>");
     });
   }
   function enterArchive() {
@@ -1401,11 +1398,11 @@
     function once(ev) {
       ev.preventDefault(); ev.stopPropagation();
       document.removeEventListener("keydown", once, true);
-      setSoftKeyHandler(null);
+      setAuthKeyHandler(null);
       gate();
     }
     document.addEventListener("keydown", once, { once: true, capture: true });
-    setSoftKeyHandler(once);
+    setAuthKeyHandler(once, "reconnect>");
   }
   const PASSWORD = "NIHIL";
   const SKIP_PROTOCOL = "REGIO";
@@ -1426,10 +1423,10 @@
       }
       function cleanup() {
         document.removeEventListener("keydown", onKey, true);
-        setSoftKeyHandler(null);
+        setAuthKeyHandler(null);
       }
       document.addEventListener("keydown", onKey, true);
-      setSoftKeyHandler(onKey);
+      setAuthKeyHandler(onKey, "code>");
     });
   }
   async function gate() {
@@ -1452,8 +1449,8 @@
 
   function awaitEntry() {
     out.innerHTML = "";
-    promptLine.classList.add("hidden");
-    cmd.disabled = true;
+    promptLine.classList.remove("hidden");
+    cmd.disabled = false;
     let bypassBuffer = "";
     printHTML(
       '<div class="banner-sm">BRI ARCHIVE NODE // STANDBY</div>' +
@@ -1463,13 +1460,13 @@
     function cleanupStandby() {
       window.removeEventListener("pointerdown", start, true);
       window.removeEventListener("keydown", bypass, true);
-      setSoftKeyHandler(null);
+      setAuthKeyHandler(null);
     }
     function start(ev) {
       if (ev && ev.type === "pointerdown" && ev.pointerType && ev.pointerType !== "mouse") {
         ev.preventDefault();
         ev.stopPropagation();
-        focusSoftInput();
+        focusAuthInput();
         return;
       }
       if (ev && ev.type === "keydown") {
@@ -1509,7 +1506,7 @@
     }
     window.addEventListener("pointerdown", start, true);
     window.addEventListener("keydown", bypass, true);
-    setSoftKeyHandler(bypass);
+    setAuthKeyHandler(bypass, "init>");
   }
 
   if (!DATA.length) {
