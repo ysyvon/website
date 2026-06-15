@@ -12,10 +12,78 @@
   const hush  = document.getElementById("hush");
   const promptLine = document.getElementById("prompt-line");
   const screen = document.getElementById("screen");
+  const softInput = document.createElement("input");
+
+  softInput.type = "text";
+  softInput.className = "soft-keyboard-bridge";
+  softInput.autocomplete = "off";
+  softInput.autocapitalize = "characters";
+  softInput.autocorrect = "off";
+  softInput.spellcheck = false;
+  softInput.setAttribute("aria-hidden", "true");
+  screen.appendChild(softInput);
+
+  let softKeyHandler = null;
+  let softKeyValue = "";
 
   document.addEventListener("contextmenu", function (ev) {
     ev.preventDefault();
     ev.stopPropagation();
+  }, true);
+
+  function softEvent(key) {
+    return {
+      key: key,
+      preventDefault: function () {},
+      stopPropagation: function () {},
+    };
+  }
+
+  function focusSoftInput() {
+    if (!softKeyHandler) return;
+    softInput.value = "";
+    softKeyValue = "";
+    setTimeout(function () {
+      if (!softKeyHandler) return;
+      try { softInput.focus({ preventScroll: true }); }
+      catch (_) { softInput.focus(); }
+    }, 0);
+  }
+
+  function setSoftKeyHandler(handler) {
+    softKeyHandler = handler;
+    softInput.value = "";
+    softKeyValue = "";
+    if (handler) focusSoftInput();
+    else softInput.blur();
+  }
+
+  softInput.addEventListener("keydown", function (ev) {
+    if (!softKeyHandler) return;
+    if (ev.key === "Enter" || ev.key === "Backspace" || ev.key === "Escape") {
+      softKeyHandler(ev);
+    }
+  });
+
+  softInput.addEventListener("input", function () {
+    if (!softKeyHandler) return;
+    const next = softInput.value || "";
+    if (next.length < softKeyValue.length) {
+      for (let i = 0; i < (softKeyValue.length - next.length); i++) softKeyHandler(softEvent("Backspace"));
+    } else if (next.length > softKeyValue.length) {
+      next.slice(softKeyValue.length).split("").forEach(function (ch) {
+        softKeyHandler(softEvent(ch));
+      });
+    }
+    softKeyValue = softInput.value || "";
+    if (softKeyValue.length > 24) {
+      softInput.value = "";
+      softKeyValue = "";
+    }
+  });
+
+  window.addEventListener("pointerdown", function () {
+    if (softKeyHandler) focusSoftInput();
   }, true);
 
   // ====================================================================
@@ -1312,8 +1380,12 @@
         else if (k === "n" || k === "escape") { cleanup(); resolve(false); }
         ev.preventDefault(); ev.stopPropagation();
       }
-      function cleanup() { document.removeEventListener("keydown", onKey, true); }
+      function cleanup() {
+        document.removeEventListener("keydown", onKey, true);
+        setSoftKeyHandler(null);
+      }
       document.addEventListener("keydown", onKey, true);
+      setSoftKeyHandler(onKey);
     });
   }
   function enterArchive() {
@@ -1326,11 +1398,14 @@
     clearScreen();
     printHTML('<div class="alert">CONNECTION TERMINATED.</div>' +
       '<div class="dim">No clearance affirmed. Press any key to reconnect.</div>');
-    document.addEventListener("keydown", function once(ev) {
+    function once(ev) {
       ev.preventDefault(); ev.stopPropagation();
       document.removeEventListener("keydown", once, true);
+      setSoftKeyHandler(null);
       gate();
-    }, { once: true, capture: true });
+    }
+    document.addEventListener("keydown", once, { once: true, capture: true });
+    setSoftKeyHandler(once);
   }
   const PASSWORD = "NIHIL";
   const SKIP_PROTOCOL = "REGIO";
@@ -1349,8 +1424,12 @@
         else if (k && k.length === 1) { buf += k; render(); }
         ev.preventDefault(); ev.stopPropagation();
       }
-      function cleanup() { document.removeEventListener("keydown", onKey, true); }
+      function cleanup() {
+        document.removeEventListener("keydown", onKey, true);
+        setSoftKeyHandler(null);
+      }
       document.addEventListener("keydown", onKey, true);
+      setSoftKeyHandler(onKey);
     });
   }
   async function gate() {
@@ -1384,8 +1463,15 @@
     function cleanupStandby() {
       window.removeEventListener("pointerdown", start, true);
       window.removeEventListener("keydown", bypass, true);
+      setSoftKeyHandler(null);
     }
     function start(ev) {
+      if (ev && ev.type === "pointerdown" && ev.pointerType && ev.pointerType !== "mouse") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        focusSoftInput();
+        return;
+      }
       if (ev && ev.type === "keydown") {
         const k = ev.key || "";
         if (k === "Tab" || k === "Shift" || k === "Meta" || k === "Alt" || k === "Control") return;
@@ -1398,6 +1484,10 @@
     function bypass(ev) {
       if (ev && ev.type === "keydown") {
         const k = ev.key || "";
+        if (k === "Enter") {
+          start(ev);
+          return;
+        }
         if (k === "Tab" || k === "Shift" || k === "Meta" || k === "Alt" || k === "Control") return;
         if (k.length === 1) {
           bypassBuffer += k.toUpperCase();
@@ -1419,6 +1509,7 @@
     }
     window.addEventListener("pointerdown", start, true);
     window.addEventListener("keydown", bypass, true);
+    setSoftKeyHandler(bypass);
   }
 
   if (!DATA.length) {
