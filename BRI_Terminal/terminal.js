@@ -25,6 +25,8 @@
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(function (ch) {
         return '<button class="auth-key" type="button" data-auth-key="' + ch + '">' + ch + "</button>";
       }).join("") +
+    "</div>" +
+    '<div class="auth-pad-actions">' +
       '<button class="auth-key auth-key-wide" type="button" data-auth-key="Y">Y</button>' +
       '<button class="auth-key auth-key-wide" type="button" data-auth-key="N">N</button>' +
       '<button class="auth-key auth-key-wide" type="button" data-auth-key="Backspace">BKSP</button>' +
