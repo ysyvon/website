@@ -13,9 +13,25 @@
   const hush  = document.getElementById("hush");
   const promptLine = document.getElementById("prompt-line");
   const screen = document.getElementById("screen");
+  const authPad = document.createElement("div");
   let authKeyHandler = null;
   let authKeyValue = "";
   let authPromptLabel = "auth>";
+
+  authPad.className = "auth-pad hidden";
+  authPad.innerHTML =
+    '<div class="auth-pad-title">TOUCH KEYPAD // TAP TO TYPE</div>' +
+    '<div class="auth-pad-grid">' +
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(function (ch) {
+        return '<button class="auth-key" type="button" data-auth-key="' + ch + '">' + ch + "</button>";
+      }).join("") +
+      '<button class="auth-key auth-key-wide" type="button" data-auth-key="Y">Y</button>' +
+      '<button class="auth-key auth-key-wide" type="button" data-auth-key="N">N</button>' +
+      '<button class="auth-key auth-key-wide" type="button" data-auth-key="Backspace">BKSP</button>' +
+      '<button class="auth-key auth-key-wide" type="button" data-auth-key="Escape">ESC</button>' +
+      '<button class="auth-key auth-key-wide auth-key-enter" type="button" data-auth-key="Enter">ENTER</button>' +
+    "</div>";
+  screen.appendChild(authPad);
 
   document.addEventListener("contextmenu", function (ev) {
     ev.preventDefault();
@@ -50,10 +66,12 @@
       ps1.textContent = authPromptLabel;
       promptLine.classList.remove("hidden");
       cmd.disabled = false;
+      authPad.classList.remove("hidden");
       focusAuthInput();
     } else {
       ps1.textContent = "archive>";
       cmd.value = "";
+      authPad.classList.add("hidden");
       cmd.blur();
     }
   }
@@ -78,6 +96,14 @@
   window.addEventListener("pointerdown", function () {
     if (authKeyHandler) focusAuthInput();
   }, true);
+
+  authPad.addEventListener("click", function (ev) {
+    const btn = ev.target.closest("[data-auth-key]");
+    if (!btn || !authKeyHandler) return;
+    const key = btn.getAttribute("data-auth-key");
+    authKeyHandler(authEvent(key));
+    focusAuthInput();
+  });
 
   // ====================================================================
   //  In-world metadata (status stamps)

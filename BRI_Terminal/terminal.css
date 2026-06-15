@@ -350,21 +350,89 @@ body{
 #caret{ color:var(--phos-hot); animation:blink 1.05s steps(2) infinite; margin-left:-.4em; }
 @keyframes blink{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
 
-.soft-keyboard-bridge{
-  position:absolute;
-  left:14px;
-  bottom:14px;
-  width:1px;
-  height:1px;
-  opacity:.01;
-  pointer-events:none;
-  background:transparent;
-  border:none;
-  color:transparent;
-  z-index:2;
-}
-
 .hidden{ display:none; }
+
+.auth-pad{
+  position:absolute;
+  left:50%;
+  bottom:72px;
+  transform:translateX(-50%);
+  width:min(calc(100% - 32px), 720px);
+  max-height:min(46vh, 340px);
+  overflow:auto;
+  z-index:10;
+  padding:10px;
+  border:1px solid var(--phos-faint);
+  border-radius:12px;
+  background:rgba(3,8,3,.94);
+  box-shadow:0 0 18px rgba(70,255,122,.10), inset 0 0 18px rgba(0,0,0,.65);
+}
+.auth-pad-title{
+  margin:0 0 8px;
+  color:var(--phos-hot);
+  font-size:12px;
+  letter-spacing:.16em;
+  text-align:center;
+  text-transform:uppercase;
+}
+.auth-pad-grid{
+  display:grid;
+  grid-template-columns:repeat(7, minmax(0, 1fr));
+  gap:6px;
+}
+.auth-key{
+  min-height:36px;
+  font:inherit;
+  color:var(--phos-hot);
+  background:rgba(0,0,0,.26);
+  border:1px solid var(--phos-dim);
+  text-shadow:var(--glow);
+}
+.auth-key-wide{ letter-spacing:.04em; }
+.auth-key-enter{ grid-column:span 3; }
+.auth-key:hover,
+.auth-key:active{
+  background:var(--phos);
+  color:#031003;
+  text-shadow:none;
+}
+@media (max-width: 780px){
+  .auth-pad{
+    bottom:78px;
+    width:min(calc(100% - 20px), 760px);
+    max-height:min(52vh, 380px);
+    padding:10px;
+  }
+  .auth-pad-grid{
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+    gap:5px;
+  }
+  .auth-key{
+    min-height:46px;
+    font-size:14px;
+  }
+  .auth-key-enter{ grid-column:span 2; }
+}
+@media (pointer: coarse){
+  .auth-pad{
+    bottom:84px;
+    width:min(calc(100% - 16px), 820px);
+    max-height:min(56vh, 420px);
+    padding:10px;
+  }
+  .auth-pad-title{
+    font-size:13px;
+    margin-bottom:10px;
+  }
+  .auth-pad-grid{
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+    gap:6px;
+  }
+  .auth-key{
+    min-height:48px;
+    font-size:15px;
+  }
+}
 
 /* ---- survey chart (map) ---- */
 .mapwrap{ margin:.5em 0 .3em; }
