@@ -110,7 +110,13 @@ window.ARCHIVE_CONTENT = {
         ]
       ],
       "media": {
-        "images": [],
+        "images": [
+          {
+            "type": "id",
+            "src": "assets/archive-media/sabinereisz/id-sabine-reisz.png",
+            "caption": "Directorate identification photograph"
+          }
+        ],
         "audio": []
       },
       "sections": [
