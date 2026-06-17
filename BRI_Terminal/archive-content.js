@@ -210,13 +210,7 @@ window.ARCHIVE_CONTENT = {
         ]
       ],
       "media": {
-        "images": [
-          {
-            "src": "assets/archive-media/vaarden/gallery-vaarden.png",
-            "name": "vaarden.png",
-            "caption": "Vaarden"
-          }
-        ],
+        "images": [],
         "audio": []
       },
       "sections": [
@@ -371,13 +365,7 @@ window.ARCHIVE_CONTENT = {
         ]
       ],
       "media": {
-        "images": [
-          {
-            "src": "assets/archive-media/breisk/gallery-breisk-4.png",
-            "name": "breisk.png",
-            "caption": "breisk.png"
-          }
-        ],
+        "images": [],
         "audio": []
       },
       "sections": [
@@ -655,13 +643,7 @@ window.ARCHIVE_CONTENT = {
         ]
       ],
       "media": {
-        "images": [
-          {
-            "src": "assets/archive-media/station9/gallery-station9.png",
-            "name": "station9.png",
-            "caption": "station9.png"
-          }
-        ],
+        "images": [],
         "audio": []
       },
       "sections": [
