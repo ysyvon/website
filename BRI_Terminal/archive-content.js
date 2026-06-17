@@ -1099,11 +1099,6 @@ window.ARCHIVE_CONTENT = {
       "relevance": "",
       "body": "Small perching bird, found in large flocks that settle and remain settled. Flock does not scatter on disturbance. Individual specimens are of low material yield; harvested in quantity by delvers for resale. Presence of a settled staarvink flock is used by experienced hunters as a reliable proximity indicator for still herd ungulates.",
       "media": {
-        "idPhoto": {
-          "src": "assets/archive-media/catalogue-stillherd/gallery-staarvink-1.png",
-          "name": "gallery-staarvink-1.png",
-          "caption": "STAARVINK // IDENTIFICATION IMAGE"
-        },
         "images": [],
         "audio": []
       }
@@ -1130,11 +1125,6 @@ window.ARCHIVE_CONTENT = {
       "relevance": "",
       "body": "Small canid. Bioluminescent markings across the dorsal surface and tail; output increases in low-visibility conditions and in proximity to still water. Solitary. Will approach a stationary human and follow at close range for extended intervals. Luminescent tissue is harvested for application in low-light field instrumentation; gland yield per specimen is low, placing high delver trade value on individual harvests.",
       "media": {
-        "idPhoto": {
-          "src": "assets/archive-media/catalogue-stillherd/gallery-glimvos.png",
-          "name": "gallery-glimvos.png",
-          "caption": "GLIMVOS // IDENTIFICATION IMAGE"
-        },
         "images": [],
         "audio": []
       }
@@ -1161,11 +1151,6 @@ window.ARCHIVE_CONTENT = {
       "relevance": "",
       "body": "Mid-sized ungulate. Four to six eyes arranged circumferentially around the skull; all recorded as open simultaneously. Observed to track multiple members of a party at once without repositioning the head. No unobserved angle has been identified. Additional ocular tissue exhibits temporal retention properties at higher concentration than standard still herd specimens; ocular material is a secondary procurement target. Encountered singly.",
       "media": {
-        "idPhoto": {
-          "src": "assets/archive-media/catalogue-stillherd/gallery-veeloog.png",
-          "name": "gallery-veeloog.png",
-          "caption": "VEELOOG // IDENTIFICATION IMAGE"
-        },
         "images": [],
         "audio": []
       }
@@ -1192,11 +1177,6 @@ window.ARCHIVE_CONTENT = {
       "relevance": "",
       "body": "Large cervid. Becomes progressively less visually distinct when stationary — resolution against background terrain degrades with duration of stillness. Effect is assessed as related to the region's spatial nonlocality. Moving specimens are fully visible. Harvest requires approach during motion, which is infrequent. No mechanism for the optical property has been characterised.",
       "media": {
-        "idPhoto": {
-          "src": "assets/archive-media/catalogue-stillherd/gallery-schijnhert.png",
-          "name": "gallery-schijnhert.png",
-          "caption": "SCHIJNHERT // IDENTIFICATION IMAGE"
-        },
         "images": [],
         "audio": []
       }
@@ -1223,11 +1203,6 @@ window.ARCHIVE_CONTENT = {
       "relevance": "",
       "body": "Large wading bird found in groups at crater lake margins and within standing fog banks. Bioluminescent plumage — blue-white, visible at 40–60m in fog conditions. Groups synchronise luminescence output over intervals of 3–5 minutes; mechanism undetermined. Feather material combines the non-decay property with low-level light emission; applications in Array component work are under assessment.",
       "media": {
-        "idPhoto": {
-          "src": "assets/archive-media/catalogue-stillherd/gallery-nevelgans.png",
-          "name": "gallery-nevelgans.png",
-          "caption": "NEVELGANS // IDENTIFICATION IMAGE"
-        },
         "images": [],
         "audio": []
       }
@@ -1254,11 +1229,6 @@ window.ARCHIVE_CONTENT = {
       "relevance": "",
       "body": "Large quadruped; taxonomy undetermined. Observed only at dusk and in the hours preceding NCE onset. Bioluminescent across the full body surface at output sufficient to cast shadow. Eye count varies across field reports between six and twelve; consistency has not been established. Luminescence is reported to orient toward the observer's position without the specimen moving. No successful harvest on record; all reported attempts were abandoned prior to contact. Material yield: unknown. Classification: pending.",
       "media": {
-        "idPhoto": {
-          "src": "assets/archive-media/catalogue-stillherd/gallery-schemerdier.png",
-          "name": "gallery-schemerdier.png",
-          "caption": "SCHEMERDIER // IDENTIFICATION IMAGE"
-        },
         "images": [],
         "audio": []
       }
