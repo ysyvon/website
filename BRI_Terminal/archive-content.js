@@ -630,14 +630,13 @@ window.ARCHIVE_CONTENT = {
         ]
       ],
       "media": {
-        "images": [
-          {
-            "type": "id",
-            "src": "assets/archive-media/sabinereisz/id-sabine-reisz.png",
-            "caption": "Directorate identification photograph"
-          }
-        ],
-        "audio": []
+        "images": [],
+        "audio": [],
+        "idPhoto": {
+          "src": "assets/archive-media/sabinereisz/id-sabine-reisz.png",
+          "name": "reisz_ID.png",
+          "caption": "IDENTIFICATION IMAGE"
+        }
       },
       "sections": [
         {
