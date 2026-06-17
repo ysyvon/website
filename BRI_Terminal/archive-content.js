@@ -26,6 +26,11 @@ window.ARCHIVE_CONTENT = {
       "status": "EXTERNAL",
       "tone": "dim"
     },
+    "dreiskel": {
+      "code": "DK-06",
+      "status": "CAPITAL",
+      "tone": ""
+    },
     "breisk": {
       "code": "BK-05",
       "status": "INST. SITE",
@@ -37,8 +42,13 @@ window.ARCHIVE_CONTENT = {
       "tone": "warn"
     },
     "nikolaialexiou": {
-      "code": "P-02",
+      "code": "BRI-18",
       "status": "INST. STAFF",
+      "tone": ""
+    },
+    "aikoreijnders": {
+      "code": "BRI-09",
+      "status": "CSD ACTIVE",
       "tone": ""
     },
     "sennbaardo": {
@@ -280,7 +290,7 @@ window.ARCHIVE_CONTENT = {
     "kalliros": {
       "title": "KL-04 // KALLIROS",
       "sub": "External sovereign state",
-      "relevance": "State of origin of Institute personnel Dr. Nikolai Alexiou (P-02).",
+      "relevance": "State of origin of Institute personnel Dr. Nikolai Alexiou (BRI-18).",
       "fields": [
         [
           "TYPE",
@@ -292,7 +302,7 @@ window.ARCHIVE_CONTENT = {
         ],
         [
           "RELEVANCE",
-          "State of origin: Institute personnel Dr. N. Alexiou (P-02); city of Myrathi"
+          "State of origin: Institute personnel Dr. N. Alexiou (BRI-18); city of Myrathi"
         ]
       ],
       "media": {
@@ -300,6 +310,39 @@ window.ARCHIVE_CONTENT = {
         "audio": []
       },
       "sections": []
+    },
+    "dreiskel": {
+      "title": "DK-06 // DREISKEL",
+      "sub": "Capital city — Virelsk",
+      "relevance": "Administrative capital of Virelsk and principal seat of state authority outside the cordon.",
+      "fields": [
+        [
+          "TYPE",
+          "Capital city"
+        ],
+        [
+          "STATE",
+          "[[Virelsk]] (VK-00)"
+        ],
+        [
+          "STATUS",
+          "Outside cordon"
+        ],
+        [
+          "RELEVANCE",
+          "Seat of Virelsk civil administration and external liaison with the Institute"
+        ]
+      ],
+      "media": {
+        "images": [],
+        "audio": []
+      },
+      "sections": [
+        {
+          "label": "ASSESSMENT",
+          "md": "Capital of [[Virelsk]] and administrative centre of the host state. Dreiskel lies outside the peninsula cordon and functions as the principal point of civil governance, ministerial coordination, and external liaison with the Institute.\n\n**Relation to De Râne.** Publicly, Dreiskel maintains the state position on containment, exclusion, and restricted disclosure. In practice, it is the city through which Virelsk's cooperation with the Institute is formalised, funded, and domestically managed."
+        }
+      ]
     },
     "breisk": {
       "title": "BK-05 // BREISK",
@@ -395,7 +438,7 @@ window.ARCHIVE_CONTENT = {
       ]
     },
     "nikolaialexiou": {
-      "title": "P-02 // ALEXIOU, NIKOLAI",
+      "title": "BRI-18 // ALEXIOU, NIKOLAI",
       "sub": "Institute personnel — field researcher",
       "relevance": "Perimeter collection duty; cataloguing of anomalous flora.",
       "fields": [
@@ -433,6 +476,64 @@ window.ARCHIVE_CONTENT = {
         {
           "label": "ASSESSMENT",
           "md": "**Service.**\n- Field researcher (botany, ecology), edge station, three years.\n- Assigned post-event perimeter collection.\n\n**Note.**\n- Maintains deliberate distance from central operations.\n- Discrepancies noted in recent perimeter collection logs. Personnel review flagged."
+        }
+      ]
+    },
+    "aikoreijnders": {
+      "title": "BRI-09 // REIJNDERS, AIKO",
+      "sub": "Containment Security Detachment — field operative",
+      "relevance": "CSD operative assigned to perimeter enforcement, recovery security, and sweep support. Recurrent participant in RN-03 contact events.",
+      "fields": [
+        [
+          "DESIGNATION",
+          "Reijnders, Aiko"
+        ],
+        [
+          "PARTICULARS",
+          "M · 30 yr. old · Virelskan · [[Dreiskel]] (DK-06), [[Virelsk]] (VK-00)"
+        ],
+        [
+          "UNIT",
+          "Containment Security Detachment (CSD)"
+        ],
+        [
+          "FUNCTION",
+          "Recovery security; perimeter enforcement; cordon response"
+        ],
+        [
+          "POSTING",
+          "Breisk / perimeter rotation"
+        ],
+        [
+          "STATUS",
+          "Active"
+        ],
+        [
+          "RETENTION",
+          "Retained for field efficacy"
+        ]
+      ],
+      "media": {
+        "images": [],
+        "audio": [],
+        "idPhoto": {
+          "src": "assets/archive-media/aikoreijnders/id-aiko-reijnders.png",
+          "name": "reijndersid.png",
+          "caption": "IDENTIFICATION IMAGE"
+        }
+      },
+      "sections": [
+        {
+          "label": "ASSESSMENT",
+          "md": "Reijnders, Aiko is a CSD field operative assigned primarily to perimeter enforcement, recovery security, and sweep support. He is assessed as reliable in armed and post-casualty environments and demonstrates low hesitation in the execution of custodial and coercive tasks.\n\nField evaluations consistently rate him as effective under deteriorating conditions, including hostile contact, recovery operations following NCE events, and perimeter incidents involving civilian or altered-person custody. He is not assessed as suitable for diplomatic, civilian-facing, or interpretive duties.\n\nInterpersonal conduct is recurrently abrasive and verbal noncompliance with supervisory or procedural burden is noted across multiple reports; however, material compliance and field efficacy remain within acceptable limits. Retention is supported on operational-performance grounds."
+        },
+        {
+          "label": "SERVICE PROFILE",
+          "md": "Assigned to the Containment Security Detachment in a field-operational capacity. Duties include cordon enforcement, perimeter response, recovery-site security, transport escort, and support of Institute sweep activity in the mid-band and adjacent perimeter zones.\n\nReijnders has been repeatedly deployed in operations involving armed interference by RN-03 personnel and has prior exposure to casualty environments associated with failed recoveries, post-swell retrieval, and subject-loss incidents. Reporting officers note consistent task completion under adverse conditions and low disruption of role performance following exposure to violence.\n\nUse history indicates preference by supervisors for assignment in operations where deterrence, force-readiness, and custody enforcement are prioritised over discretion or liaison handling."
+        },
+        {
+          "label": "PERSONNEL NOTE",
+          "md": "Reijnders displays low affective interference in the execution of security tasks. He is assessed as temperamentally suited to recovery, containment, and enforcement work where hesitation is operationally undesirable.\n\nAdministrative concerns are confined primarily to verbal conduct. Recorded issues include adversarial tone toward command authority, open contempt for procedural formalities judged non-essential to field outcome, and recurrent hostility toward documentation burden. These behaviours are noted as persistent but not, to date, disqualifying.\n\nNo indication has been found of divided loyalty, ideological sympathy with RN-03, or reluctance to participate in authorised force actions. Continued retention is recommended for operational roles requiring stress tolerance, direct compliance in hostile conditions, and reduced affective hesitation in custodial settings."
         }
       ]
     },
@@ -641,7 +742,7 @@ window.ARCHIVE_CONTENT = {
       "sections": [
         {
           "label": "ASSESSMENT",
-          "md": "Directs the Boundary Research Institute and its operations along the exclusion perimeter: monitoring, forecasting, post-swell recovery, security, and the processing facility.\n\n**Priority.** Recovery and study of altered persons is the Institute's stated first objective; material yield is secondary. Reproduction of regional effect without fatality is the standing research goal of the directorate.\n\n**Posture.** Containment and secrecy are maintained as policy. Field security is provided by the **Perimeter Security Element**; the exclusion perimeter and recovered-subject custody are held by the **Containment Security Detachment** (CSD). [[Nikolai Alexiou]] (P-02) reports to this office."
+          "md": "Directs the Boundary Research Institute and its operations along the exclusion perimeter: monitoring, forecasting, post-swell recovery, security, and the processing facility.\n\n**Priority.** Recovery and study of altered persons is the Institute's stated first objective; material yield is secondary. Reproduction of regional effect without fatality is the standing research goal of the directorate.\n\n**Posture.** Containment and secrecy are maintained as policy. Field security is provided by the **Perimeter Security Element**; the exclusion perimeter and recovered-subject custody are held by the **Containment Security Detachment** (CSD). [[Nikolai Alexiou]] (BRI-18) reports to this office."
         }
       ]
     },
@@ -833,6 +934,18 @@ window.ARCHIVE_CONTENT = {
     {
       "title": "Director Sabine Reisz",
       "group": "INSTITUTE",
+      "raw": "",
+      "empty": false
+    },
+    {
+      "title": "Aiko Reijnders",
+      "group": "INSTITUTE",
+      "raw": "",
+      "empty": false
+    },
+    {
+      "title": "Dreiskel",
+      "group": "PLACES / PHENOMENA",
       "raw": "",
       "empty": false
     },
@@ -1291,6 +1404,7 @@ window.ARCHIVE_CONTENT = {
   ],
   "groupOverride": {
     "nikolaialexiou": "INSTITUTE",
+    "aikoreijnders": "INSTITUTE",
     "boundaryresearchinstitute": "INSTITUTE",
     "naarsken": "NIS / NAARSKEN"
   },
@@ -1303,10 +1417,12 @@ window.ARCHIVE_CONTENT = {
     "breisk",
     "station9",
     "virelsk",
+    "dreiskel",
     "kalliros",
     "boundaryresearchinstitute",
     "directorsabinereisz",
     "nikolaialexiou",
+    "aikoreijnders",
     "sennbaardo",
     "imebaardo",
     "jorenvask"

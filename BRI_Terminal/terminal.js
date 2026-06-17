@@ -873,6 +873,7 @@
   const KALLIROS_COAST =
     "M320,28 L346,18 L376,24 L386,44 L372,62 L340,60 L314,46 Z";
   const VIRELSK_DOTS = [
+    { key: "dreiskel", label: "DREISKEL", x: 138, y: 180 },
     { key: "eirskel",  label: "EIRSKEL",    x: 208, y: 150 },
     { key: "kalliros", label: "KALLIROS", x: 342, y: 39  },
   ];
@@ -896,6 +897,7 @@
     s += '<text class="mfeat" x="256" y="152">CORDON</text>';
     s += '<text class="mfeat" x="270" y="126">Q-PERIMETER</text>';
     s += '<text class="mfeat" x="300" y="104">SEA ACCESS / BRI</text>';
+    s += '<text class="mfeat" x="118" y="170" letter-spacing="2">CAPITAL DISTRICT</text>';
     s += '<text class="mfeat" x="110" y="190" font-size="9" letter-spacing="3">VIRELSK</text>';
     s += '<text class="mfeat" x="52" y="70" letter-spacing="2">SEA</text>';
     s += '<text class="mfeat" x="112" y="132" letter-spacing="2">WESTERN BAY</text>';
@@ -911,7 +913,7 @@
 
   const MAP_LEGEND = {
     derane:  ["theboundary", "vaarden", "breisk", "station9", "eirskel", "silenthollow", "thelosthour", "theunchanginglight"],
-    virelsk: ["virelsk", "theboundary", "eirskel", "kalliros"],
+    virelsk: ["virelsk", "dreiskel", "theboundary", "eirskel", "kalliros"],
   };
   function mapLegend(which) {
     let leg = '<div class="maplegend">';
