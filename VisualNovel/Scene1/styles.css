@@ -32,6 +32,16 @@ button {
   font: inherit;
 }
 
+.copyright {
+  position: fixed;
+  right: 16px;
+  bottom: 10px;
+  z-index: 9;
+  color: var(--terminal-dim);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
 .app {
   position: relative;
   min-height: 100vh;
