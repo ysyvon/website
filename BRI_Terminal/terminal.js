@@ -33,7 +33,7 @@
       '<button class="auth-key auth-key-wide" type="button" data-auth-key="Escape">ESC</button>' +
       '<button class="auth-key auth-key-wide auth-key-enter" type="button" data-auth-key="Enter">ENTER</button>' +
     "</div>";
-  screen.appendChild(authPad);
+  screen.insertBefore(authPad, promptLine);
 
   document.addEventListener("contextmenu", function (ev) {
     ev.preventDefault();
@@ -57,6 +57,7 @@
     if (!authKeyHandler) return;
     cmd.value = "";
     authKeyValue = "";
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     setTimeout(function () {
       if (!authKeyHandler) return;
       try { cmd.focus({ preventScroll: true }); }
@@ -70,15 +71,27 @@
     cmd.value = "";
     authKeyValue = "";
     if (handler) {
+      const isAckPrompt = authPromptLabel === "ack>";
+      authPad.classList.toggle("auth-pad-ack", authPromptLabel === "ack>");
+      authPad.classList.toggle(
+        "auth-pad-reconnect",
+        authPromptLabel === "reconnect>" || authPromptLabel === "init>"
+      );
+      authPad.querySelector('.auth-pad-actions [data-auth-key="Y"]').textContent =
+        isAckPrompt ? "AUTHORIZE [Y]" : "Y";
+      authPad.querySelector('.auth-pad-actions [data-auth-key="N"]').textContent =
+        isAckPrompt ? "TERMINATE [N]" : "N";
       ps1.textContent = authPromptLabel;
       promptLine.classList.remove("hidden");
       cmd.disabled = false;
       authPad.classList.remove("hidden");
       focusAuthInput();
+      window.setTimeout(scrollBottom, 0);
     } else {
       ps1.textContent = "archive>";
       cmd.value = "";
       authPad.classList.add("hidden");
+      authPad.classList.remove("auth-pad-ack", "auth-pad-reconnect");
       cmd.blur();
     }
   }
@@ -765,7 +778,11 @@
       });
       h += "</div>";
     });
-    revealHTML(h, 28, true);
+    const followIndexReveal = !window.matchMedia(
+      "(max-width: 780px), (pointer: coarse)"
+    ).matches;
+    revealHTML(h, 28, followIndexReveal);
+    if (!followIndexReveal) out.scrollTop = 0;
   }
 
   // survey chart ------------------------------------------------------
@@ -1401,6 +1418,8 @@
          'offence under the Containment Act.</p>';
     h += '<p>By proceeding you affirm Level 3 clearance and accept that prolonged access ' +
          'constitutes a form of exposure.</p>';
+    h += '<div class="ack-choice">AFFIRM CLEARANCE? <span class="hot">[Y] AUTHORIZE</span> ' +
+         '<span class="dim">/</span> <span class="warn">[N] TERMINATE</span></div>';
     h += "</div>";
     printHTML(h); scrollBottom();
   }
