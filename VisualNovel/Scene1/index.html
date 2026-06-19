@@ -3,6 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        const params = new URLSearchParams(window.location.search);
+        const mobileUserAgent = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        const touchTablet =
+          navigator.maxTouchPoints > 1 &&
+          Math.min(window.screen.width, window.screen.height) <= 1024;
+        const useMobile =
+          params.get("mobile") === "1" ||
+          navigator.userAgentData?.mobile === true ||
+          mobileUserAgent ||
+          touchTablet;
+
+        if (useMobile && params.get("desktop") !== "1") {
+          window.location.replace(`./mobile/${window.location.search}${window.location.hash}`);
+        }
+      })();
+    </script>
     <title>Stilling Duty</title>
     <meta
       name="description"

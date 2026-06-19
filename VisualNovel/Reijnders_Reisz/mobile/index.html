@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mid-Band Contact — Mobile</title>
+    <link rel="canonical" href="https://ysyvon.github.io/website/VisualNovel/Reijnders_Reisz/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="recording-stage">
+      <section class="reel" aria-label="Vertical visual novel playback">
+        <div class="image-stage">
+          <img id="scene-image" src="" alt="" draggable="false" />
+          <div class="signal-label">BRI // FIELD RADIO RECORDING</div>
+          <div class="scanlines" aria-hidden="true"></div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="frame-progress">
+            <span id="progress-current">01</span>
+            <span class="progress-rule"></span>
+            <span id="progress-total">48</span>
+          </div>
+          <p id="dialogue-speaker" class="dialogue-speaker"></p>
+          <p id="dialogue-line" class="dialogue-line"></p>
+        </div>
+
+        <div id="start-overlay" class="overlay">
+          <p class="eyebrow">9:16 INTERACTIVE CUT</p>
+          <h1>Mid-Band Contact</h1>
+          <p id="countdown" class="countdown">Tap to advance dialogue</p>
+          <button id="start-button" type="button">Begin</button>
+        </div>
+
+        <div id="end-overlay" class="overlay hidden">
+          <p class="eyebrow">TRANSMISSION COMPLETE</p>
+          <h2>Reisz out.</h2>
+          <button id="replay-button" type="button">Replay</button>
+        </div>
+
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+
