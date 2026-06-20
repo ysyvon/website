@@ -192,7 +192,20 @@ button { font: inherit; }
 
 .honeypot { position: absolute !important; left: -10000px !important; opacity: 0 !important; }
 .reader-layout.comments-hidden { grid-template-columns: minmax(0, 760px); justify-content: center; }
-.reader-layout.comments-hidden .comments-column { display: none; }
+.reader-layout.comments-hidden .comments-column {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 20;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+.reader-layout.comments-hidden .comments-heading { position: static; padding: 0; }
+.reader-layout.comments-hidden .comments-heading h2,
+.reader-layout.comments-hidden .count,
+.reader-layout.comments-hidden .empty-note,
+.reader-layout.comments-hidden .comments-list { display: none; }
 
 footer { position: relative; z-index: 1; padding: 25px; border-top: 1px solid var(--border); color: var(--faint); font-size: 11px; text-align: center; }
 
