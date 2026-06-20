@@ -102,7 +102,9 @@ async function handleReader(request, env, parts) {
 
   if (request.method === "GET" && parts.length === 1) {
     const content = await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY);
-    const comments = await getComments(env.DB, shareID, false);
+    const readerSessionID = cleanText(request.headers.get("x-reader-session"), 100);
+    const readerSessionHash = readerSessionID ? await sha256Base64URL(readerSessionID) : null;
+    const comments = await getComments(env.DB, shareID, false, readerSessionHash);
     return json({
       id: share.id,
       bookTitle: share.book_title,
@@ -113,6 +115,22 @@ async function handleReader(request, env, parts) {
       commentToken: await createCommentToken(shareID, env.COMMENT_SIGNING_KEY),
       comments
     });
+  }
+
+  if (request.method === "DELETE" && parts[1] === "comments" && parts[2]) {
+    const body = await readJSON(request);
+    if (!(await verifyCommentToken(body.commentToken, shareID, env.COMMENT_SIGNING_KEY))) {
+      return json({ error: "The comment session expired. Refresh and try again." }, 403);
+    }
+    const sessionID = cleanText(body.sessionID, 100);
+    if (!sessionID) return json({ error: "This browser cannot verify ownership of that comment." }, 403);
+    const sessionHash = await sha256Base64URL(sessionID);
+    const comment = await env.DB.prepare(
+      "SELECT id FROM comments WHERE id = ? AND share_id = ? AND session_hash = ?"
+    ).bind(parts[2], shareID, sessionHash).first();
+    if (!comment) return json({ error: "Only the person who posted this comment can delete it." }, 403);
+    await env.DB.prepare("DELETE FROM comments WHERE id = ?").bind(parts[2]).run();
+    return json({ ok: true });
   }
 
   if (request.method === "POST" && parts[1] === "comments") {
@@ -153,7 +171,7 @@ async function handleReader(request, env, parts) {
     ).bind(id, shareID, nickname, commentBody, start, end, quote, sessionHash, createdAt).run();
 
     return json({
-      comment: { id, nickname, body: commentBody, startOffset: start, endOffset: end, quote, createdAt }
+      comment: { id, nickname, body: commentBody, startOffset: start, endOffset: end, quote, createdAt, canDelete: true }
     }, 201);
   }
 
@@ -164,7 +182,7 @@ async function getShare(db, id) {
   return db.prepare("SELECT * FROM shares WHERE id = ?").bind(id).first();
 }
 
-async function getComments(db, shareID, includeResolved) {
+async function getComments(db, shareID, includeResolved, readerSessionHash = null) {
   const query = includeResolved
     ? "SELECT * FROM comments WHERE share_id = ? ORDER BY created_at ASC"
     : "SELECT * FROM comments WHERE share_id = ? AND resolved = 0 ORDER BY created_at ASC";
@@ -177,7 +195,8 @@ async function getComments(db, shareID, includeResolved) {
     endOffset: row.end_offset,
     quote: row.quote,
     createdAt: row.created_at,
-    resolved: Boolean(row.resolved)
+    resolved: Boolean(row.resolved),
+    canDelete: Boolean(readerSessionHash && row.session_hash === readerSessionHash)
   }));
 }
 
@@ -311,7 +330,7 @@ function corsPreflight(request, env) {
     headers: {
       "access-control-allow-origin": origin,
       "access-control-allow-methods": "GET, POST, PATCH, DELETE, OPTIONS",
-      "access-control-allow-headers": "content-type, authorization",
+      "access-control-allow-headers": "content-type, authorization, x-reader-session",
       "access-control-max-age": "86400",
       "vary": "Origin"
     }

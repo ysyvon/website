@@ -9,10 +9,10 @@
     "loading", "error", "error-message", "reader", "book-title", "chapter-title", "manuscript",
     "comment-count", "comments-empty", "comments-list", "composer", "composer-close", "selected-quote",
     "comment-body", "comment-submit", "comment-error", "nickname-dialog", "nickname", "nickname-error",
-    "nickname-cancel", "nickname-save", "website", "watermark", "comments-toggle"
+    "nickname-cancel", "nickname-save", "website", "comments-toggle"
   ].map(id => [id, document.getElementById(id)]));
 
-  const nicknameKey = "draftroom.feedback.nickname";
+  const nicknameKey = `draftroom.feedback.nickname.${shareID}`;
   const sessionKey = "draftroom.feedback.session";
 
   initialize();
@@ -27,7 +27,7 @@
 
     try {
       const response = await fetch(`${config.apiBaseURL}/api/shares/${encodeURIComponent(shareID)}`, {
-        headers: { accept: "application/json" },
+        headers: { accept: "application/json", "x-reader-session": readerSessionID() },
         referrerPolicy: "no-referrer",
         cache: "no-store"
       });
@@ -119,7 +119,6 @@
       return;
     }
     localStorage.setItem(nicknameKey, nickname);
-    elements.watermark.textContent = `${nickname.toUpperCase()} · REVIEW COPY`;
     closeNicknameDialog();
     if (state.pendingSubmit) submitComment(nickname);
   }
@@ -188,7 +187,22 @@
     const time = document.createElement("time");
     time.dateTime = comment.createdAt;
     time.textContent = new Date(comment.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" });
-    meta.append(author, time);
+    const metaActions = document.createElement("div");
+    metaActions.className = "comment-meta-actions";
+    metaActions.append(time);
+    if (comment.canDelete) {
+      const remove = document.createElement("button");
+      remove.className = "delete-comment";
+      remove.type = "button";
+      remove.textContent = "Delete";
+      remove.setAttribute("aria-label", `Delete comment by ${comment.nickname}`);
+      remove.addEventListener("click", event => {
+        event.stopPropagation();
+        deleteComment(comment);
+      });
+      metaActions.append(remove);
+    }
+    meta.append(author, metaActions);
     const quote = document.createElement("blockquote");
     quote.className = "comment-quote";
     quote.textContent = `“${shorten(comment.quote, 180)}”`;
@@ -198,6 +212,30 @@
     card.append(meta, quote, body);
     card.addEventListener("click", () => focusComment(comment));
     return card;
+  }
+
+  async function deleteComment(comment) {
+    if (!comment.canDelete || !window.confirm("Delete this comment? This cannot be undone.")) return;
+    try {
+      const response = await fetch(
+        `${config.apiBaseURL}/api/shares/${encodeURIComponent(shareID)}/comments/${encodeURIComponent(comment.id)}`,
+        {
+          method: "DELETE",
+          headers: { "content-type": "application/json", accept: "application/json" },
+          referrerPolicy: "no-referrer",
+          body: JSON.stringify({
+            sessionID: readerSessionID(),
+            commentToken: state.share.commentToken
+          })
+        }
+      );
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "The comment could not be deleted.");
+      state.share.comments = state.share.comments.filter(item => item.id !== comment.id);
+      renderComments();
+    } catch (error) {
+      window.alert(error.message);
+    }
   }
 
   function renderHighlights(comments) {

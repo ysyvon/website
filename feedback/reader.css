@@ -129,7 +129,17 @@ h1 { margin: 0; font-size: clamp(34px, 6vw, 58px); line-height: 1.07; font-weigh
 .comment-card:hover { border-color: var(--forest-bright); }
 .comment-card.active { border-color: var(--amber); box-shadow: 0 0 0 2px rgba(185, 145, 87, .12); }
 .comment-meta { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; }
+.comment-meta-actions { display: flex; align-items: center; gap: 10px; }
 .comment-author { color: var(--cream); font-weight: 700; }
+.delete-comment {
+  border: 0;
+  padding: 0;
+  color: var(--faint);
+  background: transparent;
+  font-size: 11px;
+  cursor: pointer;
+}
+.delete-comment:hover { color: var(--danger); }
 .comment-quote { margin: 11px 0; padding-left: 10px; border-left: 2px solid var(--amber); color: var(--faint); font: italic 13px/1.45 Georgia, serif; }
 .comment-body { margin: 0; color: var(--cream); font-size: 14px; line-height: 1.55; white-space: pre-wrap; }
 
@@ -196,20 +206,6 @@ button { font: inherit; }
 .spinner { width: 28px; height: 28px; margin: 0 auto; border: 2px solid var(--border); border-top-color: var(--forest-bright); border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.watermark {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  color: rgba(238, 226, 194, .025);
-  font-size: clamp(36px, 8vw, 100px);
-  font-weight: 800;
-  letter-spacing: .1em;
-  transform: rotate(-24deg);
-  user-select: none;
-}
 .honeypot { position: absolute !important; left: -10000px !important; opacity: 0 !important; }
 .reader-layout.comments-hidden { grid-template-columns: minmax(0, 760px); justify-content: center; }
 .reader-layout.comments-hidden .comments-column { display: none; }

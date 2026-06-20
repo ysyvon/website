@@ -32,11 +32,40 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
   });
   assert.equal(comment.response.status, 201);
   assert.equal(comment.value.comment.quote, "The first line");
+  assert.equal(comment.value.comment.canDelete, true);
+
+  const ownedReader = await call(env, `/api/shares/${publish.value.id}`, {
+    readerSession: "anonymous-browser-session"
+  });
+  assert.equal(ownedReader.value.comments[0].canDelete, true);
+
+  const otherReader = await call(env, `/api/shares/${publish.value.id}`, {
+    readerSession: "different-browser-session"
+  });
+  assert.equal(otherReader.value.comments[0].canDelete, false);
 
   const status = await call(env, `/api/admin/shares/${publish.value.id}/comments`, { admin: true });
   assert.equal(status.value.comments.length, 1);
   assert.equal(status.value.comments[0].nickname, "Night Reader");
   assert.equal("ip" in status.value.comments[0], false);
+
+  const deniedDelete = await call(env, `/api/shares/${publish.value.id}/comments/${comment.value.comment.id}`, {
+    method: "DELETE",
+    body: {
+      sessionID: "different-browser-session",
+      commentToken: reader.value.commentToken
+    }
+  });
+  assert.equal(deniedDelete.response.status, 403);
+
+  const deleted = await call(env, `/api/shares/${publish.value.id}/comments/${comment.value.comment.id}`, {
+    method: "DELETE",
+    body: {
+      sessionID: "anonymous-browser-session",
+      commentToken: reader.value.commentToken
+    }
+  });
+  assert.equal(deleted.response.status, 200);
 
   await call(env, `/api/admin/shares/${publish.value.id}`, {
     method: "PATCH", admin: true, body: { isOpen: false }
@@ -48,6 +77,7 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
 async function call(env, path, options = {}) {
   const headers = new Headers({ origin: "https://ysyvon.github.io" });
   if (options.admin) headers.set("authorization", `Bearer ${env.DRAFTROOM_API_TOKEN}`);
+  if (options.readerSession) headers.set("x-reader-session", options.readerSession);
   if (options.body) headers.set("content-type", "application/json");
   const request = new Request(`https://feedback.test${path}`, {
     method: options.method || "GET",
@@ -92,6 +122,8 @@ class MemoryD1 {
         } else if (sql.startsWith("UPDATE comments")) {
           const [resolved, id] = values;
           database.comments.get(id).resolved = resolved;
+        } else if (sql.startsWith("DELETE FROM comments WHERE id")) {
+          database.comments.delete(values[0]);
         } else if (sql.startsWith("DELETE FROM comments")) {
           for (const [id, item] of database.comments) if (item.share_id === values[0]) database.comments.delete(id);
         } else if (sql.startsWith("DELETE FROM shares")) {
@@ -102,6 +134,11 @@ class MemoryD1 {
       async first() {
         const values = this.values;
         if (sql.includes("FROM shares")) return database.shares.get(values[0]) || null;
+        if (sql.includes("SELECT id FROM comments")) {
+          const [id, shareID, sessionHash] = values;
+          const item = database.comments.get(id);
+          return item && item.share_id === shareID && item.session_hash === sessionHash ? { id } : null;
+        }
         if (sql.includes("COUNT(*)")) {
           const count = [...database.comments.values()].filter(item => item.session_hash === values[0] && item.created_at > values[1]).length;
           return { count };
