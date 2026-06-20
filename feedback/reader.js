@@ -62,11 +62,31 @@
       elements["author-name"].textContent = `by ${state.share.authorName}`;
       elements["author-name"].classList.remove("hidden");
     }
-    elements.manuscript.textContent = state.share.content;
+    renderManuscript(state.share.content);
     elements.loading.classList.add("hidden");
     elements.reader.classList.remove("hidden");
     elements["comments-toggle"].classList.remove("hidden");
     renderComments();
+  }
+
+  function renderManuscript(content) {
+    const fragment = document.createDocumentFragment();
+    const pieces = String(content || "").split(/(\r\n|\r|\n)/);
+    for (const piece of pieces) {
+      if (/^(\r\n|\r|\n)$/.test(piece)) {
+        const separator = document.createElement("span");
+        separator.className = "manuscript-break";
+        separator.setAttribute("aria-hidden", "true");
+        separator.textContent = piece;
+        fragment.append(separator);
+      } else if (piece.length > 0) {
+        const paragraph = document.createElement("span");
+        paragraph.className = "manuscript-paragraph";
+        paragraph.textContent = piece;
+        fragment.append(paragraph);
+      }
+    }
+    elements.manuscript.replaceChildren(fragment);
   }
 
   function captureSelection() {
@@ -306,12 +326,26 @@
   }
 
   function rangeForOffsets(start, end) {
-    const node = elements.manuscript.firstChild;
-    if (!node || node.nodeType !== Node.TEXT_NODE || start < 0 || end > node.length || end <= start) return null;
+    if (start < 0 || end > state.share.content.length || end <= start) return null;
+    const startPosition = textPositionAt(start);
+    const endPosition = textPositionAt(end);
+    if (!startPosition || !endPosition) return null;
     const range = document.createRange();
-    range.setStart(node, start);
-    range.setEnd(node, end);
+    range.setStart(startPosition.node, startPosition.offset);
+    range.setEnd(endPosition.node, endPosition.offset);
     return range;
+  }
+
+  function textPositionAt(targetOffset) {
+    const walker = document.createTreeWalker(elements.manuscript, NodeFilter.SHOW_TEXT);
+    let traversed = 0;
+    let node;
+    while ((node = walker.nextNode())) {
+      const next = traversed + node.length;
+      if (targetOffset <= next) return { node, offset: targetOffset - traversed };
+      traversed = next;
+    }
+    return null;
   }
 
   function readerSessionID() {
