@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.workers.dev; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <title>Draftroom Feedback</title>
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body>
+  <div class="watermark" aria-hidden="true" id="watermark">UNLISTED REVIEW COPY</div>
+
+  <header class="topbar">
+    <div class="brand">Draftroom</div>
+    <div class="topbar-actions">
+      <div class="privacy-note">Unlisted review copy · comments only</div>
+      <button id="comments-toggle" class="topbar-button hidden" aria-pressed="false">
+        Hide comments
+      </button>
+    </div>
+  </header>
+
+  <main id="loading" class="state-card" aria-live="polite">
+    <div class="spinner"></div>
+    <p>Opening review copy…</p>
+  </main>
+
+  <main id="error" class="state-card hidden" aria-live="assertive">
+    <h1>This review copy isn’t available</h1>
+    <p id="error-message">The link may be incorrect, closed, or expired.</p>
+  </main>
+
+  <main id="reader" class="reader-layout hidden">
+    <article class="document-column">
+      <header class="document-heading">
+        <p id="book-title" class="eyebrow"></p>
+        <h1 id="chapter-title"></h1>
+        <p class="instructions">Highlight a passage to leave an inline comment.</p>
+      </header>
+      <div id="manuscript" class="manuscript" tabindex="0"></div>
+    </article>
+
+    <aside class="comments-column" aria-label="Reader comments">
+      <div class="comments-heading">
+        <h2>Comments</h2>
+        <span id="comment-count" class="count">0</span>
+      </div>
+      <p id="comments-empty" class="empty-note">No comments yet. Highlight a passage to begin.</p>
+      <div id="comments-list" class="comments-list"></div>
+    </aside>
+  </main>
+
+  <section id="composer" class="composer hidden" role="dialog" aria-modal="false" aria-labelledby="composer-title">
+    <button id="composer-close" class="icon-button" aria-label="Close comment box">×</button>
+    <p class="eyebrow" id="composer-title">Comment on</p>
+    <blockquote id="selected-quote"></blockquote>
+    <textarea id="comment-body" maxlength="2000" rows="4" placeholder="Leave your feedback…"></textarea>
+    <input id="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="composer-actions">
+      <span id="comment-error" class="form-error" role="alert"></span>
+      <button id="comment-submit" class="primary-button">Add comment</button>
+    </div>
+  </section>
+
+  <section id="nickname-dialog" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="nickname-title">
+    <div class="modal-card">
+      <h2 id="nickname-title">What should we call you?</h2>
+      <p>Your nickname appears beside comments. You don’t need one just to read.</p>
+      <label for="nickname">Nickname</label>
+      <input id="nickname" maxlength="40" autocomplete="nickname" placeholder="Your nickname">
+      <span id="nickname-error" class="form-error" role="alert"></span>
+      <div class="modal-actions">
+        <button id="nickname-cancel" class="quiet-button">Cancel</button>
+        <button id="nickname-save" class="primary-button">Continue</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    This page does not use analytics or store visitor IP addresses. Shared links may be forwarded.
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="reader.js"></script>
+</body>
+</html>
