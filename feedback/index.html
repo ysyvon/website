@@ -10,16 +10,6 @@
   <link rel="stylesheet" href="reader.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">Draftroom</div>
-    <div class="topbar-actions">
-      <div class="privacy-note">Unlisted review copy · comments only</div>
-      <button id="comments-toggle" class="topbar-button hidden" aria-pressed="false">
-        Hide comments
-      </button>
-    </div>
-  </header>
-
   <main id="loading" class="state-card" aria-live="polite">
     <div class="spinner"></div>
     <p>Opening review copy…</p>
@@ -35,7 +25,7 @@
       <header class="document-heading">
         <p id="book-title" class="eyebrow"></p>
         <h1 id="chapter-title"></h1>
-        <p class="instructions">Highlight a passage to leave an inline comment.</p>
+        <p id="author-name" class="author-credit hidden"></p>
       </header>
       <div id="manuscript" class="manuscript" tabindex="0"></div>
     </article>
@@ -44,6 +34,9 @@
       <div class="comments-heading">
         <h2>Comments</h2>
         <span id="comment-count" class="count">0</span>
+        <button id="comments-toggle" class="comments-toggle hidden" aria-pressed="false">
+          Hide comments
+        </button>
       </div>
       <p id="comments-empty" class="empty-note">No comments yet. Highlight a passage to begin.</p>
       <div id="comments-list" class="comments-list"></div>

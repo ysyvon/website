@@ -6,7 +6,7 @@
   const shareID = params.get("id") || "";
   const state = { share: null, selection: null, pendingSubmit: false };
   const elements = Object.fromEntries([
-    "loading", "error", "error-message", "reader", "book-title", "chapter-title", "manuscript",
+    "loading", "error", "error-message", "reader", "book-title", "chapter-title", "author-name", "manuscript",
     "comment-count", "comments-empty", "comments-list", "composer", "composer-close", "selected-quote",
     "comment-body", "comment-submit", "comment-error", "nickname-dialog", "nickname", "nickname-error",
     "nickname-cancel", "nickname-save", "website", "comments-toggle"
@@ -58,6 +58,10 @@
     document.title = `${state.share.chapterTitle} · Draftroom Feedback`;
     elements["book-title"].textContent = state.share.bookTitle;
     elements["chapter-title"].textContent = state.share.chapterTitle;
+    if (state.share.authorName) {
+      elements["author-name"].textContent = `by ${state.share.authorName}`;
+      elements["author-name"].classList.remove("hidden");
+    }
     elements.manuscript.textContent = state.share.content;
     elements.loading.classList.add("hidden");
     elements.reader.classList.remove("hidden");

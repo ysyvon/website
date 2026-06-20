@@ -21,6 +21,7 @@ createServer(async (request, response) => {
     return sendJSON(response, {
       id: shareID,
       bookTitle: "Sample Novel",
+      authorName: "Sample Author",
       chapterTitle: "Sample Chapter",
       content: manuscript,
       createdAt: new Date().toISOString(),

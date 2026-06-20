@@ -34,6 +34,7 @@ async function handleAdmin(request, env, parts) {
   if (request.method === "POST" && parts[0] === "shares" && parts.length === 1) {
     const body = await readJSON(request);
     const bookTitle = cleanText(body.bookTitle, 200);
+    const authorName = cleanText(body.authorName, 200) || null;
     const chapterTitle = cleanText(body.chapterTitle, 200);
     const content = typeof body.content === "string" ? body.content : "";
     if (!bookTitle || !chapterTitle || !content.trim() || content.length > 500_000) {
@@ -46,9 +47,9 @@ async function handleAdmin(request, env, parts) {
     const expiresAt = validFutureDate(body.expiresAt);
     await env.DB.prepare(
       `INSERT INTO shares
-       (id, book_title, chapter_title, content_ciphertext, content_iv, created_at, expires_at, is_open)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 1)`
-    ).bind(id, bookTitle, chapterTitle, encrypted.ciphertext, encrypted.iv, now, expiresAt).run();
+       (id, book_title, author_name, chapter_title, content_ciphertext, content_iv, created_at, expires_at, is_open)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)`
+    ).bind(id, bookTitle, authorName, chapterTitle, encrypted.ciphertext, encrypted.iv, now, expiresAt).run();
 
     return json({
       id,
@@ -108,6 +109,7 @@ async function handleReader(request, env, parts) {
     return json({
       id: share.id,
       bookTitle: share.book_title,
+      authorName: share.author_name,
       chapterTitle: share.chapter_title,
       content,
       createdAt: share.created_at,
@@ -204,6 +206,7 @@ function adminShare(share) {
   return {
     id: share.id,
     bookTitle: share.book_title,
+    authorName: share.author_name,
     chapterTitle: share.chapter_title,
     createdAt: share.created_at,
     expiresAt: share.expires_at,

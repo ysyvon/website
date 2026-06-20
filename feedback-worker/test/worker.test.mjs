@@ -7,7 +7,7 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
   const publish = await call(env, "/api/admin/shares", {
     method: "POST",
     admin: true,
-    body: { bookTitle: "Test Book", chapterTitle: "Prologue", content: "The first line.\n\nThe second line." }
+    body: { bookTitle: "Test Book", authorName: "Test Author", chapterTitle: "Prologue", content: "The first line.\n\nThe second line." }
   });
   assert.equal(publish.response.status, 201);
   assert.match(publish.value.id, /^[A-Za-z0-9_-]{20,30}$/);
@@ -16,6 +16,7 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
   const reader = await call(env, `/api/shares/${publish.value.id}`);
   assert.equal(reader.response.status, 200);
   assert.equal(reader.value.content, "The first line.\n\nThe second line.");
+  assert.equal(reader.value.authorName, "Test Author");
   assert.equal(reader.value.comments.length, 0);
 
   const comment = await call(env, `/api/shares/${publish.value.id}/comments`, {
@@ -111,8 +112,8 @@ class MemoryD1 {
       async run() {
         const values = this.values;
         if (sql.includes("INSERT INTO shares")) {
-          const [id, book_title, chapter_title, content_ciphertext, content_iv, created_at, expires_at] = values;
-          database.shares.set(id, { id, book_title, chapter_title, content_ciphertext, content_iv, created_at, expires_at, is_open: 1 });
+          const [id, book_title, author_name, chapter_title, content_ciphertext, content_iv, created_at, expires_at] = values;
+          database.shares.set(id, { id, book_title, author_name, chapter_title, content_ciphertext, content_iv, created_at, expires_at, is_open: 1 });
         } else if (sql.includes("INSERT INTO comments")) {
           const [id, share_id, nickname, body, start_offset, end_offset, quote, session_hash, created_at] = values;
           database.comments.set(id, { id, share_id, nickname, body, start_offset, end_offset, quote, session_hash, created_at, resolved: 0 });
