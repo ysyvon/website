@@ -45,7 +45,6 @@
   function bindEvents() {
     elements.manuscript.addEventListener("mouseup", captureSelection);
     elements.manuscript.addEventListener("keyup", captureSelection);
-    elements.manuscript.addEventListener("click", captureSentenceTap);
     elements["composer-close"].addEventListener("click", closeComposer);
     elements["comment-submit"].addEventListener("click", beginSubmit);
     elements["nickname-cancel"].addEventListener("click", closeNicknameDialog);
@@ -89,13 +88,15 @@
     elements.loading.classList.add("hidden");
     elements.reader.classList.remove("hidden");
     elements["comments-toggle"].classList.remove("hidden");
+    if (isTouchDevice()) {
+      elements["comments-empty"].textContent = "Commenting is available from a computer. Existing comments remain readable here.";
+    }
     renderComments();
   }
 
   function renderManuscript(content) {
     const fragment = document.createDocumentFragment();
     const pieces = String(content || "").split(/(\r\n|\r|\n)/);
-    let contentOffset = 0;
     for (const piece of pieces) {
       if (/^(\r\n|\r|\n)$/.test(piece)) {
         const separator = document.createElement("span");
@@ -106,56 +107,19 @@
       } else if (piece.length > 0) {
         const paragraph = document.createElement("span");
         paragraph.className = "manuscript-paragraph";
-        let paragraphOffset = 0;
-        for (const segment of sentenceSegments(piece)) {
-          const sentence = document.createElement("span");
-          sentence.className = "mobile-comment-target";
-          sentence.textContent = segment;
-          const leading = segment.length - segment.trimStart().length;
-          const trailing = segment.length - segment.trimEnd().length;
-          sentence.dataset.startOffset = String(contentOffset + paragraphOffset + leading);
-          sentence.dataset.endOffset = String(contentOffset + paragraphOffset + segment.length - trailing);
-          paragraph.append(sentence);
-          paragraphOffset += segment.length;
-        }
+        paragraph.textContent = piece;
         fragment.append(paragraph);
       }
-      contentOffset += piece.length;
     }
     elements.manuscript.replaceChildren(fragment);
   }
 
-  function sentenceSegments(text) {
-    if (typeof Intl.Segmenter === "function") {
-      return [...new Intl.Segmenter(undefined, { granularity: "sentence" }).segment(text)]
-        .map(part => part.segment);
-    }
-    return text.match(/[^.!?…]+(?:[.!?…]+[”’"')\]]*|$)\s*/g) || [text];
-  }
-
-  function captureSentenceTap(event) {
-    if (!isTouchCommentMode() || elements.reader.classList.contains("comments-hidden")) return;
-    const sentence = event.target.closest(".mobile-comment-target");
-    if (!sentence || !elements.manuscript.contains(sentence)) return;
-    const startOffset = Number(sentence.dataset.startOffset);
-    const endOffset = Number(sentence.dataset.endOffset);
-    const quote = state.share.content.slice(startOffset, endOffset).trim();
-    if (!quote || quote.length > 2000) return;
-    event.preventDefault();
-    elements.manuscript.querySelectorAll(".selected-mobile").forEach(node => node.classList.remove("selected-mobile"));
-    sentence.classList.add("selected-mobile");
-    state.selection = { startOffset, endOffset, quote };
-    elements["selected-quote"].textContent = quote;
-    elements.composer.classList.remove("hidden");
-    elements["comment-body"].focus({ preventScroll: true });
-  }
-
-  function isTouchCommentMode() {
+  function isTouchDevice() {
     return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   }
 
   function captureSelection() {
-    if (elements.reader.classList.contains("comments-hidden")) return;
+    if (isTouchDevice() || elements.reader.classList.contains("comments-hidden")) return;
     requestAnimationFrame(() => {
       const selection = window.getSelection();
       if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
@@ -183,7 +147,6 @@
     elements["comment-body"].value = "";
     elements["comment-error"].textContent = "";
     state.selection = null;
-    elements.manuscript.querySelectorAll(".selected-mobile").forEach(node => node.classList.remove("selected-mobile"));
     window.getSelection()?.removeAllRanges();
   }
 
