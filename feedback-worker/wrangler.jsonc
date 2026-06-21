@@ -21,6 +21,6 @@
   ],
   "vars": {
     "READER_BASE_URL": "https://ysyvon.github.io/website/feedback/",
-    "ALLOWED_ORIGINS": "https://ysyvon.github.io,http://127.0.0.1:8788,http://localhost:8788"
+    "ALLOWED_ORIGINS": "https://ysyvon.github.io"
   }
 }
