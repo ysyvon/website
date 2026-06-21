@@ -23,7 +23,8 @@
     installPrivacyDeterrents();
     bindEvents();
     if (!/^[A-Za-z0-9_-]{20,30}$/.test(shareID)) return showError("This feedback link is incomplete.");
-    if (!/^https:\/\//.test(config.apiBaseURL || "") && !/^http:\/\/localhost/.test(config.apiBaseURL || "")) {
+    if (!/^https:\/\//.test(config.apiBaseURL || "")
+      && !/^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(config.apiBaseURL || "")) {
       return showError("The feedback service has not been configured yet.");
     }
 
@@ -84,7 +85,7 @@
       elements["author-name"].textContent = `by ${state.share.authorName}`;
       elements["author-name"].classList.remove("hidden");
     }
-    renderManuscript(state.share.content);
+    renderManuscript(state.share.content, state.share.formatting);
     elements.loading.classList.add("hidden");
     elements.reader.classList.remove("hidden");
     elements["comments-toggle"].classList.remove("hidden");
@@ -94,9 +95,12 @@
     renderComments();
   }
 
-  function renderManuscript(content) {
+  function renderManuscript(content, formatting = []) {
     const fragment = document.createDocumentFragment();
-    const pieces = String(content || "").split(/(\r\n|\r|\n)/);
+    const text = String(content || "");
+    const runs = normalizeFormatting(formatting, text.length);
+    const pieces = text.split(/(\r\n|\r|\n)/);
+    let offset = 0;
     for (const piece of pieces) {
       if (/^(\r\n|\r|\n)$/.test(piece)) {
         const separator = document.createElement("span");
@@ -107,11 +111,62 @@
       } else if (piece.length > 0) {
         const paragraph = document.createElement("span");
         paragraph.className = "manuscript-paragraph";
-        paragraph.textContent = piece;
+        appendFormattedText(paragraph, piece, offset, runs);
         fragment.append(paragraph);
       }
+      offset += piece.length;
     }
     elements.manuscript.replaceChildren(fragment);
+  }
+
+  function normalizeFormatting(formatting, contentLength) {
+    if (!Array.isArray(formatting)) return [];
+    return formatting
+      .map(run => ({
+        startOffset: Number(run?.startOffset),
+        endOffset: Number(run?.endOffset),
+        bold: run?.bold === true,
+        italic: run?.italic === true
+      }))
+      .filter(run => Number.isInteger(run.startOffset)
+        && Number.isInteger(run.endOffset)
+        && run.startOffset >= 0
+        && run.endOffset > run.startOffset
+        && run.endOffset <= contentLength
+        && (run.bold || run.italic))
+      .sort((a, b) => a.startOffset - b.startOffset);
+  }
+
+  function appendFormattedText(parent, text, globalStart, runs) {
+    const globalEnd = globalStart + text.length;
+    const boundaries = new Set([globalStart, globalEnd]);
+    for (const run of runs) {
+      if (run.endOffset <= globalStart || run.startOffset >= globalEnd) continue;
+      boundaries.add(Math.max(globalStart, run.startOffset));
+      boundaries.add(Math.min(globalEnd, run.endOffset));
+    }
+
+    const points = [...boundaries].sort((a, b) => a - b);
+    for (let index = 0; index < points.length - 1; index += 1) {
+      const start = points[index];
+      const end = points[index + 1];
+      if (end <= start) continue;
+      const active = runs.filter(run => run.startOffset <= start && run.endOffset >= end);
+      const isBold = active.some(run => run.bold);
+      const isItalic = active.some(run => run.italic);
+      let node = document.createTextNode(text.slice(start - globalStart, end - globalStart));
+      if (isItalic) {
+        const emphasis = document.createElement("em");
+        emphasis.append(node);
+        node = emphasis;
+      }
+      if (isBold) {
+        const strong = document.createElement("strong");
+        strong.append(node);
+        node = strong;
+      }
+      parent.append(node);
+    }
   }
 
   function isTouchDevice() {

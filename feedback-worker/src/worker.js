@@ -37,12 +37,13 @@ async function handleAdmin(request, env, parts) {
     const authorName = cleanText(body.authorName, 200) || null;
     const chapterTitle = cleanText(body.chapterTitle, 200);
     const content = typeof body.content === "string" ? body.content : "";
+    const formatting = cleanFormatting(body.formatting, content.length);
     if (!bookTitle || !chapterTitle || !content.trim() || content.length > 500_000) {
       return json({ error: "A book title, chapter title, and chapter text are required." }, 400);
     }
 
     const id = randomID(18);
-    const encrypted = await encryptText(content, env.CONTENT_ENCRYPTION_KEY);
+    const encrypted = await encryptText(JSON.stringify({ version: 2, content, formatting }), env.CONTENT_ENCRYPTION_KEY);
     const now = new Date().toISOString();
     const expiresAt = validFutureDate(body.expiresAt);
     await env.DB.prepare(
@@ -102,7 +103,8 @@ async function handleReader(request, env, parts) {
   if (!share || !shareAvailable(share)) return json({ error: "This feedback link is unavailable." }, 404);
 
   if (request.method === "GET" && parts.length === 1) {
-    const content = await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY);
+    const stored = storedContent(await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY));
+    const content = stored.content;
     const readerSessionID = cleanText(request.headers.get("x-reader-session"), 100);
     const readerSessionHash = readerSessionID ? await sha256Base64URL(readerSessionID) : null;
     const comments = await getComments(env.DB, shareID, false, readerSessionHash);
@@ -112,6 +114,7 @@ async function handleReader(request, env, parts) {
       authorName: share.author_name,
       chapterTitle: share.chapter_title,
       content,
+      formatting: stored.formatting,
       createdAt: share.created_at,
       expiresAt: share.expires_at,
       commentToken: await createCommentToken(shareID, env.COMMENT_SIGNING_KEY),
@@ -151,7 +154,7 @@ async function handleReader(request, env, parts) {
       return json({ error: "Nickname, comment, and selected text are required." }, 400);
     }
 
-    const content = await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY);
+    const { content } = storedContent(await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY));
     if (start < 0 || end <= start || end > content.length || end - start > 2_000) {
       return json({ error: "Select a shorter passage and try again." }, 400);
     }
@@ -226,6 +229,35 @@ function validFutureDate(value) {
 
 function cleanText(value, maxLength) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
+}
+
+function cleanFormatting(value, contentLength) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, 10_000).flatMap(run => {
+    const startOffset = Number(run?.startOffset);
+    const endOffset = Number(run?.endOffset);
+    const bold = run?.bold === true;
+    const italic = run?.italic === true;
+    if (!Number.isInteger(startOffset) || !Number.isInteger(endOffset)
+      || startOffset < 0 || endOffset <= startOffset || endOffset > contentLength
+      || (!bold && !italic)) return [];
+    return [{ startOffset, endOffset, bold, italic }];
+  });
+}
+
+function storedContent(value) {
+  try {
+    const envelope = JSON.parse(value);
+    if (envelope?.version === 2 && typeof envelope.content === "string") {
+      return {
+        content: envelope.content,
+        formatting: cleanFormatting(envelope.formatting, envelope.content.length)
+      };
+    }
+  } catch {
+    // Shares created before formatted text support contain plain text directly.
+  }
+  return { content: value, formatting: [] };
 }
 
 async function readJSON(request) {

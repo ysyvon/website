@@ -7,7 +7,13 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
   const publish = await call(env, "/api/admin/shares", {
     method: "POST",
     admin: true,
-    body: { bookTitle: "Test Book", authorName: "Test Author", chapterTitle: "Prologue", content: "The first line.\n\nThe second line." }
+    body: {
+      bookTitle: "Test Book",
+      authorName: "Test Author",
+      chapterTitle: "Prologue",
+      content: "The first line.\n\nThe second line.",
+      formatting: [{ startOffset: 4, endOffset: 9, bold: true, italic: false }]
+    }
   });
   assert.equal(publish.response.status, 201);
   assert.match(publish.value.id, /^[A-Za-z0-9_-]{20,30}$/);
@@ -16,6 +22,7 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
   const reader = await call(env, `/api/shares/${publish.value.id}`);
   assert.equal(reader.response.status, 200);
   assert.equal(reader.value.content, "The first line.\n\nThe second line.");
+  assert.deepEqual(reader.value.formatting, [{ startOffset: 4, endOffset: 9, bold: true, italic: false }]);
   assert.equal(reader.value.authorName, "Test Author");
   assert.equal(reader.value.comments.length, 0);
 

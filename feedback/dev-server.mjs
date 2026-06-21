@@ -10,6 +10,12 @@ const manuscript = `This is generic sample text for testing inline feedback.
 Select any sentence in this paragraph to open the comment composer. The preview contains no writing from a Draftroom project.
 
 Comments should appear beside the passage they reference.`;
+const boldStart = manuscript.indexOf("generic sample text");
+const italicStart = manuscript.indexOf("Select any sentence");
+const formatting = [
+  { startOffset: boldStart, endOffset: boldStart + "generic sample text".length, bold: true, italic: false },
+  { startOffset: italicStart, endOffset: italicStart + "Select any sentence".length, bold: false, italic: true }
+];
 
 createServer(async (request, response) => {
   const url = new URL(request.url, "http://127.0.0.1:8788");
@@ -24,6 +30,7 @@ createServer(async (request, response) => {
       authorName: "Sample Author",
       chapterTitle: "Sample Chapter",
       content: manuscript,
+      formatting,
       createdAt: new Date().toISOString(),
       expiresAt: null,
       commentToken: "local-token",
@@ -72,7 +79,7 @@ function corsHeaders() {
   return {
     "access-control-allow-origin": "http://127.0.0.1:8788",
     "access-control-allow-methods": "GET, POST, OPTIONS",
-    "access-control-allow-headers": "content-type"
+    "access-control-allow-headers": "content-type, x-reader-session"
   };
 }
 
