@@ -12,6 +12,32 @@
   --amber: #b99157;
   --border: #4c422d;
   --danger: #c97d6d;
+  --page-glow: rgba(211, 160, 47, .09);
+  --sticky: rgba(14, 13, 10, .92);
+  --selection: rgba(211, 160, 47, .42);
+  --highlight: rgba(181, 96, 50, .25);
+  --highlight-line: rgba(211, 160, 47, .8);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #c99b3d;
+  --surface: #e3c475;
+  --raised: #ecd38f;
+  --paper: #f2dfa7;
+  --cream: #1b140c;
+  --muted: #4e381d;
+  --faint: #75592e;
+  --forest: #704710;
+  --forest-bright: #6b1f2d;
+  --amber: #985025;
+  --border: #8a6428;
+  --danger: #8a2636;
+  --page-glow: rgba(242, 223, 167, .38);
+  --sticky: rgba(201, 155, 61, .9);
+  --selection: rgba(23, 100, 95, .3);
+  --highlight: rgba(107, 31, 45, .16);
+  --highlight-line: rgba(107, 31, 45, .68);
 }
 
 * { box-sizing: border-box; }
@@ -23,12 +49,28 @@ body {
   min-height: 100vh;
   color: var(--cream);
   background:
-    radial-gradient(circle at 15% 0%, rgba(79, 99, 55, .12), transparent 35rem),
+    radial-gradient(circle at 15% 0%, var(--page-glow), transparent 35rem),
     var(--canvas);
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .hidden { display: none !important; }
+
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 25;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: var(--muted);
+  background: var(--surface);
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+}
+.theme-toggle:hover { border-color: var(--forest-bright); color: var(--cream); }
 
 .comments-toggle {
   margin-left: 6px;
@@ -85,8 +127,8 @@ h1 { margin: 0; font-size: clamp(34px, 6vw, 58px); line-height: 1.07; font-weigh
   line-height: 0;
 }
 
-.manuscript::selection { background: rgba(118, 151, 107, .5); color: var(--cream); }
-::highlight(reader-comment) { background: rgba(185, 145, 87, .25); text-decoration: underline rgba(185, 145, 87, .75) 2px; }
+.manuscript::selection { background: var(--selection); color: var(--cream); }
+::highlight(reader-comment) { background: var(--highlight); text-decoration: underline var(--highlight-line) 2px; }
 
 .comments-column {
   position: relative;
@@ -105,7 +147,7 @@ h1 { margin: 0; font-size: clamp(34px, 6vw, 58px); line-height: 1.07; font-weigh
   gap: 10px;
   width: fit-content;
   padding: 7px 10px 7px 0;
-  background: rgba(28, 25, 19, .92);
+  background: var(--sticky);
   backdrop-filter: blur(8px);
 }
 .comments-heading h2 { margin: 0; font-size: 24px; font-weight: 500; }
@@ -179,7 +221,7 @@ button { font: inherit; }
   cursor: pointer;
 }
 .primary-button { border-color: var(--forest); background: var(--forest); font-weight: 650; }
-.primary-button:hover { background: #3b5c33; }
+.primary-button:hover { filter: brightness(1.12); }
 .primary-button:disabled { cursor: wait; opacity: .55; }
 .quiet-button { background: transparent; }
 

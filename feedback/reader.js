@@ -9,12 +9,14 @@
     "loading", "error", "error-message", "reader", "book-title", "chapter-title", "author-name", "manuscript",
     "comment-count", "comments-empty", "comments-list", "composer", "composer-close", "selected-quote",
     "comment-body", "comment-submit", "comment-error", "nickname-dialog", "nickname", "nickname-error",
-    "nickname-cancel", "nickname-save", "website", "comments-toggle"
+    "nickname-cancel", "nickname-save", "website", "comments-toggle", "theme-toggle"
   ].map(id => [id, document.getElementById(id)]));
 
   const nicknameKey = `draftroom.feedback.nickname.${shareID}`;
   const sessionKey = "draftroom.feedback.session";
+  const themeKey = "draftroom.feedback.theme";
 
+  applyTheme(preferredTheme());
   initialize();
 
   async function initialize() {
@@ -48,10 +50,30 @@
     elements["nickname-cancel"].addEventListener("click", closeNicknameDialog);
     elements["nickname-save"].addEventListener("click", saveNicknameAndSubmit);
     elements["comments-toggle"].addEventListener("click", toggleComments);
+    elements["theme-toggle"].addEventListener("click", toggleTheme);
     window.addEventListener("resize", debounce(positionComments, 100));
     elements.nickname.addEventListener("keydown", event => {
       if (event.key === "Enter") saveNicknameAndSubmit();
     });
+  }
+
+  function preferredTheme() {
+    const stored = localStorage.getItem(themeKey);
+    if (stored === "light" || stored === "dark") return stored;
+    return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const next = theme === "dark" ? "light" : "dark";
+    elements["theme-toggle"].textContent = `${next[0].toUpperCase()}${next.slice(1)} mode`;
+    elements["theme-toggle"].setAttribute("aria-label", `Switch to ${next} mode`);
+  }
+
+  function toggleTheme() {
+    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    localStorage.setItem(themeKey, next);
+    applyTheme(next);
   }
 
   function renderShare() {
