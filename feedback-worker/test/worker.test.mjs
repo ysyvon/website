@@ -12,11 +12,14 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
       authorName: "Test Author",
       chapterTitle: "Prologue",
       content: "The first line.\n\nThe second line.",
-      formatting: [{ startOffset: 4, endOffset: 9, bold: true, italic: false }]
+      formatting: [{ startOffset: 4, endOffset: 9, bold: true, italic: false }],
+      previewStyle: "titleCard",
+      previewImage: Buffer.from("test-social-image").toString("base64")
     }
   });
   assert.equal(publish.response.status, 201);
   assert.match(publish.value.id, /^[A-Za-z0-9_-]{20,30}$/);
+  assert.equal(publish.value.url, `https://feedback.test/s/${publish.value.id}`);
   assert.equal(env.DB.shares.get(publish.value.id).content_ciphertext.includes("The first line"), false);
 
   const reader = await call(env, `/api/shares/${publish.value.id}`);
@@ -25,6 +28,17 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
   assert.deepEqual(reader.value.formatting, [{ startOffset: 4, endOffset: 9, bold: true, italic: false }]);
   assert.equal(reader.value.authorName, "Test Author");
   assert.equal(reader.value.comments.length, 0);
+
+  const social = await callRaw(env, `/s/${publish.value.id}`);
+  assert.equal(social.response.status, 200);
+  const socialHTML = await social.response.text();
+  assert.match(socialHTML, /og:image/);
+  assert.match(socialHTML, /Prologue · Test Book/);
+  assert.equal(socialHTML.includes("The first line"), false);
+
+  const preview = await callRaw(env, `/api/shares/${publish.value.id}/preview`);
+  assert.equal(preview.response.status, 200);
+  assert.equal(Buffer.from(await preview.response.arrayBuffer()).toString(), "test-social-image");
 
   const comment = await call(env, `/api/shares/${publish.value.id}/comments`, {
     method: "POST",
@@ -83,6 +97,11 @@ test("publishes encrypted chapter and accepts anonymous-reader comment", async (
 });
 
 async function call(env, path, options = {}) {
+  const result = await callRaw(env, path, options);
+  return { response: result.response, value: await result.response.json() };
+}
+
+async function callRaw(env, path, options = {}) {
   const headers = new Headers({ origin: "https://ysyvon.github.io" });
   if (options.admin) headers.set("authorization", `Bearer ${env.DRAFTROOM_API_TOKEN}`);
   if (options.readerSession) headers.set("x-reader-session", options.readerSession);
@@ -93,7 +112,7 @@ async function call(env, path, options = {}) {
     body: options.body ? JSON.stringify(options.body) : undefined
   });
   const response = await worker.fetch(request, env);
-  return { response, value: await response.json() };
+  return { response };
 }
 
 function testEnvironment() {

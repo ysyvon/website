@@ -9,6 +9,10 @@ export default {
       const parts = url.pathname.split("/").filter(Boolean);
       let response;
 
+      if (parts[0] === "s") {
+        response = await handleSocialShare(request, env, parts.slice(1));
+        return withSecurity(response, request, env);
+      }
       if (parts[0] !== "api") return json({ error: "Not found" }, 404);
 
       if (parts[1] === "admin") {
@@ -38,12 +42,13 @@ async function handleAdmin(request, env, parts) {
     const chapterTitle = cleanText(body.chapterTitle, 200);
     const content = typeof body.content === "string" ? body.content : "";
     const formatting = cleanFormatting(body.formatting, content.length);
+    const preview = cleanPreview(body.previewStyle, body.previewImage);
     if (!bookTitle || !chapterTitle || !content.trim() || content.length > 500_000) {
       return json({ error: "A book title, chapter title, and chapter text are required." }, 400);
     }
 
     const id = randomID(18);
-    const encrypted = await encryptText(JSON.stringify({ version: 2, content, formatting }), env.CONTENT_ENCRYPTION_KEY);
+    const encrypted = await encryptText(JSON.stringify({ version: 3, content, formatting, preview }), env.CONTENT_ENCRYPTION_KEY);
     const now = new Date().toISOString();
     const expiresAt = validFutureDate(body.expiresAt);
     await env.DB.prepare(
@@ -54,7 +59,7 @@ async function handleAdmin(request, env, parts) {
 
     return json({
       id,
-      url: `${env.READER_BASE_URL}?id=${encodeURIComponent(id)}`,
+      url: `${new URL(request.url).origin}/s/${encodeURIComponent(id)}`,
       createdAt: now,
       expiresAt
     }, 201);
@@ -101,6 +106,14 @@ async function handleReader(request, env, parts) {
 
   const share = await getShare(env.DB, shareID);
   if (!share || !shareAvailable(share)) return json({ error: "This feedback link is unavailable." }, 404);
+
+  if (request.method === "GET" && parts[1] === "preview" && parts.length === 2) {
+    const stored = storedContent(await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY));
+    if (!stored.preview?.image) return json({ error: "No social preview" }, 404);
+    return new Response(base64ToBytes(stored.preview.image), {
+      headers: { "content-type": "image/jpeg", "content-length": String(base64ToBytes(stored.preview.image).length) }
+    });
+  }
 
   if (request.method === "GET" && parts.length === 1) {
     const stored = storedContent(await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY));
@@ -183,6 +196,23 @@ async function handleReader(request, env, parts) {
   return json({ error: "Not found" }, 404);
 }
 
+async function handleSocialShare(request, env, parts) {
+  const shareID = parts[0];
+  if (request.method !== "GET" || !shareID || !/^[A-Za-z0-9_-]{20,30}$/.test(shareID)) {
+    return json({ error: "Not found" }, 404);
+  }
+  const share = await getShare(env.DB, shareID);
+  if (!share || !shareAvailable(share)) return socialUnavailable();
+
+  const stored = storedContent(await decryptText(share.content_ciphertext, share.content_iv, env.CONTENT_ENCRYPTION_KEY));
+  const readerURL = `${env.READER_BASE_URL}?id=${encodeURIComponent(shareID)}`;
+  const origin = new URL(request.url).origin;
+  const title = `${share.chapter_title} · ${share.book_title}`;
+  const description = `${share.chapter_title} from ${share.book_title} — shared for reader feedback.`;
+  const imageURL = stored.preview?.image ? `${origin}/api/shares/${encodeURIComponent(shareID)}/preview` : null;
+  return socialHTML({ title, description, imageURL, readerURL });
+}
+
 async function getShare(db, id) {
   return db.prepare("SELECT * FROM shares WHERE id = ?").bind(id).first();
 }
@@ -245,19 +275,69 @@ function cleanFormatting(value, contentLength) {
   });
 }
 
+function cleanPreview(style, image) {
+  const selected = ["cover", "titleCard", "none"].includes(style) ? style : "titleCard";
+  if (selected === "none") return { style: "none", image: null };
+  const value = typeof image === "string" ? image : "";
+  if (!value || value.length > 2_500_000 || !/^[A-Za-z0-9+/]+={0,2}$/.test(value)) {
+    return { style: selected, image: null };
+  }
+  return { style: selected, image: value };
+}
+
 function storedContent(value) {
   try {
     const envelope = JSON.parse(value);
-    if (envelope?.version === 2 && typeof envelope.content === "string") {
+    if ([2, 3].includes(envelope?.version) && typeof envelope.content === "string") {
       return {
         content: envelope.content,
-        formatting: cleanFormatting(envelope.formatting, envelope.content.length)
+        formatting: cleanFormatting(envelope.formatting, envelope.content.length),
+        preview: envelope.version === 3
+          ? cleanPreview(envelope.preview?.style, envelope.preview?.image)
+          : { style: "none", image: null }
       };
     }
   } catch {
     // Shares created before formatted text support contain plain text directly.
   }
-  return { content: value, formatting: [] };
+  return { content: value, formatting: [], preview: { style: "none", image: null } };
+}
+
+function socialHTML({ title, description, imageURL, readerURL }) {
+  const safeTitle = escapeHTML(title);
+  const safeDescription = escapeHTML(description);
+  const safeReaderURL = escapeHTML(readerURL);
+  const imageTags = imageURL ? `
+    <meta property="og:image" content="${escapeHTML(imageURL)}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">` : "";
+  const body = `<!doctype html><html lang="en"><head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+    <title>${safeTitle}</title><meta property="og:type" content="article">
+    <meta property="og:title" content="${safeTitle}"><meta property="og:description" content="${safeDescription}">${imageTags}
+    <meta http-equiv="refresh" content="0;url=${safeReaderURL}">
+  </head><body><p><a href="${safeReaderURL}">Open the Draftroom feedback copy</a></p></body></html>`;
+  return new Response(body, {
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'"
+    }
+  });
+}
+
+function socialUnavailable() {
+  return new Response("<!doctype html><title>Feedback link unavailable</title><p>This feedback link is unavailable.</p>", {
+    status: 404,
+    headers: { "content-type": "text/html; charset=utf-8" }
+  });
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
 }
 
 async function readJSON(request) {
