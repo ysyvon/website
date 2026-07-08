@@ -1,4 +1,0 @@
-# Copy to .dev.vars for local development. Never commit .dev.vars.
-DRAFTROOM_API_TOKEN="generate-a-long-random-token"
-CONTENT_ENCRYPTION_KEY="base64-encoded-32-byte-key"
-COMMENT_SIGNING_KEY="generate-a-different-long-random-token"
