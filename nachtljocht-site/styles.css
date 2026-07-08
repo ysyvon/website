@@ -283,9 +283,22 @@ button, input, textarea { font: inherit; }
 .author-work {
   margin: 0 auto 18px;
   padding-bottom: 18px;
-  border-bottom: 1px solid var(--line);
+  text-align: center;
+  display: grid;
+  justify-items: center;
 }
-.author-work:last-child { border-bottom: 0; padding-bottom: 0; }
+.author-work::after {
+  content: "";
+  display: block;
+  width: 3.5em;
+  height: 1px;
+  margin-top: 8px;
+  background: var(--line);
+}
+.author-work:last-child {
+  padding-bottom: 0;
+}
+.author-work:last-child::after { content: none; }
 .author-work-title {
   margin: 0 0 2px;
   font-size: 14px;
