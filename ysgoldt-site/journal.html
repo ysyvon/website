@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal | Ys Goldt</title>
+    <meta name="description" content="Journal by Ys Goldt.">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./journal-data.js"></script>
+  </head>
+  <body class="detail-page journal-page">
+    <main class="site site-detail">
+      <section class="detail-frame journal-frame">
+        <a class="back-link" href="./index.html">← Back</a>
+
+        <div class="detail-hero journal-hero">
+          <h1 class="detail-title">Journal</h1>
+        </div>
+
+        <div class="detail-body journal-body">
+          <div class="journal-carousel" id="journal-carousel" aria-live="polite">
+            <button class="journal-arrow journal-arrow-left" type="button" id="journal-prev" aria-label="Previous image">‹</button>
+
+            <button class="journal-slide-button" type="button" id="journal-open" aria-label="Open image larger">
+              <div class="journal-stage">
+                <img class="journal-image" id="journal-image" alt="" draggable="false" />
+              </div>
+            </button>
+
+            <button class="journal-arrow journal-arrow-right" type="button" id="journal-next" aria-label="Next image">›</button>
+          </div>
+
+          <p class="journal-caption" id="journal-caption"></p>
+          <p class="journal-counter" id="journal-counter"></p>
+        </div>
+      </section>
+    </main>
+
+    <div class="journal-zoom" id="journal-zoom" hidden aria-hidden="true">
+      <div class="journal-zoom-backdrop" id="journal-zoom-close"></div>
+      <section class="journal-zoom-panel" role="dialog" aria-modal="true" aria-labelledby="journal-zoom-title">
+        <button class="journal-zoom-close" type="button" id="journal-zoom-close-button" aria-label="Close enlarged image">×</button>
+        <h2 id="journal-zoom-title" class="sr-only">Enlarged journal image</h2>
+        <div class="journal-zoom-stage">
+          <img class="journal-zoom-image" id="journal-zoom-image" alt="" draggable="false" />
+        </div>
+        <p class="journal-zoom-caption" id="journal-zoom-caption"></p>
+      </section>
+    </div>
+
+    <script>
+      document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+      });
+
+      document.addEventListener('selectstart', function (event) {
+        const target = event.target;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+          return;
+        }
+        event.preventDefault();
+      });
+    </script>
+
+    <script>
+      (function () {
+        const slides = Array.isArray(window.JOURNAL_SLIDES) ? window.JOURNAL_SLIDES.slice() : [];
+        const imageEl = document.getElementById('journal-image');
+        const captionEl = document.getElementById('journal-caption');
+        const counterEl = document.getElementById('journal-counter');
+        const prevButton = document.getElementById('journal-prev');
+        const nextButton = document.getElementById('journal-next');
+        const openButton = document.getElementById('journal-open');
+        const zoom = document.getElementById('journal-zoom');
+        const zoomImage = document.getElementById('journal-zoom-image');
+        const zoomCaption = document.getElementById('journal-zoom-caption');
+        const zoomClose = document.getElementById('journal-zoom-close');
+        const zoomCloseButton = document.getElementById('journal-zoom-close-button');
+        let index = 0;
+
+        function normalize(slide) {
+          return {
+            src: slide && slide.src ? slide.src : '',
+            alt: slide && slide.alt ? slide.alt : 'Journal image',
+            caption: slide && slide.caption ? slide.caption : ''
+          };
+        }
+
+        function mod(n, m) {
+          return ((n % m) + m) % m;
+        }
+
+        function showSlide(nextIndex) {
+          if (!slides.length) return;
+          index = mod(nextIndex, slides.length);
+          const slide = normalize(slides[index]);
+          imageEl.src = slide.src;
+          imageEl.alt = slide.alt;
+          captionEl.textContent = slide.caption;
+          zoomImage.src = slide.src;
+          zoomImage.alt = slide.alt;
+          zoomCaption.textContent = slide.caption;
+          counterEl.textContent = (index + 1) + ' / ' + slides.length;
+        }
+
+        function openZoom() {
+          if (!slides.length) return;
+          zoom.hidden = false;
+          zoom.setAttribute('aria-hidden', 'false');
+          requestAnimationFrame(function () {
+            zoom.classList.add('is-open');
+          });
+        }
+
+        function closeZoom() {
+          zoom.classList.remove('is-open');
+          zoom.setAttribute('aria-hidden', 'true');
+          window.setTimeout(function () {
+            zoom.hidden = true;
+          }, 220);
+        }
+
+        if (!slides.length) {
+          captionEl.textContent = 'Add slides to journal-data.js to build the carousel.';
+          counterEl.textContent = '0 / 0';
+          return;
+        }
+
+        showSlide(0);
+
+        prevButton.addEventListener('click', function () {
+          showSlide(index - 1);
+        });
+
+        nextButton.addEventListener('click', function () {
+          showSlide(index + 1);
+        });
+
+        openButton.addEventListener('click', openZoom);
+        zoomClose.addEventListener('click', closeZoom);
+        zoomCloseButton.addEventListener('click', closeZoom);
+
+        zoom.addEventListener('click', function (event) {
+          if (event.target === zoom) closeZoom();
+        });
+
+        window.addEventListener('keydown', function (event) {
+          if (zoom.hidden) {
+            if (event.key === 'ArrowLeft') {
+              showSlide(index - 1);
+            } else if (event.key === 'ArrowRight') {
+              showSlide(index + 1);
+            } else if (event.key === 'Enter') {
+              openZoom();
+            }
+            return;
+          }
+
+          if (event.key === 'Escape') {
+            closeZoom();
+          } else if (event.key === 'ArrowLeft') {
+            showSlide(index - 1);
+          } else if (event.key === 'ArrowRight') {
+            showSlide(index + 1);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
+

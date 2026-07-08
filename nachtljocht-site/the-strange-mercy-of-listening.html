@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Strange Mercy of Listening | Ys Goldt</title>
+    <meta name="description" content="The Strange Mercy of Listening by Ys Goldt.">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="detail-page">
+    <main class="site site-detail">
+      <section class="detail-frame">
+        <a class="back-link" href="./index.html">← Back</a>
+
+        <div class="detail-hero">
+          <a class="art-wrap" href="https://a.co/d/0crS9LxC" target="_blank" rel="noreferrer">
+            <img alt="The Strange Mercy of Listening cover" class="detail-image book-image" src="https://m.media-amazon.com/images/I/71LTESyLFNL._SL1500_.jpg" />
+          </a>
+          <h1 class="detail-title">The Strange Mercy of Listening</h1>
+          <p class="detail-subtitle">Novella</p>
+        </div>
+
+        <div class="detail-body">
+          <p><em>A quiet devotion becomes something far more dangerous when silence learns to speak back.</em></p>
+
+          <h2>Synopsis</h2>
+          <p><strong>East Prussia, 1935.</strong></p>
+          <p>Every morning, a telegraph operator walks into the woods and waits. He counts the minutes and his own breaths. He has been doing this for three months.</p>
+          <p>She does not know he exists.</p>
+          <p>She reads poetry, kneels among wildflowers, hums to herself. He watches from the trees and tells himself it is harmless; only observation, only careful attention. He follows her through town at a careful distance; notes the books she borrows from the library, the bread she chooses at the baker's, the way she tilts her face up to the rain and laughs. He begins to keep a journal. What he writes there frightens him. He knows he should stop. He finds he cannot.</p>
+
+          <h2>Excerpt</h2>
+          <blockquote>
+            <p>She came again today, the same place, the same hour. I smelled the grass where she bent, damp and sweet. The wind uncovered her ear, pale against her hair, the skin there was white, unguarded... it looked so soft...</p>
+            <p>Her humming again. It clung to the air long after she was gone, echoing in the walls, in my teeth. I followed its shape in the dark, tracing the thought of her mouth when she sang. Not the words... only her mouth, the warmth of her breath, the curve of lips.</p>
+            <p>It shames me how I long for her. To sit close enough that I might feel her warmth through the thin cloth of her dress, without even touching. To be near is enough, and yet never enough.</p>
+            <p>For three months, I have watched her... and she does not know my name, and I do not know hers. I have spoken nothing. But I know her laughter. I know the face she makes when she believes herself alone. She is never alone. I am always there. Even now, I am with her, writing this.</p>
+          </blockquote>
+
+          <h2>Read</h2>
+          <p class="cta-row"><a class="cta-button" href="https://a.co/d/0crS9LxC" target="_blank" rel="noreferrer">Amazon →</a></p>
+          <p class="cta-row"><a class="cta-button" href="https://buttondown.com/ysgoldt" target="_blank" rel="noreferrer">Subscribe to Read for Free →</a></p>
+
+          <h2>Notes</h2>
+          <p>For readers of quiet, atmospheric literary fiction with a dark romantic core. Contains sensual content and psychological intensity.</p>
+        </div>
+      </section>
+    </main>
+  
+    <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
+      <div class="newsletter-backdrop" data-close-newsletter></div>
+      <section class="newsletter-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
+        <button class="newsletter-close" type="button" aria-label="Close newsletter signup" data-close-newsletter>×</button>
+        <h2 id="newsletter-title" class="newsletter-kicker">Subscribe to the Mailing List</h2>
+        <p class="newsletter-copy">Get a free novella when you subscribe, plus occasional book news and new posts.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/ysgoldt" method="post" class="embeddable-buttondown-form newsletter-form">
+          <label for="bd-email">Enter your email</label>
+          <input type="email" name="email" id="bd-email" placeholder="Email address" autocomplete="email" required />
+          <input type="submit" value="Subscribe" />
+          <p class="newsletter-powered"><a href="https://buttondown.com/refer/ysgoldt" target="_blank" rel="noreferrer">Powered by Buttondown.</a></p>
+        </form>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        const popup = document.getElementById('newsletter-popup');
+        if (!popup) return;
+        const dismissers = popup.querySelectorAll('[data-close-newsletter]');
+        const openDelay = 1200;
+
+        const openPopup = () => {
+          popup.hidden = false;
+          popup.setAttribute('aria-hidden', 'false');
+          requestAnimationFrame(() => popup.classList.add('is-open'));
+        };
+
+        const closePopup = () => {
+          popup.classList.remove('is-open');
+          popup.setAttribute('aria-hidden', 'true');
+          window.setTimeout(() => { popup.hidden = true; }, 220);
+        };
+
+        if (!window.localStorage.getItem('newsletter-dismissed')) {
+          window.setTimeout(openPopup, openDelay);
+        }
+
+        dismissers.forEach((el) => el.addEventListener('click', () => {
+          window.localStorage.setItem('newsletter-dismissed', '1');
+          closePopup();
+        }));
+
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !popup.hidden) {
+            window.localStorage.setItem('newsletter-dismissed', '1');
+            closePopup();
+          }
+        });
+      })();
+    </script>
+
+    <script>
+      document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+      });
+
+      document.addEventListener('selectstart', function (event) {
+        const target = event.target;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+          return;
+        }
+        event.preventDefault();
+      });
+    </script>  </body>
+</html>
+
+
+
+

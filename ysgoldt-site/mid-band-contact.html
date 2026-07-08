@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mid-Band Contact | Ys Goldt</title>
+    <meta name="description" content="Mid-Band Contact by Ys Goldt.">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="detail-page">
+    <main class="site site-detail">
+      <section class="detail-frame">
+        <a class="back-link" href="./index.html">← Back</a>
+
+        <div class="detail-hero">
+          <img alt="Mid-Band Contact" class="detail-image" src="https://ysyvon.github.io/website/VisualNovel/Reijnders_Reisz/Mid-BandImage.png" />
+          <h1 class="detail-title">Mid-Band Contact</h1>
+          <p class="detail-subtitle">Mini visual novel • The Boundary Institute</p>
+        </div>
+
+        <div class="detail-body">
+          <p>A second short visual novel set within the same universe, centred on a private exchange between two Institute personnel.</p>
+          <p><a class="project-link" href="https://ysyvon.github.io/website/VisualNovel/Reijnders_Reisz/index.html" rel="noopener noreferrer" target="_blank">Play Mid-Band Contact →</a></p>
+        </div>
+      </section>
+    </main>
+  
+    <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
+      <div class="newsletter-backdrop" data-close-newsletter></div>
+      <section class="newsletter-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
+        <button class="newsletter-close" type="button" aria-label="Close newsletter signup" data-close-newsletter>×</button>
+        <h2 id="newsletter-title" class="newsletter-kicker">Subscribe to the Mailing List</h2>
+        <p class="newsletter-copy">Get a free novella when you subscribe, plus occasional book news and new posts.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/ysgoldt" method="post" class="embeddable-buttondown-form newsletter-form">
+          <label for="bd-email">Enter your email</label>
+          <input type="email" name="email" id="bd-email" placeholder="Email address" autocomplete="email" required />
+          <input type="submit" value="Subscribe" />
+          <p class="newsletter-powered"><a href="https://buttondown.com/refer/ysgoldt" target="_blank" rel="noreferrer">Powered by Buttondown.</a></p>
+        </form>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        const popup = document.getElementById('newsletter-popup');
+        if (!popup) return;
+        const dismissers = popup.querySelectorAll('[data-close-newsletter]');
+        const openDelay = 1200;
+
+        const openPopup = () => {
+          popup.hidden = false;
+          popup.setAttribute('aria-hidden', 'false');
+          requestAnimationFrame(() => popup.classList.add('is-open'));
+        };
+
+        const closePopup = () => {
+          popup.classList.remove('is-open');
+          popup.setAttribute('aria-hidden', 'true');
+          window.setTimeout(() => { popup.hidden = true; }, 220);
+        };
+
+        if (!window.localStorage.getItem('newsletter-dismissed')) {
+          window.setTimeout(openPopup, openDelay);
+        }
+
+        dismissers.forEach((el) => el.addEventListener('click', () => {
+          window.localStorage.setItem('newsletter-dismissed', '1');
+          closePopup();
+        }));
+
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !popup.hidden) {
+            window.localStorage.setItem('newsletter-dismissed', '1');
+            closePopup();
+          }
+        });
+      })();
+    </script>
+
+    <script>
+      document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+      });
+
+      document.addEventListener('selectstart', function (event) {
+        const target = event.target;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+          return;
+        }
+        event.preventDefault();
+      });
+    </script>  </body>
+</html>
+
+
+
+
+

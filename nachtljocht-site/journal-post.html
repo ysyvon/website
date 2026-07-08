@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal Post | Ys Goldt</title>
+    <meta name="description" content="Journal post from Ys Goldt.">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./journal-data.js"></script>
+  </head>
+  <body class="detail-page">
+    <main class="site site-detail">
+      <a class="back-link" href="./journal.html">← Back</a>
+
+      <section class="detail-frame">
+        <div class="detail-hero journal-hero">
+          <p class="detail-subtitle" id="journal-post-date"></p>
+          <h1 class="detail-title" id="journal-post-title">Journal Post</h1>
+        </div>
+
+        <article class="detail-body" id="journal-post-body">
+          <p class="journal-empty">Loading post…</p>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug') || '';
+        const posts = Array.isArray(window.JOURNAL_POSTS) ? window.JOURNAL_POSTS : [];
+        const post = posts.find((item) => item.slug === slug);
+        const titleEl = document.getElementById('journal-post-title');
+        const dateEl = document.getElementById('journal-post-date');
+        const bodyEl = document.getElementById('journal-post-body');
+
+        function formatDate(value) {
+          if (!value) return '';
+          const date = new Date(value);
+          if (Number.isNaN(date.getTime())) return '';
+          return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }).format(date);
+        }
+
+        if (!post) {
+          titleEl.textContent = 'Post not found';
+          dateEl.textContent = '';
+          bodyEl.innerHTML = '<p class="journal-empty">This journal entry could not be found.</p>';
+          return;
+        }
+
+        titleEl.textContent = post.title || 'Untitled post';
+        dateEl.textContent = formatDate(post.date || post.published || '');
+        bodyEl.innerHTML = post.body || '<p class="journal-empty">No content yet.</p>';
+      })();
+    </script>
+
+    <script>
+      document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+      });
+
+      document.addEventListener('selectstart', function (event) {
+        const target = event.target;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+          return;
+        }
+        event.preventDefault();
+      });
+    </script>  </body>
+</html>
+
+
