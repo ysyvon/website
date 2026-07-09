@@ -53,6 +53,11 @@ button, input, textarea { font: inherit; }
   box-shadow: var(--panel-shadow);
   object-fit: cover;
 }
+.hero-image--compact {
+  width: min(100%, 420px);
+  max-height: 340px;
+  object-fit: contain;
+}
 .page-title, .detail-title {
   margin: 16px 0 4px;
   font-size: 14px;
