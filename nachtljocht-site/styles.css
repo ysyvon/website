@@ -222,11 +222,17 @@ button, input, textarea { font: inherit; }
   object-fit: cover;
   object-position: center;
 }
+.contributors-page .contributor-photo {
+  filter: grayscale(100%);
+}
 .contributor-photo--james {
   object-position: center 28%;
 }
 .contributor-photo--david {
   object-position: center 18%;
+}
+.contributor-photo--viviane {
+  object-position: center top;
 }
 .contributor-name {
   font-family: inherit;
