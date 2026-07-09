@@ -248,16 +248,14 @@
         const archiveTitle = makeEl('p', 'journal-archive-title', 'Archive');
         archiveEl.appendChild(archiveTitle);
 
-        Object.keys(archiveByYear).sort().reverse().forEach(function (year, index) {
+        Object.keys(archiveByYear).sort().reverse().forEach(function (year) {
           const yearDetails = document.createElement('details');
           yearDetails.className = 'journal-archive-year';
-          yearDetails.open = index === 0;
           yearDetails.appendChild(makeEl('summary', '', year));
 
           Object.keys(archiveByYear[year]).forEach(function (month) {
             const monthDetails = document.createElement('details');
             monthDetails.className = 'journal-archive-month';
-            monthDetails.open = index === 0;
             monthDetails.appendChild(makeEl('summary', '', month));
 
             const list = makeEl('ol', 'journal-archive-list');

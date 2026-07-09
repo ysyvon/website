@@ -723,6 +723,7 @@ img {
   margin: 0 0 10px;
   color: var(--muted);
   font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -733,11 +734,30 @@ img {
 
 .journal-archive summary {
   display: inline-flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
   color: var(--fg);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.journal-archive summary::-webkit-details-marker {
+  display: none;
+}
+
+.journal-archive summary::before {
+  content: ">";
+  display: inline-block;
+  font-size: 10px;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 160ms ease;
+}
+
+.journal-archive details[open] > summary::before {
+  transform: rotate(90deg);
 }
 
 .journal-archive-month {
