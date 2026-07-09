@@ -11,30 +11,31 @@ window.JOURNAL_POSTS = [
   {
     date: '2026-05-07',
     dateLabel: '7 may 2026',
-    image: './journal-assets/journal_2026-05-07_01.png',
-    alt: 'Typewritten journal page for 7 May 2026',
-    caption: ''
-  },
-  {
-    date: '2026-05-07',
-    dateLabel: '7 may 2026',
-    image: './journal-assets/journal_2026-05-07_02.png',
-    alt: 'Typewritten journal page for 7 May 2026',
-    caption: ''
-  },
-  {
-    date: '2026-05-07',
-    dateLabel: '7 may 2026',
-    image: './journal-assets/journal_2026-05-07_03.png',
-    alt: 'Typewritten journal page for 7 May 2026',
+    images: [
+      {
+        src: './journal-assets/journal_2026-05-07_01.png',
+        alt: 'Typewritten journal page for 7 May 2026, page 1'
+      },
+      {
+        src: './journal-assets/journal_2026-05-07_02.png',
+        alt: 'Typewritten journal page for 7 May 2026, page 2'
+      },
+      {
+        src: './journal-assets/journal_2026-05-07_03.png',
+        alt: 'Typewritten journal page for 7 May 2026, page 3'
+      }
+    ],
     caption: ''
   }
 ];
 
-window.JOURNAL_SLIDES = window.JOURNAL_POSTS.map(function (post) {
-  return {
-    src: post.image,
-    alt: post.alt,
-    caption: post.dateLabel
-  };
+window.JOURNAL_SLIDES = window.JOURNAL_POSTS.flatMap(function (post) {
+  const images = post.images || [{ src: post.image, alt: post.alt }];
+  return images.map(function (image) {
+    return {
+      src: image.src,
+      alt: image.alt,
+      caption: post.dateLabel
+    };
+  });
 });

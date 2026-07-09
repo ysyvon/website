@@ -209,14 +209,21 @@
           const parsed = parseDate(post.date);
           const year = parsed ? String(parsed.getFullYear()) : 'undated';
           const month = parsed ? monthNames[parsed.getMonth()] : 'misc';
+          const images = Array.isArray(post.images) && post.images.length
+            ? post.images
+            : [{ src: post.image || post.src || '', alt: post.alt || 'Journal post image' }];
           return {
             id: postId(post, index),
             date: post.date || '',
             dateLabel: post.dateLabel || post.caption || post.date || 'undated',
             year: post.year || year,
             month: post.month || month,
-            image: post.image || post.src || '',
-            alt: post.alt || 'Journal post image',
+            images: images.map(function (image) {
+              return {
+                src: image.src || image.image || '',
+                alt: image.alt || post.alt || 'Journal post image'
+              };
+            }),
             caption: post.caption || ''
           };
         }
@@ -282,14 +289,18 @@
 
           article.appendChild(makeEl('h2', 'journal-post-date', post.dateLabel));
 
-          const frame = makeEl('div', 'journal-post-frame');
-          const image = document.createElement('img');
-          image.className = 'journal-post-image';
-          image.src = post.image;
-          image.alt = post.alt;
-          image.draggable = false;
-          frame.appendChild(image);
-          article.appendChild(frame);
+          const imageList = makeEl('div', 'journal-post-images');
+          post.images.forEach(function (postImage) {
+            const frame = makeEl('div', 'journal-post-frame');
+            const image = document.createElement('img');
+            image.className = 'journal-post-image';
+            image.src = postImage.src;
+            image.alt = postImage.alt;
+            image.draggable = false;
+            frame.appendChild(image);
+            imageList.appendChild(frame);
+          });
+          article.appendChild(imageList);
 
           if (post.caption) {
             article.appendChild(makeEl('p', 'journal-post-caption', post.caption));

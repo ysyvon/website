@@ -801,6 +801,11 @@ img {
   text-transform: uppercase;
 }
 
+.journal-post-images {
+  display: grid;
+  gap: 14px;
+}
+
 .journal-post-frame {
   padding: 12px;
   border: 1px solid var(--line);
