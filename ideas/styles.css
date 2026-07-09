@@ -5,7 +5,7 @@
   --muted: #5f5a50;
   --line: #171717;
   --soft-line: rgba(17, 17, 17, 0.38);
-  --max-width: 980px;
+  --max-width: 840px;
 }
 
 * {
@@ -37,12 +37,12 @@ body {
   width: min(calc(100vw - 40px), var(--max-width));
   min-height: 100vh;
   margin: 0 auto;
-  padding: 70px 0 54px;
+  padding: 58px 0 48px;
 }
 
 .ideas-header h1 {
-  margin: 0 0 72px;
-  font-size: clamp(40px, 8.2vw, 78px);
+  margin: 0 0 60px;
+  font-size: clamp(36px, 7vw, 66px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.34em;
@@ -68,8 +68,8 @@ body {
 .ideas-section {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(330px, 1fr) minmax(300px, 0.95fr);
-  gap: 46px;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(260px, 0.78fr);
+  gap: 34px;
   align-items: start;
 }
 
@@ -84,7 +84,7 @@ body {
 
 .section-copy {
   position: relative;
-  padding-left: 150px;
+  padding-left: 132px;
 }
 
 .section-copy::before {
@@ -92,14 +92,14 @@ body {
   position: absolute;
   top: 15px;
   left: 0;
-  width: 132px;
+  width: 114px;
   height: 1px;
   background: var(--line);
 }
 
 .section-copy h2 {
   margin: 0 0 20px;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.22em;
@@ -111,7 +111,7 @@ body {
   display: grid;
   gap: 16px;
   margin: 0 0 0 20px;
-  padding: 0 0 0 92px;
+  padding: 0 0 0 78px;
   list-style: none;
 }
 
@@ -127,7 +127,7 @@ body {
 
 .section-copy li {
   position: relative;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -136,8 +136,8 @@ body {
   content: "";
   position: absolute;
   top: 0.75em;
-  left: -92px;
-  width: 72px;
+  left: -78px;
+  width: 58px;
   height: 1px;
   background: var(--line);
 }
@@ -148,7 +148,7 @@ body {
 }
 
 .image-placeholder {
-  min-height: 120px;
+  min-height: 104px;
   border: 1px solid var(--soft-line);
   background:
     linear-gradient(135deg, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px 5px),
@@ -169,7 +169,7 @@ body {
 }
 
 .placeholder-journal-nachtljocht {
-  min-height: 155px;
+  min-height: 132px;
 }
 
 .editions-placeholders {
@@ -187,7 +187,7 @@ body {
 }
 
 .studio-placeholders .image-placeholder {
-  min-height: 170px;
+  min-height: 142px;
 }
 
 .objects-placeholders {
