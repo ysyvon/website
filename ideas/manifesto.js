@@ -60,30 +60,5 @@
     });
   }
 
-  function drawFooterMark() {
-    const canvas = document.getElementById('footer-mark');
-    if (!canvas) return;
-    const size = 72;
-    const ctx = setupCanvas(canvas, size);
-    const center = size / 2;
-
-    drawDot(ctx, center, center, 10);
-
-    for (let i = 0; i < 18; i += 1) {
-      const angle = (Math.PI * 2 * i) / 18;
-      const inner = 14 + (i % 2) * 2;
-      const outer = 24 + (i % 3) * 4;
-      ctx.beginPath();
-      ctx.lineWidth = i % 2 ? 2 : 1.5;
-      ctx.moveTo(center + Math.cos(angle) * inner, center + Math.sin(angle) * inner);
-      ctx.lineTo(center + Math.cos(angle) * outer, center + Math.sin(angle) * outer);
-      ctx.stroke();
-      if (i % 2 === 0) {
-        drawDot(ctx, center + Math.cos(angle) * 31, center + Math.sin(angle) * 31, 2);
-      }
-    }
-  }
-
   drawOrbit();
-  drawFooterMark();
 })();
