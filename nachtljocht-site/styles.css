@@ -231,10 +231,26 @@ button, input, textarea { font: inherit; }
 @media (max-width: 700px) {
   .site { width: min(calc(100vw - 24px), var(--max-width)); padding-top: 16px; }
   .tabs, .panel-shell, .detail-frame { width: 100%; }
+  .tabs {
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    align-items: flex-end;
+    padding-bottom: 1px;
+  }
+  .tab {
+    padding-bottom: 9px;
+  }
   .panel, .detail-body { padding: 18px 14px 16px; }
   .contributors-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
 }
 @media (max-width: 480px) {
+  .tabs {
+    gap: 8px 14px;
+  }
+  .tab {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
   .contributors-grid { grid-template-columns: 1fr; }
 }
 
