@@ -201,7 +201,8 @@
         }
 
         function postId(post, index) {
-          return 'journal-' + String(post.date || index).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const slug = String(post.date || 'post').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          return 'journal-' + slug + '-' + String(index + 1);
         }
 
         function normalize(post, index) {

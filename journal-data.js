@@ -7,6 +7,27 @@ window.JOURNAL_POSTS = [
     image: './journal-assets/moodboard_8_jul_2026_ys.png',
     alt: 'Moodboard journal page for 8 July 2026',
     caption: ''
+  },
+  {
+    date: '2026-05-07',
+    dateLabel: '7 may 2026',
+    image: './journal-assets/journal_2026-05-07_01.png',
+    alt: 'Typewritten journal page for 7 May 2026',
+    caption: ''
+  },
+  {
+    date: '2026-05-07',
+    dateLabel: '7 may 2026',
+    image: './journal-assets/journal_2026-05-07_02.png',
+    alt: 'Typewritten journal page for 7 May 2026',
+    caption: ''
+  },
+  {
+    date: '2026-05-07',
+    dateLabel: '7 may 2026',
+    image: './journal-assets/journal_2026-05-07_03.png',
+    alt: 'Typewritten journal page for 7 May 2026',
+    caption: ''
   }
 ];
 
