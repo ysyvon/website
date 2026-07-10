@@ -215,10 +215,14 @@ button, input, textarea { font: inherit; }
   border: none;
 }
 .manifesto-image {
+  display: block;
   width: 100%;
   height: auto;
   border: 0;
   background: transparent;
+}
+.manifesto-image + .manifesto-image {
+  margin-top: 28px;
 }
 .contributors-page { max-width: 760px; margin: 0 auto; }
 .contributors-grid {
