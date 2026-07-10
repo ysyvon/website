@@ -114,6 +114,9 @@ button, input, textarea { font: inherit; }
   width: min(100%, 520px);
   margin: 0 auto;
 }
+.panel-shell.manifesto-active {
+  width: min(100%, 720px);
+}
 .panel, .detail-body {
   padding: 20px 18px 18px;
   border: 1px solid var(--line);

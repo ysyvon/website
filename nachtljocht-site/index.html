@@ -124,6 +124,7 @@
     <script>
       const tabs = document.querySelectorAll('.tab[data-panel]');
       const panels = document.querySelectorAll('.panel[data-panel]');
+      const panelShell = document.querySelector('.panel-shell');
 
       function activatePanel(name) {
         if (!document.querySelector('.panel[data-panel="' + name + '"]')) {
@@ -141,6 +142,8 @@
           panel.hidden = !active;
           panel.classList.toggle('active', active);
         });
+
+        panelShell.classList.toggle('manifesto-active', name === 'manifesto');
       }
 
       tabs.forEach((tab) => {
