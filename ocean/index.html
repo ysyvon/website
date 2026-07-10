@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Still Chaos Index: Marine Entanglement</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <canvas id="chaosCanvas" aria-label="Animated Mandelbrot-inspired chaos shape"></canvas>
+    <div class="audio-controls" aria-label="Audio controls">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Switch between light and dark mode">dark</button>
+      <button class="audio-mute" id="audioMute" type="button" aria-pressed="true" title="Start or mute ambient drone">play sound</button>
+      <input class="audio-volume" id="audioVolume" type="range" min="0" max="100" value="28" aria-label="Volume">
+    </div>
+    <script src="shape.js"></script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+  --page-bg: #eee5c7;
+  --page-fg: #1d1b18;
+  --control-bg: rgba(238, 229, 199, 0.34);
+  --control-border: rgba(29, 27, 24, 0.14);
+  --control-fg: rgba(29, 27, 24, 0.7);
+  --control-active: #9c2f1f;
+  --range-accent: #677f7d;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #101313;
+  --page-fg: #eee5c7;
+  --control-bg: rgba(16, 19, 19, 0.38);
+  --control-border: rgba(238, 229, 199, 0.16);
+  --control-fg: rgba(238, 229, 199, 0.72);
+  --control-active: #e6c75a;
+  --range-accent: #86a8a5;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--page-bg);
+  color: var(--page-fg);
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+.audio-controls {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px;
+  background: var(--control-bg);
+  border: 1px solid var(--control-border);
+  backdrop-filter: blur(8px);
+}
+
+.theme-toggle,
+.audio-mute {
+  width: 72px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--control-fg);
+  font: 300 11px "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  cursor: pointer;
+}
+
+.theme-toggle {
+  width: 38px;
+}
+
+.theme-toggle[aria-pressed="true"],
+.audio-mute[aria-pressed="false"] {
+  color: var(--control-active);
+}
+
+.audio-volume {
+  width: 82px;
+  height: 14px;
+  accent-color: var(--range-accent);
+  opacity: 0.68;
+}
+
+.audio-volume:hover,
+.audio-volume:focus {
+  opacity: 1;
+}

@@ -1,0 +1,15 @@
+{
+  "loaded": true,
+  "source": "Open-Meteo Marine API",
+  "apiUrl": "https://marine-api.open-meteo.com/v1/marine?latitude=40.25&longitude=-73.35&current=wave_height%2Cwave_period%2Csea_level_height_msl%2Csea_surface_temperature%2Cocean_current_velocity%2Cocean_current_direction&hourly=wave_height%2Cwave_period%2Csea_level_height_msl%2Csea_surface_temperature%2Cocean_current_velocity%2Cocean_current_direction&forecast_hours=6&timezone=UTC&cell_selection=sea",
+  "updated": "2026-07-10T03:36:47.344245+00:00",
+  "time": "2026-07-10T03:30",
+  "latitude": 40.291664,
+  "longitude": -73.37499,
+  "waveHeight": 0.94,
+  "wavePeriod": 6.1,
+  "seaLevel": -0.61,
+  "seaSurfaceTemperature": 23.2,
+  "currentVelocity": 0.6,
+  "currentDirection": 72.0
+}
