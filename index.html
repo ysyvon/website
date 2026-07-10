@@ -17,7 +17,6 @@
     <meta name="twitter:image" content="https://ysyvon.github.io/website/ysprofile.jpg">
     <link rel="icon" type="image/png" href="./favicon.png">
     <link rel="stylesheet" href="./styles.css">
-    <script src="./journal-data.js"></script>
     <script src="./disable-context-menu.js" defer></script>
   </head>
   <body>
@@ -28,8 +27,9 @@
         <p class="page-subtitle">creator of strange and tender things</p>
       </section>
 
-            <section class="tabs" aria-label="Sections">
+      <section class="tabs" aria-label="Sections">
         <button class="tab active" type="button" data-panel="work">Work</button>
+        <button class="tab" type="button" data-panel="materials">Materials</button>
         <button class="tab" type="button" data-panel="about">About</button>
         <button class="tab" type="button" data-panel="contact">Contact</button>
       </section>
@@ -129,9 +129,35 @@
           </div>
         </div>
 
-        <div class="panel journal-body" data-panel="journal" hidden>
-          <nav class="journal-archive" aria-label="Journal archive" id="journal-archive"></nav>
-          <div class="journal-post-feed" id="journal-feed" aria-live="polite"></div>
+        <div class="panel" data-panel="materials" hidden>
+          <div class="materials-grid">
+            <figure class="material-item">
+              <img
+                class="material-image"
+                src="./gallery-assets/nachtljocht-work-margin-paper-transparent.png"
+                alt="Nachtljocht work margin manifesto on lined paper"
+                draggable="false"
+              />
+            </figure>
+
+            <figure class="material-item">
+              <img
+                class="material-image"
+                src="./gallery-assets/nachtljocht-manifesto-screenshot.png"
+                alt="Nachtljocht manifesto page with typewritten text and a circular mark"
+                draggable="false"
+              />
+            </figure>
+
+            <figure class="material-item">
+              <img
+                class="material-image"
+                src="./gallery-assets/quiet-work.gif"
+                alt="Animated quiet work artwork"
+                draggable="false"
+              />
+            </figure>
+          </div>
         </div>
 
         <div class="panel" data-panel="contact" hidden>
@@ -170,147 +196,6 @@
       });
     </script>
 
-    <script>
-      (function () {
-        const posts = Array.isArray(window.JOURNAL_POSTS) ? window.JOURNAL_POSTS.slice() : [];
-        const archiveEl = document.getElementById('journal-archive');
-        const feedEl = document.getElementById('journal-feed');
-        const monthNames = [
-          'january',
-          'february',
-          'march',
-          'april',
-          'may',
-          'june',
-          'july',
-          'august',
-          'september',
-          'october',
-          'november',
-          'december'
-        ];
-
-        if (!archiveEl || !feedEl) {
-          return;
-        }
-
-        function parseDate(value) {
-          const parts = String(value || '').split('-').map(Number);
-          if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
-          return new Date(parts[0], parts[1] - 1, parts[2]);
-        }
-
-        function postId(post, index) {
-          const slug = String(post.date || 'post').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          return 'journal-' + slug + '-' + String(index + 1);
-        }
-
-        function normalize(post, index) {
-          const parsed = parseDate(post.date);
-          const year = parsed ? String(parsed.getFullYear()) : 'undated';
-          const month = parsed ? monthNames[parsed.getMonth()] : 'misc';
-          const images = Array.isArray(post.images) && post.images.length
-            ? post.images
-            : [{ src: post.image || post.src || '', alt: post.alt || 'Journal post image' }];
-          return {
-            id: postId(post, index),
-            date: post.date || '',
-            dateLabel: post.dateLabel || post.caption || post.date || 'undated',
-            year: post.year || year,
-            month: post.month || month,
-            images: images.map(function (image) {
-              return {
-                src: image.src || image.image || '',
-                alt: image.alt || post.alt || 'Journal post image'
-              };
-            }),
-            caption: post.caption || ''
-          };
-        }
-
-        function sortNewestFirst(a, b) {
-          return String(b.date).localeCompare(String(a.date));
-        }
-
-        function makeEl(tagName, className, text) {
-          const el = document.createElement(tagName);
-          if (className) el.className = className;
-          if (text) el.textContent = text;
-          return el;
-        }
-
-        const normalizedPosts = posts.map(normalize).sort(sortNewestFirst);
-
-        if (!normalizedPosts.length) {
-          feedEl.appendChild(makeEl('p', 'journal-post-empty', 'Add image posts to journal-data.js to build the journal.'));
-          return;
-        }
-
-        const archiveByYear = normalizedPosts.reduce(function (years, post) {
-          if (!years[post.year]) years[post.year] = {};
-          if (!years[post.year][post.month]) years[post.year][post.month] = [];
-          years[post.year][post.month].push(post);
-          return years;
-        }, {});
-
-        const archiveTitle = makeEl('p', 'journal-archive-title', 'Archive');
-        archiveEl.appendChild(archiveTitle);
-
-        Object.keys(archiveByYear).sort().reverse().forEach(function (year) {
-          const yearDetails = document.createElement('details');
-          yearDetails.className = 'journal-archive-year';
-          yearDetails.appendChild(makeEl('summary', '', year));
-
-          Object.keys(archiveByYear[year]).forEach(function (month) {
-            const monthDetails = document.createElement('details');
-            monthDetails.className = 'journal-archive-month';
-            monthDetails.appendChild(makeEl('summary', '', month));
-
-            const list = makeEl('ol', 'journal-archive-list');
-            archiveByYear[year][month].forEach(function (post) {
-              const item = document.createElement('li');
-              const link = document.createElement('a');
-              link.href = '#' + post.id;
-              link.textContent = post.dateLabel;
-              item.appendChild(link);
-              list.appendChild(item);
-            });
-
-            monthDetails.appendChild(list);
-            yearDetails.appendChild(monthDetails);
-          });
-
-          archiveEl.appendChild(yearDetails);
-        });
-
-        normalizedPosts.forEach(function (post) {
-          const article = makeEl('article', 'journal-post');
-          article.id = post.id;
-
-          article.appendChild(makeEl('h2', 'journal-post-date', post.dateLabel));
-
-          const imageList = makeEl('div', 'journal-post-images');
-          post.images.forEach(function (postImage) {
-            const frame = makeEl('div', 'journal-post-frame');
-            const image = document.createElement('img');
-            image.className = 'journal-post-image';
-            image.src = postImage.src;
-            image.alt = postImage.alt;
-            image.draggable = false;
-            frame.appendChild(image);
-            imageList.appendChild(frame);
-          });
-          article.appendChild(imageList);
-
-          if (post.caption) {
-            article.appendChild(makeEl('p', 'journal-post-caption', post.caption));
-          }
-
-          feedEl.appendChild(article);
-        });
-      })();
-    </script>
-  
     <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
       <div class="newsletter-backdrop" data-close-newsletter></div>
       <section class="newsletter-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">

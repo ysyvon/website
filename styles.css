@@ -127,7 +127,7 @@ img {
 }
 
 .panel-shell {
-  width: min(100%, 520px);
+  width: min(100%, var(--max-width));
   margin: 0 auto;
 }
 
@@ -226,6 +226,31 @@ img {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.material-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 8px;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.material-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .section-label {
@@ -682,6 +707,10 @@ img {
 
   .work-button {
     min-width: 90px;
+  }
+
+  .materials-grid {
+    grid-template-columns: 1fr;
   }
 
   .site-detail {
