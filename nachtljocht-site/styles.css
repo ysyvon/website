@@ -77,12 +77,12 @@ button, input, textarea { font: inherit; }
   text-transform: uppercase;
 }
 .tabs {
-  width: min(100%, 520px);
+  width: min(100%, 900px);
   margin: 18px auto 18px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0 22px;
+  gap: 0 18px;
   padding-top: 6px;
   border-bottom: 1px solid var(--line);
 }
