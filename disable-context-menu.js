@@ -8,6 +8,13 @@
       if (type === 'contextmenu' && document.body?.hasAttribute('data-disable-context-menu')) {
         event.preventDefault();
       }
+      if (type === 'selectstart' && document.body?.hasAttribute('data-disable-selection')) {
+        const target = event.target;
+        const editable = target instanceof HTMLElement && (
+          target.matches('input, textarea') || target.isContentEditable
+        );
+        if (!editable) event.preventDefault();
+      }
     }, { capture: true });
   });
 
