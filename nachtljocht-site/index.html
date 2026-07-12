@@ -18,15 +18,16 @@
     <link rel="icon" type="image/png" href="./nachtljochtlogo.png">
     <link rel="stylesheet" href="./styles.css">
     <script src="../disable-context-menu.js" defer></script>
+    <script src="./accessibility.js" defer></script>
   </head>
-  <body>
+  <body data-disable-context-menu>
     <main class="site site-home">
       <section class="hero" aria-label="Featured image">
         <img class="hero-image hero-image--compact" src="./nachtljocht-work-margin-paper-transparent.png" alt="Nachtljocht work between the real and the imagined paper graphic" />
         <h1 class="page-title">nachtljocht</h1>
       </section>
 
-      <section class="tabs" aria-label="Sections">
+      <nav class="tabs" aria-label="Nachtljocht sections">
         <button class="tab active" type="button" data-panel="home">Home</button>
         <button class="tab" type="button" data-panel="manifesto">Manifesto</button>
         <button class="tab" type="button" data-panel="submit">Submit</button>
@@ -34,9 +35,9 @@
         <button class="tab" type="button" data-panel="contact">Contact</button>
         <button class="tab" type="button" data-panel="volunteer-readers">Volunteer Reader Applications</button>
         <a class="tab" href="https://buttondown.com/nachtljocht" target="_blank" rel="noreferrer">Newsletter</a>
-      </section>
+      </nav>
 
-      <section class="panel-shell" aria-live="polite">
+      <section class="panel-shell">
         <div class="panel panel-text active" data-panel="home">
           <p><center>VOLUME I COMING AUGUST 2026</center></p>
           <br/>
@@ -105,7 +106,26 @@
         </div>
 
         <div class="panel panel-text" data-panel="manifesto" hidden>
-          <img class="manifesto-image" src="./nachtljocht-manifesto.png" alt="Nachtljocht manifesto">
+          <img class="manifesto-image" src="./nachtljocht-manifesto.png" alt="Nachtljocht manifesto; a complete text version follows">
+          <div id="manifesto-transcript" class="sr-only">
+            <p>We believe in attention. Slow work. Honest language.</p>
+            <p>We publish fiction that is strange, sincere, and alive.</p>
+            <p>We make space for the overlooked, the unconventional, and the uncompromising.</p>
+            <p>We value beauty without ornament. Ideas without hierarchy. People without performance.</p>
+            <p>Attend to sincerity. To the unfinished. To what resists. To what remains unexplained.</p>
+            <p>Sincerity needs no alibi.</p>
+            <p>We believe the work can be earnest without apology, beautiful without ornament, and quiet without emptiness.</p>
+            <p>A story is not a product. It is one person giving sustained attention to another. Not a transaction. Not a performance. A meeting.</p>
+            <p>We attend to the strange, the tender, the difficult, the ordinary, and the unfinished—not because they are fashionable, but because they are true to the complexity of being human.</p>
+            <p>A story need not be literary. It need not be experimental. It need not be realist. It need only become a place where two interior lives meet long enough to recognize one another.</p>
+            <p>Not for the algorithm. Not for the market.</p>
+            <p>The writer leaves changed. The reader leaves changed. Neither remains exactly as they were.</p>
+            <p>We are not interested in what sells. We are interested in what stays.</p>
+            <p>We trust the reader. We trust the writer. We trust the work to do what it must.</p>
+            <p>Genre is not a boundary. Form is not a hierarchy. The human is our only criterion.</p>
+            <p>Fiction remembers. Fiction questions. Fiction transforms.</p>
+            <p>Publish what cannot be exhausted by a single reading. Publish what invites return. Publish what endures.</p>
+          </div>
         </div>
 
         <div class="panel panel-text" data-panel="volunteer-readers" hidden>

@@ -1,0 +1,73 @@
+.vn-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: 10px;
+  left: 10px;
+  padding: 10px 14px;
+  border: 1px solid #ffffff;
+  background: #05070b;
+  color: #ffffff;
+  font: 12px/1.4 "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+body,
+.scene,
+.reel,
+.dialogue-box,
+.dialogue-line {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.signal-label,
+.frame-progress,
+.eyebrow,
+.countdown,
+.copyright,
+.dialogue-speaker {
+  color: rgba(238, 244, 255, 0.82) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .signal-label,
+  .frame-progress,
+  .eyebrow,
+  .copyright {
+    font-size: max(11px, 1.15vh) !important;
+  }
+}
