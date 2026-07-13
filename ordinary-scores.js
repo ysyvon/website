@@ -49,7 +49,7 @@ const scores = [
   ],
   [
     "Borrowed Shadow",
-    "Stand near a wall.|Wait until someone else's shadow crosses it.|Step into the place where it was.|Remain there for one minute.|Leave without explanation."
+    "Stand near a wall.|Wait until someone else's shadow crosses yours.|Step into the place where it was.|Remain there for one minute.|Leave without explanation."
   ],
   [
     "Window",
