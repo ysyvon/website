@@ -64,6 +64,11 @@ a {
   text-decoration: none;
 }
 
+.bio-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 button {
   font: inherit;
 }
