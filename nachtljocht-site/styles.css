@@ -159,6 +159,11 @@ button, input, textarea { font: inherit; }
 .store-body {
   min-height: 320px;
 }
+.preorder-link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .panel, .detail-body {
   padding: 20px 18px 18px;
   border: 1px solid var(--line);
