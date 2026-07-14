@@ -8,53 +8,71 @@
     <link rel="stylesheet" href="./styles.css">
     <script src="./disable-context-menu.js" defer></script>
   </head>
-  <body class="detail-page">
+  <body class="detail-page book-product-page">
     <main class="site site-detail">
       <section class="detail-frame">
         <a class="back-link" href="./index.html">← Back</a>
 
         <div class="detail-hero">
-          <a class="art-wrap" href="https://a.co/d/0f0tw5Yc" target="_blank" rel="noreferrer">
-            <img alt="Even if the Light Forgets Volume 1 cover" class="detail-image book-image" src="https://m.media-amazon.com/images/I/71KAyjo7MWL._SL1500_.jpg" />
-          </a>
           <h1 class="detail-title">Even if the Light Forgets Volume 1</h1>
           <p class="detail-subtitle">Novel</p>
+          <section class="sample-section sample-section-featured" aria-labelledby="sample-section-title">
+            <h2 id="sample-section-title">Read a Sample</h2>
+            <p>Step inside the opening pages of <em>Even if the Light Forgets</em>.</p>
+            <p class="cta-row"><button class="cta-button sample-open" type="button" data-open-sample>Look Inside →</button></p>
+          </section>
         </div>
 
         <div class="detail-body">
-          <h2>Synopsis</h2>
-          <p>Nefra lives alone with her uncle Enkin in a bunker beneath a ruined observatory. Above them lies a wasteland of collapsed cities and null-zones where creatures linger, and Enkin's soul has been trapped in a doll since an experiment went wrong thirteen years ago.</p>
-          <p>When a strange signal draws them deeper into the wasteland, they encounter Aurel, a man known as Half-Made, his body part crystal after a failed transformation. He offers them an artefact of unknown origins, and all he asks for in return is company.</p>
-          <p>What begins as an uneasy truce grows into something harder to abandon. But the artefact has drawn the attention of an organisation that believes people are nothing more than patterns to be studied and dissected; and they are willing to tear apart the lives around Nefra to get it.</p>
+          <section class="book-store" aria-label="Order Even if the Light Forgets Volume 1">
+            <div id="my-store-139267004"></div>
+          </section>
 
-          <h2>Excerpt</h2>
-          <blockquote>
-            <p>No one agrees on when the world ended.</p>
-            <p>Some say it never did.</p>
-            <p>I have spent the better part of my four centuries gathering what follows. It is incomplete. I have known this for a long time, and I expect whoever reads it will know it more clearly still. What I leave behind is not a history. A history would require a witness, and on the one matter that shapes us most, there are none.</p>
-            <p>Two thousand years ago, humanity attempted to escape death. The process was called Sublimation, the transfiguration of the human body into a form wrought from crystal, alloy, and bound light. It was offered as a cure for suffering, for decay, for grief.</p>
-            <p>Many accepted. Some refused.</p>
-            <p>These new forms did not age, did not grow sick, nor fail as flesh does. Memory, in theory, could be preserved indefinitely, refined rather than lost. Those who underwent the rite became known as the Numenari. I am one of them, and I will say at the outset that the theory has not held. Many of us forget. We forget differently than the living forget, but we forget.</p>
-            <p>Those who refused remained as they were: mortal, embodied, bound to birth and death. Their descendants became the Remekhet, the last unaltered humans. To them, the Sublimation was not salvation but theft; a severing of the soul from the natural cycle, a refusal of the return that gives life its meaning. I have come to think they were not wrong, though I cannot say they were right either. I have only my own long life as evidence, and my own life is not a reliable witness.</p>
-          </blockquote>
+          <section class="book-reviews" aria-labelledby="book-reviews-title">
+            <h2 id="book-reviews-title">Reviews</h2>
+            <blockquote class="review">
+              <p>"Possibly the best book of 2026 and it's only March!"</p>
+              <p>"This is one of those books where you know that you're going to be in for a ride from the very beginning. It has a way of bringing you in and making you think about it."</p>
+              <footer>— <a href="https://www.goodreads.com/user/show/53518507-kathryn" target="_blank" rel="noreferrer">Kathryn</a>, Goodreads</footer>
+            </blockquote>
 
-          <h2>Reviews</h2>
-          <blockquote class="review">
-            <p>"Possibly the best book of 2026 and it's only March!"</p>
-            <p>"This is one of those books where you know that you're going to be in for a ride from the very beginning. It has a way of bringing you in and making you think about it."</p>
-            <footer>— <a href="https://www.goodreads.com/user/show/53518507-kathryn" target="_blank" rel="noreferrer">Kathryn</a>, Goodreads</footer>
-          </blockquote>
+            <blockquote class="review">
+              <p>"The philosophical discussions in the book reminded me of reading Brave New World... I love texts that ponder the nature of human life, and this is a story that provides that in spades... The slow-burn in this book is, for the most part, fantastically done... I loved it, would happily read it again (which I can't say for every book I read)."</p>
+              <footer>— <a href="https://norbezdoes.wordpress.com/2026/04/22/bez-reviews-independent-books-18-even-if-the-light-forgets-volume-1/" target="_blank" rel="noreferrer">Bez Jones</a>, Bez Reviews Independent Books</footer>
+            </blockquote>
+          </section>
 
-          <blockquote class="review">
-            <p>"The philosophical discussions in the book reminded me of reading Brave New World... I love texts that ponder the nature of human life, and this is a story that provides that in spades... The slow-burn in this book is, for the most part, fantastically done... I loved it, would happily read it again (which I can't say for every book I read)."</p>
-            <footer>— <a href="https://norbezdoes.wordpress.com/2026/04/22/bez-reviews-independent-books-18-even-if-the-light-forgets-volume-1/" target="_blank" rel="noreferrer">Bez Jones</a>, Bez Reviews Independent Books</footer>
-          </blockquote>
-
-          <h2>Where to Read</h2>
-          <p class="cta-row"><a class="cta-button" href="https://a.co/d/0f0tw5Yc" target="_blank" rel="noreferrer">Buy on Amazon →</a></p>
         </div>
       </section>
     </main>
+
+    <div class="sample-reader" id="sample-reader" hidden aria-hidden="true">
+      <div class="sample-reader-backdrop" data-close-sample></div>
+      <section class="sample-reader-dialog" role="dialog" aria-modal="true" aria-labelledby="sample-reader-title">
+        <header class="sample-reader-header">
+          <div>
+            <p class="sample-reader-kicker">Read a Sample</p>
+            <h2 id="sample-reader-title">Even if the Light Forgets</h2>
+          </div>
+          <button class="sample-reader-close" type="button" aria-label="Close sample reader" data-close-sample>×</button>
+        </header>
+
+        <div class="sample-reader-stage" data-sample-stage>
+          <button class="sample-reader-arrow sample-reader-previous" type="button" aria-label="Previous page" data-sample-previous>←</button>
+          <div class="sample-reader-page">
+            <img src="./assets/eitlf-sample/pages/page-01.jpg" alt="Sample page 1 of 19" data-sample-page draggable="false">
+          </div>
+          <button class="sample-reader-arrow sample-reader-next" type="button" aria-label="Next page" data-sample-next>→</button>
+        </div>
+
+        <footer class="sample-reader-footer">
+          <button type="button" data-sample-previous>← Previous</button>
+          <p><span data-sample-current>1</span> / <span>19</span></p>
+          <button type="button" data-sample-next>Next →</button>
+        </footer>
+        <p class="sample-reader-hint">Swipe or use the arrow keys to turn pages.</p>
+      </section>
+    </div>
   
     <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
       <div class="newsletter-backdrop" data-close-newsletter></div>
@@ -71,6 +89,50 @@
       </section>
     </div>
 
+    <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-14" charset="utf-8"></script>
+    <script>
+      window.ec = window.ec || {};
+      window.ec.storefront = window.ec.storefront || {};
+      window.ec.storefront.enable_navigation = true;
+      window.ec.storefront.product_details_layout = "TWO_COLUMNS_SIDEBAR_ON_THE_RIGHT";
+      window.ec.storefront.product_details_gallery_layout = "IMAGE_SINGLE_THUMBNAILS_HORIZONTAL";
+      window.ec.storefront.product_details_two_columns_with_right_sidebar_show_product_description_on_sidebar = false;
+      window.ec.storefront.product_details_two_columns_with_left_sidebar_show_product_description_on_sidebar = false;
+      window.ec.storefront.product_details_show_product_name = true;
+      window.ec.storefront.product_details_show_breadcrumbs = false;
+      window.ec.storefront.product_details_show_product_sku = false;
+      window.ec.storefront.product_details_show_product_price = true;
+      window.ec.storefront.product_details_show_in_stock_label = false;
+      window.ec.storefront.product_details_show_number_of_items_in_stock = false;
+      window.ec.storefront.product_details_show_qty = false;
+      window.ec.storefront.product_details_show_wholesale_prices = false;
+      window.ec.storefront.product_details_show_product_options = true;
+      window.ec.storefront.product_details_show_product_description = true;
+      window.ec.storefront.product_details_show_delivery_time = undefined;
+      window.ec.storefront.product_details_show_share_buttons = true;
+      window.ec.storefront.product_details_position_product_name = 100;
+      window.ec.storefront.product_details_position_breadcrumbs = 200;
+      window.ec.storefront.product_details_position_product_sku = 300;
+      window.ec.storefront.product_details_position_product_price = 400;
+      window.ec.storefront.product_details_position_product_options = 500;
+      window.ec.storefront.product_details_position_buy_button = 700;
+      window.ec.storefront.product_details_position_wholesale_prices = 800;
+      window.ec.storefront.product_details_position_product_description = 900;
+      window.ec.storefront.product_details_position_delivery_time = undefined;
+      window.ec.storefront.product_details_position_share_buttons = 1000;
+      window.ec.storefront.product_details_position_subtitle = 600;
+      window.ec.storefront.product_details_show_subtitle = false;
+      xProductBrowser(
+        "categoriesPerRow=3",
+        "views=grid(20,3) list(60) table(60)",
+        "categoryView=grid",
+        "searchView=list",
+        "defaultProductId=848382763",
+        "defaultSlug=even-if-the-light-forgets-volume-i-digital-edition-848382763",
+        "id=my-store-139267004"
+      );
+    </script>
+
     <script>
       (function () {
         const popup = document.getElementById('newsletter-popup');
@@ -79,6 +141,7 @@
         const openDelay = 1200;
 
         const openPopup = () => {
+          if (document.body.classList.contains('sample-reader-open')) return;
           popup.hidden = false;
           popup.setAttribute('aria-hidden', 'false');
           requestAnimationFrame(() => popup.classList.add('is-open'));
@@ -105,6 +168,94 @@
             closePopup();
           }
         });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const reader = document.getElementById('sample-reader');
+        const openButton = document.querySelector('[data-open-sample]');
+        const pageImage = reader && reader.querySelector('[data-sample-page]');
+        const currentLabel = reader && reader.querySelector('[data-sample-current]');
+        const previousButtons = reader && reader.querySelectorAll('[data-sample-previous]');
+        const nextButtons = reader && reader.querySelectorAll('[data-sample-next]');
+        const closeButtons = reader && reader.querySelectorAll('[data-close-sample]');
+        const stage = reader && reader.querySelector('[data-sample-stage]');
+        const pageCount = 19;
+        let currentPage = 1;
+        let touchStartX = 0;
+        let previousFocus = null;
+
+        if (!reader || !openButton || !pageImage || !currentLabel || !stage) return;
+
+        const pageSource = (page) => './assets/eitlf-sample/pages/page-' + String(page).padStart(2, '0') + '.jpg';
+
+        const preloadPage = (page) => {
+          if (page < 1 || page > pageCount) return;
+          const image = new Image();
+          image.src = pageSource(page);
+        };
+
+        const showPage = (page) => {
+          currentPage = Math.max(1, Math.min(pageCount, page));
+          pageImage.src = pageSource(currentPage);
+          pageImage.alt = 'Sample page ' + currentPage + ' of ' + pageCount;
+          currentLabel.textContent = currentPage;
+          previousButtons.forEach((button) => { button.disabled = currentPage === 1; });
+          nextButtons.forEach((button) => { button.disabled = currentPage === pageCount; });
+          preloadPage(currentPage - 1);
+          preloadPage(currentPage + 1);
+        };
+
+        const openReader = () => {
+          previousFocus = document.activeElement;
+          const newsletter = document.getElementById('newsletter-popup');
+          if (newsletter) {
+            newsletter.classList.remove('is-open');
+            newsletter.hidden = true;
+            newsletter.setAttribute('aria-hidden', 'true');
+          }
+          reader.hidden = false;
+          reader.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('sample-reader-open');
+          requestAnimationFrame(() => {
+            reader.classList.add('is-open');
+            reader.querySelector('[data-close-sample]').focus();
+          });
+          showPage(currentPage);
+        };
+
+        const closeReader = () => {
+          reader.classList.remove('is-open');
+          reader.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('sample-reader-open');
+          window.setTimeout(() => { reader.hidden = true; }, 180);
+          if (previousFocus) previousFocus.focus();
+        };
+
+        openButton.addEventListener('click', openReader);
+        closeButtons.forEach((button) => button.addEventListener('click', closeReader));
+        previousButtons.forEach((button) => button.addEventListener('click', () => showPage(currentPage - 1)));
+        nextButtons.forEach((button) => button.addEventListener('click', () => showPage(currentPage + 1)));
+
+        stage.addEventListener('touchstart', (event) => {
+          touchStartX = event.changedTouches[0].clientX;
+        }, { passive: true });
+
+        stage.addEventListener('touchend', (event) => {
+          const distance = event.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(distance) < 45) return;
+          showPage(currentPage + (distance < 0 ? 1 : -1));
+        }, { passive: true });
+
+        window.addEventListener('keydown', (event) => {
+          if (reader.hidden) return;
+          if (event.key === 'Escape') closeReader();
+          if (event.key === 'ArrowLeft') showPage(currentPage - 1);
+          if (event.key === 'ArrowRight') showPage(currentPage + 1);
+        });
+
+        showPage(1);
       })();
     </script>
 

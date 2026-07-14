@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Books | Ys Goldt</title>
+    <meta name="description" content="Books by Ys Goldt, available in digital and print editions.">
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="stylesheet" href="./styles.css?v=20260714-7">
+    <script src="./disable-context-menu.js" defer></script>
+  </head>
+  <body class="books-page" data-disable-context-menu>
+    <main class="site">
+      <section class="hero books-hero" aria-label="Ys Goldt">
+        <img class="hero-image" src="./ysprofile.jpg" alt="Ys Goldt profile image">
+        <h1 class="page-title">Ys Goldt</h1>
+        <p class="page-subtitle">creator of strange and tender things</p>
+      </section>
+
+      <nav class="tabs" aria-label="Sections">
+        <a class="tab active" href="./books.html" aria-current="page">Books</a>
+        <a class="tab" href="./index.html#work">Works</a>
+        <a class="tab" href="./index.html#materials">Materials</a>
+        <a class="tab" href="./index.html#about">About</a>
+        <a class="tab" href="./index.html#contact">Contact</a>
+      </nav>
+
+      <header class="books-store-header">
+        <h2>Books</h2>
+        <p>Digital and print editions by Ys Goldt.</p>
+      </header>
+
+      <div class="books-catalog-navigation" data-books-catalog-navigation hidden>
+        <a class="books-back-to-catalog" href="./books.html">← Back to Catalog</a>
+      </div>
+
+      <div class="books-cart" aria-label="Shopping bag">
+        <div class="ec-cart-widget"></div>
+      </div>
+
+      <section class="books-store" aria-label="Books by Ys Goldt">
+        <div id="my-store-139267004"></div>
+      </section>
+
+      <footer class="site-footer">
+        <p><a href="./privacy-policy.html">Privacy Policy</a></p>
+      </footer>
+    </main>
+
+    <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-14" charset="utf-8"></script>
+    <script>
+      Ecwid.init();
+      xProductBrowser(
+        "categoriesPerRow=3",
+        "views=grid(20,3) list(60) table(60)",
+        "categoryView=grid",
+        "searchView=list",
+        "defaultCategoryId=203498829",
+        "id=my-store-139267004"
+      );
+
+      const catalogNavigation = document.querySelector('[data-books-catalog-navigation]');
+
+      const updateCatalogNavigation = () => {
+        if (!catalogNavigation) return;
+        catalogNavigation.hidden = !/\/p\/\d+/.test(window.location.hash);
+      };
+
+      window.addEventListener('hashchange', updateCatalogNavigation);
+      updateCatalogNavigation();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Read a Sample | The Strange Mercy of Listening</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="stylesheet" href="./sample-reader.css">
+  </head>
+  <body>
+    <main class="standalone-reader" data-standalone-reader data-page-count="10" data-page-path="./assets/strange-mercy-sample/pages">
+      <header class="standalone-reader-header">
+        <p class="standalone-reader-kicker">Read a Sample</p>
+        <h1 class="standalone-reader-title">The Strange Mercy of Listening</h1>
+      </header>
+
+      <div class="standalone-reader-stage" data-sample-stage>
+        <button class="standalone-reader-arrow" type="button" aria-label="Previous page" data-sample-previous>←</button>
+        <div class="standalone-reader-page">
+          <img src="./assets/strange-mercy-sample/pages/page-01.jpg" alt="Sample page 1 of 10" data-sample-page draggable="false">
+        </div>
+        <button class="standalone-reader-arrow" type="button" aria-label="Next page" data-sample-next>→</button>
+      </div>
+
+      <footer class="standalone-reader-controls">
+        <button type="button" data-sample-previous>← Previous</button>
+        <p class="standalone-reader-count"><span data-sample-current>1</span> / 10</p>
+        <button type="button" data-sample-next>Next →</button>
+      </footer>
+      <p class="standalone-reader-hint">Swipe or use the arrow keys to turn pages.</p>
+    </main>
+    <script src="./sample-reader.js"></script>
+  </body>
+</html>

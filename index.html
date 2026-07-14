@@ -18,6 +18,11 @@
     <link rel="icon" type="image/png" href="./favicon.png">
     <link rel="stylesheet" href="./styles.css">
     <script src="./disable-context-menu.js" defer></script>
+    <script>
+      if (!window.location.hash) {
+        window.location.replace('./books.html');
+      }
+    </script>
   </head>
   <body data-disable-context-menu>
     <main class="site site-home">
@@ -28,6 +33,7 @@
       </section>
 
       <section class="tabs" aria-label="Sections">
+        <a class="tab" href="./books.html">Books</a>
         <button class="tab active" type="button" data-panel="work">Works</button>
         <button class="tab" type="button" data-panel="materials">Materials</button>
         <button class="tab" type="button" data-panel="about">About</button>
@@ -37,15 +43,6 @@
       <section class="panel-shell" aria-live="polite">
         <div class="panel active" data-panel="work">
           <div class="work-list compact-list">
-            <section class="work-group" aria-labelledby="works-writing">
-              <h2 class="work-group-title" id="works-writing">Writing</h2>
-              <div class="work-group-items">
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">An Index of Vanishing Part I</h3><p class="work-kicker">2026 · Novella</p></div><div class="work-action"><a class="work-button" href="./an-index-of-vanishing.html">View</a></div></article>
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Even if the Light Forgets Volume 1</h3><p class="work-kicker">2026 · Novel</p></div><div class="work-action"><a class="work-button" href="./even-if-the-light-forgets-volume-1.html">View</a></div></article>
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">The Strange Mercy of Listening</h3><p class="work-kicker">2026 · Novel</p></div><div class="work-action"><a class="work-button" href="./the-strange-mercy-of-listening.html">View</a></div></article>
-              </div>
-            </section>
-
             <section class="work-group" aria-labelledby="works-scores">
               <h2 class="work-group-title" id="works-scores">Scores</h2>
               <div class="work-group-items">
@@ -155,8 +152,16 @@
       }
 
       tabs.forEach((tab) => {
-        tab.addEventListener('click', () => activatePanel(tab.dataset.panel));
+        tab.addEventListener('click', () => {
+          activatePanel(tab.dataset.panel);
+          history.replaceState(null, '', '#' + tab.dataset.panel);
+        });
       });
+
+      const requestedPanel = window.location.hash.slice(1);
+      if (requestedPanel && document.querySelector('.panel[data-panel="' + requestedPanel + '"]')) {
+        activatePanel(requestedPanel);
+      }
     </script>
 
     <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
