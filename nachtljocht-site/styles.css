@@ -136,6 +136,29 @@ button, input, textarea { font: inherit; }
 .panel-shell.manifesto-active {
   width: min(100%, 720px);
 }
+.store-frame {
+  width: min(100%, 1100px);
+}
+.store-intro {
+  margin: 0 auto 18px;
+  max-width: 620px;
+  text-align: center;
+}
+.store-intro p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.store-cart {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 12px;
+  min-height: 42px;
+}
+.store-body {
+  min-height: 320px;
+}
 .panel, .detail-body {
   padding: 20px 18px 18px;
   border: 1px solid var(--line);
