@@ -9,4 +9,12 @@
 <div class="actions"><button id="focusButton">◌ FOCUS LOOP</button><button id="randomAmbient">☾ RANDOM LOOP</button><button id="saveLibrary">＋ SAVE TO LOOP LIBRARY</button><button id="saveLoop">↓ EXPORT 90S FLAC</button></div>
 <section class="loop-library" aria-label="Saved loops"><div class="library-head"><span>SAVED LOOPS</span><small id="libraryCount">0 / 10</small></div><div id="libraryItems" class="library-items"></div></section>
 <p class="hint" id="status">Choose a star to make it sing.</p><div id="loading" class="loading" aria-live="polite"><i></i><span>CALCULATING NEW UNIVERSE</span></div></aside></main>
-<footer><span>MATHEMATICAL AMBIENT ENGINE</span><span>audio-reactive constellation</span><span id="clock"></span></footer><script src="flac-worker.js?v=20260714-birdfloor"></script><script src="engine-v2.js?v=20260714-birdfloor"></script><script src="visualizer.js?v=20260714-birdfloor"></script></body></html>
+<footer><span>MATHEMATICAL AMBIENT ENGINE</span><span>audio-reactive constellation</span><span id="clock"></span></footer><script>
+(()=>{
+  const block=event=>event.preventDefault();
+  ['contextmenu','copy','cut','paste','selectstart','dragstart'].forEach(type=>document.addEventListener(type,block));
+  document.addEventListener('keydown',event=>{
+    if((event.ctrlKey||event.metaKey)&&['a','c','x','v','u','s'].includes(event.key.toLowerCase()))event.preventDefault();
+  });
+})();
+</script><script src="flac-worker.js?v=20260714-equalpower"></script><script src="engine-v2.js?v=20260714-equalpower"></script><script src="visualizer.js?v=20260714-equalpower"></script></body></html>
