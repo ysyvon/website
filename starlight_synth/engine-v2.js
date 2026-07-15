@@ -1,121 +1,1790 @@
-const stars=document.querySelector('#stars'),scale=document.querySelector('#scale'),volume=document.querySelector('#volume'),volOut=document.querySelector('#volOut'),glow=document.querySelector('#glow'),glowOut=document.querySelector('#glowOut'),bpm=document.querySelector('#bpm'),bpmOut=document.querySelector('#bpmOut'),play=document.querySelector('#play'),songName=document.querySelector('#songName'),statusText=document.querySelector('#status'),loading=document.querySelector('#loading'),clock=document.querySelector('#clock'),BIRD_GAIN=.48,CHIME_GAIN=.26,CROSSFADE_SECONDS=6;let ac,bus,outputBus,comp,birdBus,chimeBus,currentBank,playing=false,song=[],songStart=0,schedulerId=0,playIndex=0,activeEvents=[],transitionTimer=0,transitionToken=0,stopTimer=0;const audioBanks=new Set(),retireTimers=new Set();
-const pts=Array.from({length:220},(_,i)=>{let x=(Math.sin((i+1)*91.731)*43758.5453)%1,y=(Math.sin((i+1)*47.173+8.4)*24634.6345)%1;return[2+Math.abs(x)*96,2+Math.abs(y)*96]});
-function rebuildAudioBus(initialGain=1){
-  if(!comp){comp=ac.createDynamicsCompressor();const analyser=ac.createAnalyser();analyser.fftSize=256;window.ambientAnalyser=analyser;window.ambientAudioContext=ac;comp.connect(analyser);analyser.connect(ac.destination)}
-  const bank={music:ac.createGain(),output:ac.createGain(),birds:ac.createGain(),chimes:ac.createGain()};
-  bank.music.gain.value=Math.max(0,volume.value/100);bank.output.gain.value=initialGain;bank.birds.gain.value=((birdVolume?.value||18)/100)*BIRD_GAIN;bank.chimes.gain.value=((chimeVolume?.value||14)/100)*CHIME_GAIN;
-  bank.music.connect(bank.output);bank.birds.connect(bank.output);bank.chimes.connect(bank.output);bank.output.connect(comp);audioBanks.add(bank);currentBank=bank;bus=bank.music;outputBus=bank.output;birdBus=bank.birds;chimeBus=bank.chimes;return bank
+const stars = document.querySelector("#stars"),
+  scale = document.querySelector("#scale"),
+  volume = document.querySelector("#volume"),
+  volOut = document.querySelector("#volOut"),
+  glow = document.querySelector("#glow"),
+  glowOut = document.querySelector("#glowOut"),
+  bpm = document.querySelector("#bpm"),
+  bpmOut = document.querySelector("#bpmOut"),
+  play = document.querySelector("#play"),
+  songName = document.querySelector("#songName"),
+  statusText = document.querySelector("#status"),
+  loading = document.querySelector("#loading"),
+  clock = document.querySelector("#clock"),
+  BIRD_GAIN = 0.48,
+  CHIME_GAIN = 0.26,
+  CROSSFADE_SECONDS = 6;
+let ac,
+  bus,
+  outputBus,
+  comp,
+  birdBus,
+  chimeBus,
+  currentBank,
+  playing = false,
+  song = [],
+  songStart = 0,
+  schedulerId = 0,
+  playIndex = 0,
+  activeEvents = [],
+  transitionTimer = 0,
+  transitionToken = 0,
+  stopTimer = 0;
+const audioBanks = new Set(),
+  retireTimers = new Set();
+const pts = Array.from({ length: 220 }, (_, i) => {
+  let x = (Math.sin((i + 1) * 91.731) * 43758.5453) % 1,
+    y = (Math.sin((i + 1) * 47.173 + 8.4) * 24634.6345) % 1;
+  return [2 + Math.abs(x) * 96, 2 + Math.abs(y) * 96];
+});
+function rebuildAudioBus(initialGain = 1) {
+  if (!comp) {
+    comp = ac.createDynamicsCompressor();
+    const analyser = ac.createAnalyser();
+    analyser.fftSize = 256;
+    window.ambientAnalyser = analyser;
+    window.ambientAudioContext = ac;
+    comp.connect(analyser);
+    analyser.connect(ac.destination);
+  }
+  const bank = {
+    music: ac.createGain(),
+    output: ac.createGain(),
+    birds: ac.createGain(),
+    chimes: ac.createGain(),
+  };
+  bank.music.gain.value = Math.max(0, volume.value / 100);
+  bank.output.gain.value = initialGain;
+  bank.birds.gain.value = ((birdVolume?.value || 18) / 100) * BIRD_GAIN;
+  bank.chimes.gain.value = ((chimeVolume?.value || 14) / 100) * CHIME_GAIN;
+  bank.music.connect(bank.output);
+  bank.birds.connect(bank.output);
+  bank.chimes.connect(bank.output);
+  bank.output.connect(comp);
+  audioBanks.add(bank);
+  currentBank = bank;
+  bus = bank.music;
+  outputBus = bank.output;
+  birdBus = bank.birds;
+  chimeBus = bank.chimes;
+  return bank;
 }
-function setup(){if(ac)return
-const AudioEngine=window.AudioContext||window.webkitAudioContext;if(!AudioEngine){statusText.textContent='Web Audio is unavailable in this browser.';return}ac=new AudioEngine();rebuildAudioBus()}
-function currentMode(){return focusActive?'focus':ambientMode.value}
-function hz(n){return 440*2**((n-69)/12)}
-function tone(n,d=.35,ch=-1,v=.65,when=0){setup();let at=when||ac.currentTime,isBass=n<50||ch===3,presets={bell:['sine',4200,.008,.7],pluck:['triangle',3000,.004,.34],pad:['sawtooth',1100,.18,1.35],focusPad:['sine',760,.8,1.8],pulse:['square',1800,.012,.5],saw:['sawtooth',2400,.01,.65],organ:['square',950,.035,1.05],lead:['sawtooth',3600,.018,.75],warm:['triangle',1450,.045,.9]},toneStyle=currentMode()==='focus'?(ch===5?'focusPad':'bell'):({drone:'pad',minimal:'pluck',tape:'warm',celestial:'bell',ocean:'bell',plants:'pluck',mycelium:'organ',tidal:'pad'}[ambientMode.value]||'bell'),pr=presets[toneStyle],o=ac.createOscillator(),gain=ac.createGain(),f=ac.createBiquadFilter();o.type=isBass&&currentMode()!=='focus'?'sawtooth':pr[0];o.frequency.value=hz(n);f.type='lowpass';f.frequency.value=isBass?520:pr[1];f.Q.value=isBass?1.2:1.2;let peak=Math.max(.006,v*(isBass?1.05:.21)),attack=isBass?.12:pr[2],release=isBass?Math.max(.8,d):Math.max(.12,d*pr[3]);gain.gain.setValueAtTime(.001,at);gain.gain.exponentialRampToValueAtTime(peak,at+attack);gain.gain.exponentialRampToValueAtTime(.001,at+release);o.connect(f).connect(gain).connect(bus);o.start(at);o.stop(at+release+.04);if(!isBass&&['bell','organ','pad'].includes(toneStyle)){let color=ac.createOscillator(),cg=ac.createGain();color.type=toneStyle==='bell'?'sine':pr[0];color.frequency.value=hz(n)*(toneStyle==='bell'?2.01:1.005);cg.gain.setValueAtTime(.001,at);cg.gain.exponentialRampToValueAtTime(v*.05,at+attack+.005);cg.gain.exponentialRampToValueAtTime(.001,at+release);color.connect(cg).connect(bus);color.start(at);color.stop(at+release+.04)}if(isBass&&currentMode()!=='focus'){let sub=ac.createOscillator(),sg=ac.createGain();sub.type='sine';sub.frequency.value=hz(n-12);sg.gain.setValueAtTime(.001,at);sg.gain.exponentialRampToValueAtTime(v*.8,at+.008);sg.gain.exponentialRampToValueAtTime(.001,at+Math.max(.24,d));sub.connect(sg).connect(bus);sub.start(at);sub.stop(at+Math.max(.24,d)+.04)}}
-pts.forEach((q,i)=>{let b=document.createElement('i'),u=Math.abs(Math.sin((i+3)*12.9898)*43758.5453)%1,size=u<.68?1:u<.88?2:u<.965?3:u<.992?5:8;b.className=`star ${i%3===0?'bass-star':i%3===1?'mid-star':'air-star'}`;b.style.cssText=`left:${q[0]}%;top:${q[1]}%;--star-size:${size}px`;stars.append(b)});
-volume.oninput=()=>{setup();const now=ac.currentTime,target=volume.value/100;audioBanks.forEach(bank=>{bank.music.gain.cancelScheduledValues(now);bank.music.gain.setTargetAtTime(target,now,.035)});volOut.value=volume.value+'%'};glow.oninput=()=>glowOut.value=glow.value+'%';bpm.oninput=()=>bpmOut.value=bpm.value+' BPM';
-function setPlayingUI(on){document.querySelectorAll('.panel select,#bpm,#glow').forEach(el=>el.disabled=on);birdsEnabled.disabled=on;chimesEnabled.disabled=on;volume.disabled=false;birdVolume.disabled=false;chimeVolume.disabled=false;randomAmbient.disabled=on;focusButton.disabled=on}
-const equalPowerIn=Float32Array.from({length:96},(_,i)=>Math.sin(Math.PI*.5*i/95)),equalPowerOut=Float32Array.from({length:96},(_,i)=>Math.cos(Math.PI*.5*i/95));
-function applyLoopFade(start){if(!ac||!outputBus)return;outputBus.gain.cancelScheduledValues(start);outputBus.gain.setValueAtTime(.001,start);outputBus.gain.setValueCurveAtTime(equalPowerIn,start,3)}
-function scheduleEvent(e,at){if(e.ch===10)weatherVoice(e.n,e.d,e.v,at);else if(e.ch===11)playBirdSafely(e,at);else if(e.ch===12)chimeSynthVoice(e.n,e.v,at,e.t);else if(e.ch===9)drumVoice(e.n,e.v,at);else if(e.ch===3||(e.n<50&&currentMode()!=='focus'))bassVoice(e.n,e.d,e.v,at);else tone(e.n,e.d,e.ch,e.v,at)}
-function retireBank(bank,when){const delay=Math.max(0,(when-ac.currentTime+.15)*1000),timer=setTimeout(()=>{retireTimers.delete(timer);audioBanks.delete(bank);try{bank.output.disconnect()}catch{}},delay);retireTimers.add(timer)}
-function beginPassageCrossfade(duration){
-  const fadeStart=songStart+duration-CROSSFADE_SECONDS,oldBank=currentBank;
-  while(playIndex<activeEvents.length){const e=activeEvents[playIndex++];scheduleEvent(e,songStart+e.t)}
-  oldBank.output.gain.cancelScheduledValues(fadeStart);oldBank.output.gain.setValueAtTime(1,fadeStart);oldBank.output.gain.setValueCurveAtTime(equalPowerOut,fadeStart,CROSSFADE_SECONDS);
-  const nextEvents=focusActive?ambientSong():[...song];if(focusActive){song=nextEvents;statusText.textContent='Focus is composing a new passage…'}
-  const nextBank=rebuildAudioBus(.001);nextBank.output.gain.setValueCurveAtTime(equalPowerIn,fadeStart,CROSSFADE_SECONDS);songStart=fadeStart;activeEvents=[...nextEvents].sort((a,b)=>a.t-b.t);playIndex=0;retireBank(oldBank,fadeStart+CROSSFADE_SECONDS);scheduleWindow()
+function setup() {
+  if (ac) return;
+  const AudioEngine = window.AudioContext || window.webkitAudioContext;
+  if (!AudioEngine) {
+    statusText.textContent = "Web Audio is unavailable in this browser.";
+    return;
+  }
+  ac = new AudioEngine();
+  rebuildAudioBus();
 }
-function scheduleWindow(){if(!playing)return;const horizon=ac.currentTime-songStart+1.25;while(playIndex<activeEvents.length&&activeEvents[playIndex].t<=horizon){const e=activeEvents[playIndex++];scheduleEvent(e,songStart+e.t)}const duration=focusActive?60:90;if((focusActive||loopEnabled)&&ac.currentTime>=songStart+duration-CROSSFADE_SECONDS-.15){beginPassageCrossfade(duration);return}if(playIndex>=activeEvents.length&&!focusActive&&!loopEnabled&&ac.currentTime>songStart+activeEvents[activeEvents.length-1].t+activeEvents[activeEvents.length-1].d+.25)stop()}
-function playEvents(events,loop=false){setup();if(!ac||!events.length)return;if(ac.state==='suspended')ac.resume();stop(true);loopEnabled=loop;activeEvents=[...events].sort((a,b)=>a.t-b.t);playIndex=0;playing=true;window.ambientPlaying=true;document.body.dataset.playing='true';play.textContent='■';setPlayingUI(true);songStart=ac.currentTime+.1;applyLoopFade(songStart);scheduleWindow();schedulerId=setInterval(scheduleWindow,100)}
-function stop(immediate=false){clearTimeout(stopTimer);clearInterval(schedulerId);schedulerId=0;playing=false;play.textContent='▶';retireTimers.forEach(clearTimeout);retireTimers.clear();const banks=[...audioBanks],now=ac?.currentTime||0,fade=immediate?.02:2.4;banks.forEach(bank=>{const gain=bank.output.gain,current=Math.max(.001,gain.value);gain.cancelScheduledValues(now);gain.setValueAtTime(current,now);gain.exponentialRampToValueAtTime(.001,now+fade)});const finish=()=>{banks.forEach(bank=>{try{bank.output.disconnect()}catch{}});audioBanks.clear();if(ac)rebuildAudioBus();window.ambientPlaying=false;document.body.dataset.playing='false';setPlayingUI(false);play.disabled=false};if(immediate)finish();else{play.disabled=true;statusText.textContent='Letting the sound dissolve…';stopTimer=setTimeout(finish,2450)}}
-const bassStyle=document.querySelector('#bassStyle'),drumKit=document.querySelector('#drumKit');
-const ambientMode=document.querySelector('#ambientMode'),saveLoop=document.querySelector('#saveLoop'),focusControls=document.querySelector('#focusControls'),focusEnvironment=document.querySelector('#focusEnvironment'),birdsEnabled=document.querySelector('#birdsEnabled'),chimesEnabled=document.querySelector('#chimesEnabled'),birdVolume=document.querySelector('#birdVolume'),chimeVolume=document.querySelector('#chimeVolume'),birdVolOut=document.querySelector('#birdVolOut'),chimeVolOut=document.querySelector('#chimeVolOut'),natureStatus=document.querySelector('#natureStatus'),focusButton=document.querySelector('#focusButton');let loopEnabled=false,recording=false,focusActive=false;
-const randomAmbient=document.querySelector('#randomAmbient');
-function bassVoice(n,d,v,at){setup();let style=bassStyle.value,freq=hz(n),o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain();o.type=style==='sub'?'sine':style==='fm'?'square':style==='pluck'?'triangle':'sawtooth';o.frequency.setValueAtTime(freq,at);if(style==='acid')o.detune.setValueAtTime(-7,at);f.type='lowpass';f.Q.value=style==='acid'?15:style==='pluck'?5:2;f.frequency.setValueAtTime(style==='acid'?1800:style==='fm'?750:style==='pluck'?1400:420,at);if(style==='acid')f.frequency.exponentialRampToValueAtTime(180,at+Math.max(.15,d));let peak=v*(style==='sub'?.95:style==='fm'?.55:.78);g.gain.setValueAtTime(.001,at);g.gain.exponentialRampToValueAtTime(peak,at+.006);g.gain.exponentialRampToValueAtTime(.001,at+Math.max(.12,d));o.connect(f).connect(g).connect(bus);o.start(at);o.stop(at+d+.05);if(style==='sub'||style==='fm'){let sub=ac.createOscillator(),sg=ac.createGain();sub.type='sine';sub.frequency.value=style==='fm'?freq*1.5:freq/2;sg.gain.setValueAtTime(v*(style==='fm'?.24:.7),at);sg.gain.exponentialRampToValueAtTime(.001,at+Math.max(.15,d));sub.connect(sg).connect(bus);sub.start(at);sub.stop(at+d+.05)}}
-function drumVoice(n,v,at){setup();let kit=drumKit.value,isKick=n===35||n===36,isSnare=n===38||n===40;if(isKick){let o=ac.createOscillator(),g=ac.createGain();o.type=kit==='glitch'?'square':'sine';o.frequency.setValueAtTime(kit==='space'?110:kit==='soft'?75:145,at);o.frequency.exponentialRampToValueAtTime(kit==='glitch'?38:45,at+(kit==='space'?.42:.16));g.gain.setValueAtTime(v*(kit==='soft'?.38:.78),at);g.gain.exponentialRampToValueAtTime(.001,at+(kit==='space'?.5:.2));o.connect(g).connect(bus);o.start(at);o.stop(at+.55);return}let len=isSnare?(kit==='space'?.42:.18):(kit==='glitch'?.025:.07),b=ac.createBuffer(1,ac.sampleRate*len,ac.sampleRate),data=b.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*(1-i/data.length);let s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();s.buffer=b;f.type=isSnare?'bandpass':'highpass';f.frequency.value=isSnare?(kit==='soft'?950:kit==='space'?1250:1900):(kit==='glitch'?6800:4800);f.Q.value=kit==='space'?4:1;g.gain.value=v*(isSnare?.3:.12);s.connect(f).connect(g).connect(bus);s.start(at)}
-const weatherBuffers={};function weatherVoice(kind,d,v,at){setup();let key=kind+'-'+ac.sampleRate,b=weatherBuffers[key];if(!b){b=ac.createBuffer(1,ac.sampleRate*4,ac.sampleRate);let data=b.getChannelData(0),brown=0;for(let i=0;i<data.length;i++){let white=Math.random()*2-1;brown=(brown+white*.018)/1.018;data[i]=brown*.97+white*.03}weatherBuffers[key]=b}let src=ac.createBufferSource(),filter=ac.createBiquadFilter(),gain=ac.createGain(),freq=[680,360,520,430][kind]||460;src.buffer=b;src.loop=true;filter.type='lowpass';filter.frequency.setValueAtTime(freq*.9,at);filter.frequency.exponentialRampToValueAtTime(freq*1.06,at+d*.55);filter.frequency.exponentialRampToValueAtTime(freq*.94,at+d);filter.Q.value=.18;gain.gain.setValueAtTime(.001,at);gain.gain.exponentialRampToValueAtTime(v,at+6);gain.gain.setValueAtTime(v,Math.max(at+6,at+d-6));gain.gain.exponentialRampToValueAtTime(.001,at+d);src.connect(filter).connect(gain).connect(bus);src.start(at);src.stop(at+d+.05)}
-function seededPattern(seed){let s=((seed*1000|0)^0x9e3779b9)>>>0;return()=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return s/4294967296}}
-function birdPattern(event){const p=event.bird||{id:0,type:0,pan:0,distance:.3,phrase:1,range:6},rand=seededPattern(event.t*97+p.id*131+(event.n||91)*17),type=p.type%5,counts=[3+rand()*5|0,8+rand()*11|0,5+rand()*8|0,6+rand()*12|0,2+rand()*4|0],base=hz((event.n||91)-3),calls=[],spacing=[.34,.075,.17,.055,.7][type]*p.phrase,cursor=0;for(let i=0;i<counts[type];i++){cursor+=i?spacing*(.55+rand()*1.05)-(type===1||type===3?rand()*.035:0):0;let dur=[.22,.055,.095,.035,.48][type]*(.65+rand()*.9)*p.phrase,from=base*(.82+rand()*(p.range||6)/12),curve=type===0?(rand()>.5?1.25:.76):type===1?.92+rand()*.18:type===2?(i%2?1.34:.7+rand()*.18):type===3?.88+rand()*.26:.82+rand()*.12,to=from*curve,mid=Math.sqrt(from*to)*(type===0?.94+rand()*.18:1),end=to*(.92+rand()*.16),amp=[.12,.075,.095,.065,.14][type]*(.72+rand()*.45)*(1-p.distance*.48),harmonic=[.1,.16,.12,.08,.045][type],noise=[.05,.09,.14,.22,.035][type];calls.push({offset:cursor,dur,from,mid,to:end,amp,harmonic,noise});if((type===0||type===2)&&rand()<.2)calls.push({offset:cursor+.08+rand()*.2,dur:dur*.8,from:from*(1.12+rand()*.16),mid:mid*1.18,to:end*1.12,amp:amp*.48,harmonic,noise:noise*.8})}calls.sort((a,b)=>a.offset-b.offset);const last=calls[calls.length-1];return{calls,length:last.offset+last.dur+.8+p.distance*.9,pan:p.pan||0,distance:p.distance||0,type}}
-function chimePattern(note,seed){const rand=seededPattern(seed+(note||64)*29),base=hz(note||52),modes=[1,2.756,5.404,8.933],tubeRatios=[1,1.12246,1.25992,1.33484],strikes=2+(rand()>.46?1:0),pattern=[];for(let tube=0;tube<strikes;tube++){let strikeOffset=tube*(.28+rand()*.46),tubeRatio=tubeRatios[(tube+(rand()*tubeRatios.length|0))%tubeRatios.length],energy=(.9+rand()*.2)/Math.sqrt(1+tube*.3);modes.forEach((ratio,i)=>pattern.push({offset:strikeOffset+i*(.07+rand()*.07),freq:base*tubeRatio*ratio*(.998+rand()*.004),dur:(13+rand()*4)/(1+i*.42),amp:.13*energy/(1+i*.9)}))}return pattern}
-function birdSynthVoice(event,at){setup();const pattern=birdPattern(event),cluster=ac.createGain(),pan=typeof ac.createStereoPanner==='function'?ac.createStereoPanner():null,clusterEnd=at+pattern.length;if(pan){pan.pan.value=pattern.pan;cluster.connect(pan).connect(birdBus)}else cluster.connect(birdBus);cluster.gain.setValueAtTime(.16,at);cluster.gain.linearRampToValueAtTime(1,at+.24);cluster.gain.setValueAtTime(1,Math.max(at+.24,clusterEnd-.65));cluster.gain.linearRampToValueAtTime(.12,clusterEnd);pattern.calls.forEach(call=>{const start=at+call.offset,from=Math.max(120,call.from),mid=Math.max(120,call.mid),to=Math.max(120,call.to),dur=Math.max(.035,call.dur);let o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();o.type=pattern.type===3?'triangle':'sine';o.frequency.setValueAtTime(from,start);o.frequency.exponentialRampToValueAtTime(mid,start+dur*.38);o.frequency.exponentialRampToValueAtTime(to,start+dur);f.type='lowpass';f.frequency.value=3000-pattern.distance*900;f.Q.value=.08;g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(Math.max(.006,event.v*call.amp*1.8),start+.028);g.gain.exponentialRampToValueAtTime(.001,start+dur);o.connect(f).connect(g).connect(cluster);o.start(start);o.stop(start+dur+.04)})}
-function fallbackBirdVoice(noteOrEvent,vOrAt,maybeAt){const event=typeof noteOrEvent==='object'?noteOrEvent:{n:noteOrEvent,v:vOrAt,t:0,bird:{id:cryptoUnit()*999|0}},at=typeof noteOrEvent==='object'?vOrAt:maybeAt,rand=seededPattern((event.t||0)+(event.bird?.id||0)*43+Date.now()%997),base=hz((event.n||88)-8),calls=3+(rand()*9|0);for(let i=0;i<calls;i++){let start=at+i*(.07+rand()*.3),dur=.06+rand()*.32,o=ac.createOscillator(),g=ac.createGain(),from=base*(.65+rand()*.7),to=from*(.7+rand()*.75);o.type=rand()<.18?'triangle':'sine';o.frequency.setValueAtTime(from,start);o.frequency.exponentialRampToValueAtTime(Math.max(120,to),start+dur);g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(.012+rand()*.022,start+.025);g.gain.exponentialRampToValueAtTime(.001,start+dur);o.connect(g).connect(birdBus);o.start(start);o.stop(start+dur+.03)}}
-function playBirdSafely(event,at){try{birdSynthVoice(event,at)}catch(error){console.error('Bird voice fallback:',error);fallbackBirdVoice(event,at)}}
-function chimeSynthVoice(note,v,at,seed=0){setup();chimePattern(note,seed).forEach((mode,i)=>{let o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter(),start=at+mode.offset;o.type='sine';o.frequency.value=mode.freq;f.type='lowpass';f.frequency.value=2400;f.Q.value=.1;g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(Math.max(.0015,v*mode.amp),start+.16+i*.035);g.gain.exponentialRampToValueAtTime(.001,start+mode.dur);o.connect(f).connect(g).connect(chimeBus);o.start(start);o.stop(start+mode.dur+.08)})}
-function cryptoUnit(){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]/4294967296}
-function fitMinute(events){if(!events.length)return events;let length=Math.min(60,Math.max(...events.map(e=>e.t+e.d))),out=[];for(let offset=0;offset<90;offset+=length)events.forEach(e=>{if(e.t<length&&e.t+offset<90)out.push({...e,t:e.t+offset,d:Math.min(e.d,90-e.t-offset)})});return out}
-function buildGenerated(total=false,ambient=true,randomizeAmbient=false){if(randomizeAmbient){focusActive=false;ambientMode.selectedIndex=cryptoUnit()*ambientMode.options.length|0;scale.selectedIndex=cryptoUnit()*scale.options.length|0;bassStyle.selectedIndex=cryptoUnit()*bassStyle.options.length|0;drumKit.selectedIndex=cryptoUnit()*drumKit.options.length|0;bpm.value=38+(cryptoUnit()*45|0);bpmOut.value=bpm.value+' BPM'}song=focusActive?ambientSong():fitMinute(ambientSong());songName.textContent=focusActive?'FOCUS · '+focusEnvironment.options[focusEnvironment.selectedIndex].text:'AMBIENT · '+ambientMode.options[ambientMode.selectedIndex].text;statusText.textContent=focusActive?`ONGOING · ${scale.options[scale.selectedIndex].text} · continuously composing`:`90S · ${scale.options[scale.selectedIndex].text} · ${bpm.value} BPM · ${bassStyle.options[bassStyle.selectedIndex].text}`;showFormula();return song}
-function transitionGenerate(total=false,ambient=true,randomizeAmbient=false){setup();
-const token=++transitionToken;clearTimeout(transitionTimer);randomAmbient.disabled=true;loading.classList.add('show');statusText.textContent='Composing a new ambient world…';if(ac){let now=ac.currentTime,current=Math.max(.001,outputBus.gain.value);outputBus.gain.cancelScheduledValues(now);outputBus.gain.setValueAtTime(current,now);outputBus.gain.exponentialRampToValueAtTime(.001,now+.38)}clearInterval(schedulerId);playing=false;play.textContent='▶';transitionTimer=setTimeout(()=>{if(token!==transitionToken)return;
-const next=buildGenerated(total,ambient,randomizeAmbient);renderLibrary();if(ac){let now=ac.currentTime;outputBus.gain.cancelScheduledValues(now);outputBus.gain.setValueAtTime(.001,now)}playEvents(next,true);applyLoopFade(songStart);loading.classList.remove('show');setPlayingUI(true)},430)}
-randomAmbient.onclick=()=>{focusActive=false;focusButton.textContent='◌ FOCUS LOOP';transitionGenerate(false,true,true)};
-focusButton.onclick=()=>{if(!focusActive){focusActive=true;focusButton.textContent='◌ START FOCUS STREAM';invalidateComposition();setup();return}bpm.value=44+(cryptoUnit()*17|0);bpmOut.value=bpm.value+' BPM';transitionGenerate(false,true,false)};
-const formula=document.querySelector('#formula'),formulaText={drone:'fₙ = f₀ · n — harmonic partial series',minimal:'P(xₙ₊₁ | xₙ) — sparse Markov transitions',tape:'f(t) = f₀ + ε·sin(ωt) — slow oscillator drift',celestial:'T² ∝ a³ — Keplerian orbital periods',ocean:'η(x,t) = Σ Aₙ cos(kₙx − ωₙt + φₙ) — Gerstner waves',plants:'θₙ = n · 137.507764° — golden-angle phyllotaxis',mycelium:'∂u/∂t = Dᵤ∇²u − uv² + F(1−u) — reaction diffusion',tidal:'h(t) = M₂ sin(2πt/12.42) + S₂ sin(2πt/12) — lunar tides',focus:'weather(t) + f₀ + sparse pentatonic partials — non-periodic focus field'};
-bassStyle.closest('label').classList.remove('normal-control');drumKit.closest('label').classList.remove('normal-control');scale.closest('label').classList.remove('normal-control');
-let ambientDetail='';function showFormula(){const mode=currentMode();formula.textContent=formulaText[mode]+(ambientDetail?' · '+ambientDetail:'');formula.dataset.mode=mode;document.body.dataset.ambient=mode}
-function invalidateComposition(){clearTimeout(transitionTimer);transitionToken++;stop(true);song=[];activeEvents=[];ambientDetail='';showFormula();renderLibrary();statusText.textContent=focusActive?'Choose a Focus environment and layers, then generate.':'Settings ready · press RANDOM LOOP to compose.'}ambientMode.addEventListener('change',()=>{focusActive=false;focusButton.textContent='◌ FOCUS LOOP';invalidateComposition()});focusEnvironment.addEventListener('change',invalidateComposition);birdsEnabled.addEventListener('change',invalidateComposition);chimesEnabled.addEventListener('change',invalidateComposition);birdVolume.oninput=()=>{birdVolOut.value=birdVolume.value+'%';if(ac)audioBanks.forEach(bank=>bank.birds.gain.setTargetAtTime((birdVolume.value/100)*BIRD_GAIN,ac.currentTime,.08))};chimeVolume.oninput=()=>{chimeVolOut.value=chimeVolume.value+'%';if(ac)audioBanks.forEach(bank=>bank.chimes.gain.setTargetAtTime((chimeVolume.value/100)*CHIME_GAIN,ac.currentTime,.08))};showFormula();
-birdsEnabled.addEventListener('change',()=>{if(!birdsEnabled.checked)return;setup();if(ac.state==='suspended')ac.resume();fallbackBirdVoice(+scale.value+31,.9,ac.currentTime+.08);natureStatus.textContent='Bird layer ready · previewing a call'});
-Object.assign(formulaText,{drone:'fₙ = n f₀ — explicit harmonic partials',minimal:'P(Xₙ₊₁=j | Xₙ=i) = Pᵢⱼ — seeded Markov chain',tape:'f(t) = f₀ + ε sin(ωt + φ) — continuous pitch drift',celestial:'T = √(a³) — Keplerian period mapping',ocean:'x=qₓ−ΣQA sin(k·q−ωt+φ), z=q_z+ΣA cos(k·q−ωt+φ), ω²=gk',plants:'θₙ=n·α, rₙ=c√n, α=137.507764°+ε — phyllotaxis',mycelium:'uₜ=Dᵤ∇²u−uv²+F(1−u), vₜ=Dᵥ∇²v+uv²−(F+k)v',tidal:'h(t)=M₂cos(2πt/12.42+φ₁)+S₂cos(2πt/12+φ₂) — time compressed'});
-function buildBirdEcosystem(root,pent,rand,E){
-  const count=8+(rand()*11|0),forestPhase=rand()*Math.PI*2,forestCycle=42+rand()*34;
-  const voices=Array.from({length:count},(_,id)=>{
-    const distant=rand()<.42,large=rand()<.12;
-    return{id,type:rand()*5|0,pan:rand()*1.8-.9,distance:distant?.58+rand()*.38:rand()*.48,confidence:.14+rand()*.46,interval:8+rand()*18,phrase:.5+rand()*1.55,range:3+rand()*12,note:root+(large?7+rand()*9:25+rand()*15),phase:rand()*Math.PI*2,cycle:38+rand()*58}
+function currentMode() {
+  return focusActive ? "focus" : ambientMode.value;
+}
+function hz(n) {
+  return 440 * 2 ** ((n - 69) / 12);
+}
+function tone(n, d = 0.35, ch = -1, v = 0.65, when = 0) {
+  setup();
+  let at = when || ac.currentTime,
+    isBass = n < 50 || ch === 3,
+    presets = {
+      bell: ["sine", 4200, 0.008, 0.7],
+      pluck: ["triangle", 3000, 0.004, 0.34],
+      pad: ["sawtooth", 1100, 0.18, 1.35],
+      focusPad: ["sine", 760, 0.8, 1.8],
+      pulse: ["square", 1800, 0.012, 0.5],
+      saw: ["sawtooth", 2400, 0.01, 0.65],
+      organ: ["square", 950, 0.035, 1.05],
+      lead: ["sawtooth", 3600, 0.018, 0.75],
+      warm: ["triangle", 1450, 0.045, 0.9],
+    },
+    toneStyle =
+      currentMode() === "focus"
+        ? ch === 5
+          ? "focusPad"
+          : "bell"
+        : {
+            drone: "pad",
+            minimal: "pluck",
+            tape: "warm",
+            celestial: "bell",
+            ocean: "bell",
+            plants: "pluck",
+            mycelium: "organ",
+            tidal: "pad",
+          }[ambientMode.value] || "bell",
+    pr = presets[toneStyle],
+    o = ac.createOscillator(),
+    gain = ac.createGain(),
+    f = ac.createBiquadFilter();
+  o.type = isBass && currentMode() !== "focus" ? "sawtooth" : pr[0];
+  o.frequency.value = hz(n);
+  f.type = "lowpass";
+  f.frequency.value = isBass ? 520 : pr[1];
+  f.Q.value = isBass ? 1.2 : 1.2;
+  let peak = Math.max(0.006, v * (isBass ? 1.05 : 0.21)),
+    attack = isBass ? 0.12 : pr[2],
+    release = isBass ? Math.max(0.8, d) : Math.max(0.12, d * pr[3]);
+  gain.gain.setValueAtTime(0.001, at);
+  gain.gain.exponentialRampToValueAtTime(peak, at + attack);
+  gain.gain.exponentialRampToValueAtTime(0.001, at + release);
+  o.connect(f).connect(gain).connect(bus);
+  o.start(at);
+  o.stop(at + release + 0.04);
+  if (!isBass && ["bell", "organ", "pad"].includes(toneStyle)) {
+    let color = ac.createOscillator(),
+      cg = ac.createGain();
+    color.type = toneStyle === "bell" ? "sine" : pr[0];
+    color.frequency.value = hz(n) * (toneStyle === "bell" ? 2.01 : 1.005);
+    cg.gain.setValueAtTime(0.001, at);
+    cg.gain.exponentialRampToValueAtTime(v * 0.05, at + attack + 0.005);
+    cg.gain.exponentialRampToValueAtTime(0.001, at + release);
+    color.connect(cg).connect(bus);
+    color.start(at);
+    color.stop(at + release + 0.04);
+  }
+  if (isBass && currentMode() !== "focus") {
+    let sub = ac.createOscillator(),
+      sg = ac.createGain();
+    sub.type = "sine";
+    sub.frequency.value = hz(n - 12);
+    sg.gain.setValueAtTime(0.001, at);
+    sg.gain.exponentialRampToValueAtTime(v * 0.8, at + 0.008);
+    sg.gain.exponentialRampToValueAtTime(0.001, at + Math.max(0.24, d));
+    sub.connect(sg).connect(bus);
+    sub.start(at);
+    sub.stop(at + Math.max(0.24, d) + 0.04);
+  }
+}
+pts.forEach((q, i) => {
+  let b = document.createElement("i"),
+    u = Math.abs(Math.sin((i + 3) * 12.9898) * 43758.5453) % 1,
+    size = u < 0.68 ? 1 : u < 0.88 ? 2 : u < 0.965 ? 3 : u < 0.992 ? 5 : 8;
+  b.className = `star ${i % 3 === 0 ? "bass-star" : i % 3 === 1 ? "mid-star" : "air-star"}`;
+  b.style.cssText = `left:${q[0]}%;top:${q[1]}%;--star-size:${size}px`;
+  stars.append(b);
+});
+volume.oninput = () => {
+  setup();
+  const now = ac.currentTime,
+    target = volume.value / 100;
+  audioBanks.forEach((bank) => {
+    bank.music.gain.cancelScheduledValues(now);
+    bank.music.gain.setTargetAtTime(target, now, 0.035);
   });
-  const makeEvent=(voice,t,reply=false)=>({t,d:6,n:voice.note+pent[rand()*pent.length|0],v:(reply?.15+rand()*.09:.19+rand()*.12)*(1-voice.distance*.52),ch:11,bird:{...voice,type:rand()<.24?rand()*5|0:voice.type}});
-  const candidates=[];
-  voices.forEach(voice=>{
-    let t=2+rand()*voice.interval;
-    while(t<59){
-      const local=.5+.5*Math.sin(t/voice.cycle*Math.PI*2+voice.phase),forest=.5+.5*Math.sin(t/forestCycle*Math.PI*2+forestPhase),activity=local*local*forest*forest,chance=Math.min(.72,voice.confidence*(.11+1.15*activity));
-      if(rand()<chance){
-        candidates.push(makeEvent(voice,t));
-        if(activity>.58&&rand()<.045&&voices.length>1){const responder=voices[(voice.id+1+(rand()*(voices.length-1)|0))%voices.length],reply=t+.7+rand()*2.4;if(reply<59)candidates.push(makeEvent(responder,reply,true))}
+  volOut.value = volume.value + "%";
+};
+glow.oninput = () => (glowOut.value = glow.value + "%");
+bpm.oninput = () => (bpmOut.value = bpm.value + " BPM");
+function setPlayingUI(on) {
+  document
+    .querySelectorAll(".panel select,#bpm,#glow")
+    .forEach((el) => (el.disabled = on));
+  birdsEnabled.disabled = on;
+  chimesEnabled.disabled = on;
+  volume.disabled = false;
+  birdVolume.disabled = false;
+  chimeVolume.disabled = false;
+  randomAmbient.disabled = on;
+  focusButton.disabled = on;
+}
+const equalPowerIn = Float32Array.from({ length: 96 }, (_, i) =>
+    Math.sin((Math.PI * 0.5 * i) / 95),
+  ),
+  equalPowerOut = Float32Array.from({ length: 96 }, (_, i) =>
+    Math.cos((Math.PI * 0.5 * i) / 95),
+  );
+function applyLoopFade(start) {
+  if (!ac || !outputBus) return;
+  outputBus.gain.cancelScheduledValues(start);
+  outputBus.gain.setValueAtTime(0.001, start);
+  outputBus.gain.setValueCurveAtTime(equalPowerIn, start, 3);
+}
+function scheduleEvent(e, at) {
+  if (e.ch === 10) weatherVoice(e.n, e.d, e.v, at);
+  else if (e.ch === 11) playBirdSafely(e, at);
+  else if (e.ch === 12) chimeSynthVoice(e.n, e.v, at, e.t);
+  else if (e.ch === 9) drumVoice(e.n, e.v, at);
+  else if (e.ch === 3 || (e.n < 50 && currentMode() !== "focus"))
+    bassVoice(e.n, e.d, e.v, at);
+  else tone(e.n, e.d, e.ch, e.v, at);
+}
+function retireBank(bank, when) {
+  const delay = Math.max(0, (when - ac.currentTime + 0.15) * 1000),
+    timer = setTimeout(() => {
+      retireTimers.delete(timer);
+      audioBanks.delete(bank);
+      try {
+        bank.output.disconnect();
+      } catch {}
+    }, delay);
+  retireTimers.add(timer);
+}
+function beginPassageCrossfade(duration) {
+  const fadeStart = songStart + duration - CROSSFADE_SECONDS,
+    oldBank = currentBank;
+  while (playIndex < activeEvents.length) {
+    const e = activeEvents[playIndex++];
+    scheduleEvent(e, songStart + e.t);
+  }
+  oldBank.output.gain.cancelScheduledValues(fadeStart);
+  oldBank.output.gain.setValueAtTime(1, fadeStart);
+  oldBank.output.gain.setValueCurveAtTime(
+    equalPowerOut,
+    fadeStart,
+    CROSSFADE_SECONDS,
+  );
+  const nextEvents = focusActive ? ambientSong() : [...song];
+  if (focusActive) {
+    song = nextEvents;
+    statusText.textContent = "Focus is composing a new passage…";
+  }
+  const nextBank = rebuildAudioBus(0.001);
+  nextBank.output.gain.setValueCurveAtTime(
+    equalPowerIn,
+    fadeStart,
+    CROSSFADE_SECONDS,
+  );
+  songStart = fadeStart;
+  activeEvents = [...nextEvents].sort((a, b) => a.t - b.t);
+  playIndex = 0;
+  retireBank(oldBank, fadeStart + CROSSFADE_SECONDS);
+  scheduleWindow();
+}
+function scheduleWindow() {
+  if (!playing) return;
+  const horizon = ac.currentTime - songStart + 1.25;
+  while (
+    playIndex < activeEvents.length &&
+    activeEvents[playIndex].t <= horizon
+  ) {
+    const e = activeEvents[playIndex++];
+    scheduleEvent(e, songStart + e.t);
+  }
+  const duration = focusActive ? 60 : 90;
+  if (
+    (focusActive || loopEnabled) &&
+    ac.currentTime >= songStart + duration - CROSSFADE_SECONDS - 0.15
+  ) {
+    beginPassageCrossfade(duration);
+    return;
+  }
+  if (
+    playIndex >= activeEvents.length &&
+    !focusActive &&
+    !loopEnabled &&
+    ac.currentTime >
+      songStart +
+        activeEvents[activeEvents.length - 1].t +
+        activeEvents[activeEvents.length - 1].d +
+        0.25
+  )
+    stop();
+}
+function playEvents(events, loop = false) {
+  setup();
+  if (!ac || !events.length) return;
+  if (ac.state === "suspended") ac.resume();
+  stop(true);
+  loopEnabled = loop;
+  activeEvents = [...events].sort((a, b) => a.t - b.t);
+  playIndex = 0;
+  playing = true;
+  window.ambientPlaying = true;
+  document.body.dataset.playing = "true";
+  play.textContent = "■";
+  setPlayingUI(true);
+  songStart = ac.currentTime + 0.1;
+  applyLoopFade(songStart);
+  scheduleWindow();
+  schedulerId = setInterval(scheduleWindow, 100);
+}
+function stop(immediate = false) {
+  clearTimeout(stopTimer);
+  clearInterval(schedulerId);
+  schedulerId = 0;
+  playing = false;
+  play.textContent = "▶";
+  retireTimers.forEach(clearTimeout);
+  retireTimers.clear();
+  const banks = [...audioBanks],
+    now = ac?.currentTime || 0,
+    fade = immediate ? 0.02 : 2.4;
+  banks.forEach((bank) => {
+    const gain = bank.output.gain,
+      current = Math.max(0.001, gain.value);
+    gain.cancelScheduledValues(now);
+    gain.setValueAtTime(current, now);
+    gain.exponentialRampToValueAtTime(0.001, now + fade);
+  });
+  const finish = () => {
+    banks.forEach((bank) => {
+      try {
+        bank.output.disconnect();
+      } catch {}
+    });
+    audioBanks.clear();
+    if (ac) rebuildAudioBus();
+    window.ambientPlaying = false;
+    document.body.dataset.playing = "false";
+    setPlayingUI(false);
+    play.disabled = false;
+  };
+  if (immediate) finish();
+  else {
+    play.disabled = true;
+    statusText.textContent = "Letting the sound dissolve…";
+    stopTimer = setTimeout(finish, 2450);
+  }
+}
+const bassStyle = document.querySelector("#bassStyle"),
+  drumKit = document.querySelector("#drumKit");
+const ambientMode = document.querySelector("#ambientMode"),
+  saveLoop = document.querySelector("#saveLoop"),
+  focusControls = document.querySelector("#focusControls"),
+  focusEnvironment = document.querySelector("#focusEnvironment"),
+  birdsEnabled = document.querySelector("#birdsEnabled"),
+  chimesEnabled = document.querySelector("#chimesEnabled"),
+  birdVolume = document.querySelector("#birdVolume"),
+  chimeVolume = document.querySelector("#chimeVolume"),
+  birdVolOut = document.querySelector("#birdVolOut"),
+  chimeVolOut = document.querySelector("#chimeVolOut"),
+  natureStatus = document.querySelector("#natureStatus"),
+  focusButton = document.querySelector("#focusButton");
+let loopEnabled = false,
+  recording = false,
+  focusActive = false;
+const randomAmbient = document.querySelector("#randomAmbient");
+function bassVoice(n, d, v, at) {
+  setup();
+  let style = bassStyle.value,
+    freq = hz(n),
+    o = ac.createOscillator(),
+    f = ac.createBiquadFilter(),
+    g = ac.createGain();
+  o.type =
+    style === "sub"
+      ? "sine"
+      : style === "fm"
+        ? "square"
+        : style === "pluck"
+          ? "triangle"
+          : "sawtooth";
+  o.frequency.setValueAtTime(freq, at);
+  if (style === "acid") o.detune.setValueAtTime(-7, at);
+  f.type = "lowpass";
+  f.Q.value = style === "acid" ? 15 : style === "pluck" ? 5 : 2;
+  f.frequency.setValueAtTime(
+    style === "acid"
+      ? 1800
+      : style === "fm"
+        ? 750
+        : style === "pluck"
+          ? 1400
+          : 420,
+    at,
+  );
+  if (style === "acid")
+    f.frequency.exponentialRampToValueAtTime(180, at + Math.max(0.15, d));
+  let peak = v * (style === "sub" ? 0.95 : style === "fm" ? 0.55 : 0.78);
+  g.gain.setValueAtTime(0.001, at);
+  g.gain.exponentialRampToValueAtTime(peak, at + 0.006);
+  g.gain.exponentialRampToValueAtTime(0.001, at + Math.max(0.12, d));
+  o.connect(f).connect(g).connect(bus);
+  o.start(at);
+  o.stop(at + d + 0.05);
+  if (style === "sub" || style === "fm") {
+    let sub = ac.createOscillator(),
+      sg = ac.createGain();
+    sub.type = "sine";
+    sub.frequency.value = style === "fm" ? freq * 1.5 : freq / 2;
+    sg.gain.setValueAtTime(v * (style === "fm" ? 0.24 : 0.7), at);
+    sg.gain.exponentialRampToValueAtTime(0.001, at + Math.max(0.15, d));
+    sub.connect(sg).connect(bus);
+    sub.start(at);
+    sub.stop(at + d + 0.05);
+  }
+}
+function drumVoice(n, v, at) {
+  setup();
+  let kit = drumKit.value,
+    isKick = n === 35 || n === 36,
+    isSnare = n === 38 || n === 40;
+  if (isKick) {
+    let o = ac.createOscillator(),
+      g = ac.createGain();
+    o.type = kit === "glitch" ? "square" : "sine";
+    o.frequency.setValueAtTime(
+      kit === "space" ? 110 : kit === "soft" ? 75 : 145,
+      at,
+    );
+    o.frequency.exponentialRampToValueAtTime(
+      kit === "glitch" ? 38 : 45,
+      at + (kit === "space" ? 0.42 : 0.16),
+    );
+    g.gain.setValueAtTime(v * (kit === "soft" ? 0.38 : 0.78), at);
+    g.gain.exponentialRampToValueAtTime(
+      0.001,
+      at + (kit === "space" ? 0.5 : 0.2),
+    );
+    o.connect(g).connect(bus);
+    o.start(at);
+    o.stop(at + 0.55);
+    return;
+  }
+  let len = isSnare
+      ? kit === "space"
+        ? 0.42
+        : 0.18
+      : kit === "glitch"
+        ? 0.025
+        : 0.07,
+    b = ac.createBuffer(1, ac.sampleRate * len, ac.sampleRate),
+    data = b.getChannelData(0);
+  for (let i = 0; i < data.length; i++)
+    data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+  let s = ac.createBufferSource(),
+    f = ac.createBiquadFilter(),
+    g = ac.createGain();
+  s.buffer = b;
+  f.type = isSnare ? "bandpass" : "highpass";
+  f.frequency.value = isSnare
+    ? kit === "soft"
+      ? 950
+      : kit === "space"
+        ? 1250
+        : 1900
+    : kit === "glitch"
+      ? 6800
+      : 4800;
+  f.Q.value = kit === "space" ? 4 : 1;
+  g.gain.value = v * (isSnare ? 0.3 : 0.12);
+  s.connect(f).connect(g).connect(bus);
+  s.start(at);
+}
+const weatherBuffers = {};
+function weatherVoice(kind, d, v, at) {
+  setup();
+  let key = kind + "-" + ac.sampleRate,
+    b = weatherBuffers[key];
+  if (!b) {
+    b = ac.createBuffer(1, ac.sampleRate * 4, ac.sampleRate);
+    let data = b.getChannelData(0),
+      brown = 0;
+    for (let i = 0; i < data.length; i++) {
+      let white = Math.random() * 2 - 1;
+      brown = (brown + white * 0.018) / 1.018;
+      data[i] = brown * 0.97 + white * 0.03;
+    }
+    weatherBuffers[key] = b;
+  }
+  let src = ac.createBufferSource(),
+    filter = ac.createBiquadFilter(),
+    gain = ac.createGain(),
+    freq = [680, 360, 520, 430][kind] || 460;
+  src.buffer = b;
+  src.loop = true;
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(freq * 0.9, at);
+  filter.frequency.exponentialRampToValueAtTime(freq * 1.06, at + d * 0.55);
+  filter.frequency.exponentialRampToValueAtTime(freq * 0.94, at + d);
+  filter.Q.value = 0.18;
+  gain.gain.setValueAtTime(0.001, at);
+  gain.gain.exponentialRampToValueAtTime(v, at + 6);
+  gain.gain.setValueAtTime(v, Math.max(at + 6, at + d - 6));
+  gain.gain.exponentialRampToValueAtTime(0.001, at + d);
+  src.connect(filter).connect(gain).connect(bus);
+  src.start(at);
+  src.stop(at + d + 0.05);
+}
+function seededPattern(seed) {
+  let s = (((seed * 1000) | 0) ^ 0x9e3779b9) >>> 0;
+  return () => {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    return s / 4294967296;
+  };
+}
+function birdPattern(event) {
+  const p = event.bird || {
+      id: 0,
+      type: 0,
+      pan: 0,
+      distance: 0.3,
+      phrase: 1,
+      range: 6,
+    },
+    rand = seededPattern(event.t * 97 + p.id * 131 + (event.n || 91) * 17),
+    type = p.type % 5,
+    counts = [
+      (3 + rand() * 5) | 0,
+      (8 + rand() * 11) | 0,
+      (5 + rand() * 8) | 0,
+      (6 + rand() * 12) | 0,
+      (2 + rand() * 4) | 0,
+    ],
+    base = hz((event.n || 91) - 3),
+    calls = [],
+    spacing = [0.34, 0.075, 0.17, 0.055, 0.7][type] * p.phrase,
+    cursor = 0;
+  for (let i = 0; i < counts[type]; i++) {
+    cursor += i
+      ? spacing * (0.55 + rand() * 1.05) -
+        (type === 1 || type === 3 ? rand() * 0.035 : 0)
+      : 0;
+    let dur =
+        [0.22, 0.055, 0.095, 0.035, 0.48][type] *
+        (0.65 + rand() * 0.9) *
+        p.phrase,
+      from = base * (0.82 + (rand() * (p.range || 6)) / 12),
+      curve =
+        type === 0
+          ? rand() > 0.5
+            ? 1.25
+            : 0.76
+          : type === 1
+            ? 0.92 + rand() * 0.18
+            : type === 2
+              ? i % 2
+                ? 1.34
+                : 0.7 + rand() * 0.18
+              : type === 3
+                ? 0.88 + rand() * 0.26
+                : 0.82 + rand() * 0.12,
+      to = from * curve,
+      mid = Math.sqrt(from * to) * (type === 0 ? 0.94 + rand() * 0.18 : 1),
+      end = to * (0.92 + rand() * 0.16),
+      amp =
+        [0.12, 0.075, 0.095, 0.065, 0.14][type] *
+        (0.72 + rand() * 0.45) *
+        (1 - p.distance * 0.48),
+      harmonic = [0.1, 0.16, 0.12, 0.08, 0.045][type],
+      noise = [0.05, 0.09, 0.14, 0.22, 0.035][type];
+    calls.push({
+      offset: cursor,
+      dur,
+      from,
+      mid,
+      to: end,
+      amp,
+      harmonic,
+      noise,
+    });
+    if ((type === 0 || type === 2) && rand() < 0.2)
+      calls.push({
+        offset: cursor + 0.08 + rand() * 0.2,
+        dur: dur * 0.8,
+        from: from * (1.12 + rand() * 0.16),
+        mid: mid * 1.18,
+        to: end * 1.12,
+        amp: amp * 0.48,
+        harmonic,
+        noise: noise * 0.8,
+      });
+  }
+  calls.sort((a, b) => a.offset - b.offset);
+  const last = calls[calls.length - 1];
+  return {
+    calls,
+    length: last.offset + last.dur + 0.8 + p.distance * 0.9,
+    pan: p.pan || 0,
+    distance: p.distance || 0,
+    type,
+  };
+}
+function chimePattern(note, seed) {
+  const rand = seededPattern(seed + (note || 64) * 29),
+    base = hz(note || 52),
+    modes = [1, 2.756, 5.404, 8.933],
+    tubeRatios = [1, 1.12246, 1.25992, 1.33484],
+    strikes = 2 + (rand() > 0.46 ? 1 : 0),
+    pattern = [];
+  for (let tube = 0; tube < strikes; tube++) {
+    let strikeOffset = tube * (0.28 + rand() * 0.46),
+      tubeRatio =
+        tubeRatios[
+          (tube + ((rand() * tubeRatios.length) | 0)) % tubeRatios.length
+        ],
+      energy = (0.9 + rand() * 0.2) / Math.sqrt(1 + tube * 0.3);
+    modes.forEach((ratio, i) =>
+      pattern.push({
+        offset: strikeOffset + i * (0.07 + rand() * 0.07),
+        freq: base * tubeRatio * ratio * (0.998 + rand() * 0.004),
+        dur: (13 + rand() * 4) / (1 + i * 0.42),
+        amp: (0.13 * energy) / (1 + i * 0.9),
+      }),
+    );
+  }
+  return pattern;
+}
+function birdSynthVoice(event, at) {
+  setup();
+  const pattern = birdPattern(event),
+    cluster = ac.createGain(),
+    pan =
+      typeof ac.createStereoPanner === "function"
+        ? ac.createStereoPanner()
+        : null,
+    clusterEnd = at + pattern.length;
+  if (pan) {
+    pan.pan.value = pattern.pan;
+    cluster.connect(pan).connect(birdBus);
+  } else cluster.connect(birdBus);
+  cluster.gain.setValueAtTime(0.16, at);
+  cluster.gain.linearRampToValueAtTime(1, at + 0.24);
+  cluster.gain.setValueAtTime(1, Math.max(at + 0.24, clusterEnd - 0.65));
+  cluster.gain.linearRampToValueAtTime(0.12, clusterEnd);
+  pattern.calls.forEach((call) => {
+    const start = at + call.offset,
+      from = Math.max(120, call.from),
+      mid = Math.max(120, call.mid),
+      to = Math.max(120, call.to),
+      dur = Math.max(0.035, call.dur);
+    let o = ac.createOscillator(),
+      g = ac.createGain(),
+      f = ac.createBiquadFilter();
+    o.type = pattern.type === 3 ? "triangle" : "sine";
+    o.frequency.setValueAtTime(from, start);
+    o.frequency.exponentialRampToValueAtTime(mid, start + dur * 0.38);
+    o.frequency.exponentialRampToValueAtTime(to, start + dur);
+    f.type = "lowpass";
+    f.frequency.value = 3000 - pattern.distance * 900;
+    f.Q.value = 0.08;
+    g.gain.setValueAtTime(0.001, start);
+    g.gain.exponentialRampToValueAtTime(
+      Math.max(0.006, event.v * call.amp * 1.8),
+      start + 0.028,
+    );
+    g.gain.exponentialRampToValueAtTime(0.001, start + dur);
+    o.connect(f).connect(g).connect(cluster);
+    o.start(start);
+    o.stop(start + dur + 0.04);
+  });
+}
+function fallbackBirdVoice(noteOrEvent, vOrAt, maybeAt) {
+  const event =
+      typeof noteOrEvent === "object"
+        ? noteOrEvent
+        : {
+            n: noteOrEvent,
+            v: vOrAt,
+            t: 0,
+            bird: { id: (cryptoUnit() * 999) | 0 },
+          },
+    at = typeof noteOrEvent === "object" ? vOrAt : maybeAt,
+    rand = seededPattern(
+      (event.t || 0) + (event.bird?.id || 0) * 43 + (Date.now() % 997),
+    ),
+    base = hz((event.n || 88) - 8),
+    calls = 3 + ((rand() * 9) | 0);
+  for (let i = 0; i < calls; i++) {
+    let start = at + i * (0.07 + rand() * 0.3),
+      dur = 0.06 + rand() * 0.32,
+      o = ac.createOscillator(),
+      g = ac.createGain(),
+      from = base * (0.65 + rand() * 0.7),
+      to = from * (0.7 + rand() * 0.75);
+    o.type = rand() < 0.18 ? "triangle" : "sine";
+    o.frequency.setValueAtTime(from, start);
+    o.frequency.exponentialRampToValueAtTime(Math.max(120, to), start + dur);
+    g.gain.setValueAtTime(0.001, start);
+    g.gain.exponentialRampToValueAtTime(0.012 + rand() * 0.022, start + 0.025);
+    g.gain.exponentialRampToValueAtTime(0.001, start + dur);
+    o.connect(g).connect(birdBus);
+    o.start(start);
+    o.stop(start + dur + 0.03);
+  }
+}
+function playBirdSafely(event, at) {
+  try {
+    birdSynthVoice(event, at);
+  } catch (error) {
+    console.error("Bird voice fallback:", error);
+    fallbackBirdVoice(event, at);
+  }
+}
+function chimeSynthVoice(note, v, at, seed = 0) {
+  setup();
+  chimePattern(note, seed).forEach((mode, i) => {
+    let o = ac.createOscillator(),
+      g = ac.createGain(),
+      f = ac.createBiquadFilter(),
+      start = at + mode.offset;
+    o.type = "sine";
+    o.frequency.value = mode.freq;
+    f.type = "lowpass";
+    f.frequency.value = 2400;
+    f.Q.value = 0.1;
+    g.gain.setValueAtTime(0.001, start);
+    g.gain.exponentialRampToValueAtTime(
+      Math.max(0.0015, v * mode.amp),
+      start + 0.16 + i * 0.035,
+    );
+    g.gain.exponentialRampToValueAtTime(0.001, start + mode.dur);
+    o.connect(f).connect(g).connect(chimeBus);
+    o.start(start);
+    o.stop(start + mode.dur + 0.08);
+  });
+}
+function cryptoUnit() {
+  const a = new Uint32Array(1);
+  crypto.getRandomValues(a);
+  return a[0] / 4294967296;
+}
+function fitMinute(events) {
+  if (!events.length) return events;
+  let length = Math.min(60, Math.max(...events.map((e) => e.t + e.d))),
+    out = [];
+  for (let offset = 0; offset < 90; offset += length)
+    events.forEach((e) => {
+      if (e.t < length && e.t + offset < 90)
+        out.push({
+          ...e,
+          t: e.t + offset,
+          d: Math.min(e.d, 90 - e.t - offset),
+        });
+    });
+  return out;
+}
+function buildGenerated(
+  total = false,
+  ambient = true,
+  randomizeAmbient = false,
+) {
+  if (randomizeAmbient) {
+    focusActive = false;
+    ambientMode.selectedIndex = (cryptoUnit() * ambientMode.options.length) | 0;
+    scale.selectedIndex = (cryptoUnit() * scale.options.length) | 0;
+    bassStyle.selectedIndex = (cryptoUnit() * bassStyle.options.length) | 0;
+    drumKit.selectedIndex = (cryptoUnit() * drumKit.options.length) | 0;
+    bpm.value = 38 + ((cryptoUnit() * 45) | 0);
+    bpmOut.value = bpm.value + " BPM";
+  }
+  song = focusActive ? ambientSong() : fitMinute(ambientSong());
+  songName.textContent = focusActive
+    ? "FOCUS · " + focusEnvironment.options[focusEnvironment.selectedIndex].text
+    : "AMBIENT · " + ambientMode.options[ambientMode.selectedIndex].text;
+  statusText.textContent = focusActive
+    ? `ONGOING · ${scale.options[scale.selectedIndex].text} · continuously composing`
+    : `90S · ${scale.options[scale.selectedIndex].text} · ${bpm.value} BPM · ${bassStyle.options[bassStyle.selectedIndex].text}`;
+  showFormula();
+  return song;
+}
+function transitionGenerate(
+  total = false,
+  ambient = true,
+  randomizeAmbient = false,
+) {
+  setup();
+  const token = ++transitionToken;
+  clearTimeout(transitionTimer);
+  randomAmbient.disabled = true;
+  loading.classList.add("show");
+  statusText.textContent = "Composing a new ambient world…";
+  if (ac) {
+    let now = ac.currentTime,
+      current = Math.max(0.001, outputBus.gain.value);
+    outputBus.gain.cancelScheduledValues(now);
+    outputBus.gain.setValueAtTime(current, now);
+    outputBus.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+  }
+  clearInterval(schedulerId);
+  playing = false;
+  play.textContent = "▶";
+  transitionTimer = setTimeout(() => {
+    if (token !== transitionToken) return;
+    const next = buildGenerated(total, ambient, randomizeAmbient);
+    renderLibrary();
+    if (ac) {
+      let now = ac.currentTime;
+      outputBus.gain.cancelScheduledValues(now);
+      outputBus.gain.setValueAtTime(0.001, now);
+    }
+    playEvents(next, true);
+    applyLoopFade(songStart);
+    loading.classList.remove("show");
+    setPlayingUI(true);
+  }, 430);
+}
+randomAmbient.onclick = () => {
+  focusActive = false;
+  focusButton.textContent = "◌ FOCUS LOOP";
+  transitionGenerate(false, true, true);
+};
+focusButton.onclick = () => {
+  if (!focusActive) {
+    focusActive = true;
+    focusButton.textContent = "◌ START FOCUS STREAM";
+    invalidateComposition();
+    setup();
+    return;
+  }
+  bpm.value = 44 + ((cryptoUnit() * 17) | 0);
+  bpmOut.value = bpm.value + " BPM";
+  transitionGenerate(false, true, false);
+};
+const formula = document.querySelector("#formula"),
+  formulaText = {
+    drone: "fₙ = f₀ · n — harmonic partial series",
+    minimal: "P(xₙ₊₁ | xₙ) — sparse Markov transitions",
+    tape: "f(t) = f₀ + ε·sin(ωt) — slow oscillator drift",
+    celestial: "T² ∝ a³ — Keplerian orbital periods",
+    ocean: "η(x,t) = Σ Aₙ cos(kₙx − ωₙt + φₙ) — Gerstner waves",
+    plants: "θₙ = n · 137.507764° — golden-angle phyllotaxis",
+    mycelium: "∂u/∂t = Dᵤ∇²u − uv² + F(1−u) — reaction diffusion",
+    tidal: "h(t) = M₂ sin(2πt/12.42) + S₂ sin(2πt/12) — lunar tides",
+    focus:
+      "weather(t) + f₀ + sparse pentatonic partials — non-periodic focus field",
+  };
+bassStyle.closest("label").classList.remove("normal-control");
+drumKit.closest("label").classList.remove("normal-control");
+scale.closest("label").classList.remove("normal-control");
+let ambientDetail = "";
+function showFormula() {
+  const mode = currentMode();
+  formula.textContent =
+    formulaText[mode] + (ambientDetail ? " · " + ambientDetail : "");
+  formula.dataset.mode = mode;
+  document.body.dataset.ambient = mode;
+}
+function invalidateComposition() {
+  clearTimeout(transitionTimer);
+  transitionToken++;
+  stop(true);
+  song = [];
+  activeEvents = [];
+  ambientDetail = "";
+  showFormula();
+  renderLibrary();
+  statusText.textContent = focusActive
+    ? "Choose a Focus environment and layers, then generate."
+    : "Settings ready · press RANDOM LOOP to compose.";
+}
+ambientMode.addEventListener("change", () => {
+  focusActive = false;
+  focusButton.textContent = "◌ FOCUS LOOP";
+  invalidateComposition();
+});
+focusEnvironment.addEventListener("change", invalidateComposition);
+birdsEnabled.addEventListener("change", invalidateComposition);
+chimesEnabled.addEventListener("change", invalidateComposition);
+birdVolume.oninput = () => {
+  birdVolOut.value = birdVolume.value + "%";
+  if (ac)
+    audioBanks.forEach((bank) =>
+      bank.birds.gain.setTargetAtTime(
+        (birdVolume.value / 100) * BIRD_GAIN,
+        ac.currentTime,
+        0.08,
+      ),
+    );
+};
+chimeVolume.oninput = () => {
+  chimeVolOut.value = chimeVolume.value + "%";
+  if (ac)
+    audioBanks.forEach((bank) =>
+      bank.chimes.gain.setTargetAtTime(
+        (chimeVolume.value / 100) * CHIME_GAIN,
+        ac.currentTime,
+        0.08,
+      ),
+    );
+};
+showFormula();
+birdsEnabled.addEventListener("change", () => {
+  if (!birdsEnabled.checked) return;
+  setup();
+  if (ac.state === "suspended") ac.resume();
+  fallbackBirdVoice(+scale.value + 31, 0.9, ac.currentTime + 0.08);
+  natureStatus.textContent = "Bird layer ready · previewing a call";
+});
+Object.assign(formulaText, {
+  drone: "fₙ = n f₀ — explicit harmonic partials",
+  minimal: "P(Xₙ₊₁=j | Xₙ=i) = Pᵢⱼ — seeded Markov chain",
+  tape: "f(t) = f₀ + ε sin(ωt + φ) — continuous pitch drift",
+  celestial: "T = √(a³) — Keplerian period mapping",
+  ocean: "x=qₓ−ΣQA sin(k·q−ωt+φ), z=q_z+ΣA cos(k·q−ωt+φ), ω²=gk",
+  plants: "θₙ=n·α, rₙ=c√n, α=137.507764°+ε — phyllotaxis",
+  mycelium: "uₜ=Dᵤ∇²u−uv²+F(1−u), vₜ=Dᵥ∇²v+uv²−(F+k)v",
+  tidal: "h(t)=M₂cos(2πt/12.42+φ₁)+S₂cos(2πt/12+φ₂) — time compressed",
+});
+function buildBirdEcosystem(root, pent, rand, E) {
+  const count = 8 + ((rand() * 11) | 0),
+    forestPhase = rand() * Math.PI * 2,
+    forestCycle = 42 + rand() * 34;
+  const voices = Array.from({ length: count }, (_, id) => {
+    const distant = rand() < 0.42,
+      large = rand() < 0.12;
+    return {
+      id,
+      type: (rand() * 5) | 0,
+      pan: rand() * 1.8 - 0.9,
+      distance: distant ? 0.58 + rand() * 0.38 : rand() * 0.48,
+      confidence: 0.14 + rand() * 0.46,
+      interval: 8 + rand() * 18,
+      phrase: 0.5 + rand() * 1.55,
+      range: 3 + rand() * 12,
+      note: root + (large ? 7 + rand() * 9 : 25 + rand() * 15),
+      phase: rand() * Math.PI * 2,
+      cycle: 38 + rand() * 58,
+    };
+  });
+  const makeEvent = (voice, t, reply = false) => ({
+    t,
+    d: 6,
+    n: voice.note + pent[(rand() * pent.length) | 0],
+    v:
+      (reply ? 0.15 + rand() * 0.09 : 0.19 + rand() * 0.12) *
+      (1 - voice.distance * 0.52),
+    ch: 11,
+    bird: { ...voice, type: rand() < 0.24 ? (rand() * 5) | 0 : voice.type },
+  });
+  const candidates = [];
+  voices.forEach((voice) => {
+    let t = 2 + rand() * voice.interval;
+    while (t < 59) {
+      const local =
+          0.5 + 0.5 * Math.sin((t / voice.cycle) * Math.PI * 2 + voice.phase),
+        forest =
+          0.5 + 0.5 * Math.sin((t / forestCycle) * Math.PI * 2 + forestPhase),
+        activity = local * local * forest * forest,
+        chance = Math.min(0.72, voice.confidence * (0.11 + 1.15 * activity));
+      if (rand() < chance) {
+        candidates.push(makeEvent(voice, t));
+        if (activity > 0.58 && rand() < 0.045 && voices.length > 1) {
+          const responder =
+              voices[
+                (voice.id + 1 + ((rand() * (voices.length - 1)) | 0)) %
+                  voices.length
+              ],
+            reply = t + 0.7 + rand() * 2.4;
+          if (reply < 59) candidates.push(makeEvent(responder, reply, true));
+        }
       }
-      const gap=-Math.log(Math.max(.001,1-rand()))*voice.interval;
-      t+=Math.max(3.5,Math.min(28,gap));
+      const gap = -Math.log(Math.max(0.001, 1 - rand())) * voice.interval;
+      t += Math.max(3.5, Math.min(28, gap));
     }
   });
-  const minimum=5+(rand()*4|0);
-  while(candidates.length<minimum){const voice=voices[rand()*voices.length|0],slot=candidates.length;candidates.push(makeEvent(voice,5+slot*(48/minimum)+rand()*3))}
-  const events=[];
-  candidates.sort((a,b)=>a.t-b.t).forEach(event=>{const near=events.filter(e=>e.t>event.t-3.2).length,active=events.filter(e=>e.t>event.t-7.5).length;if(near<2&&active<4)events.push(event)});
+  const minimum = 5 + ((rand() * 4) | 0);
+  while (candidates.length < minimum) {
+    const voice = voices[(rand() * voices.length) | 0],
+      slot = candidates.length;
+    candidates.push(makeEvent(voice, 5 + slot * (48 / minimum) + rand() * 3));
+  }
+  const events = [];
+  candidates
+    .sort((a, b) => a.t - b.t)
+    .forEach((event) => {
+      const near = events.filter((e) => e.t > event.t - 3.2).length,
+        active = events.filter((e) => e.t > event.t - 7.5).length;
+      if (near < 2 && active < 4) events.push(event);
+    });
   E.push(...events);
-  return count
+  return count;
 }
-function ambientSongCorrected(){const mode=currentMode(),root=+scale.value,E=[],rand=()=>cryptoUnit(),seed=(cryptoUnit()*0xffffffff)>>>0,id=seed.toString(16).padStart(8,'0').toUpperCase(),add=(t,d,n,v=.14,ch=5)=>{if(t<60)E.push({t,d:Math.min(d,60-t),n,v,ch})},register=[-12,0,12][Math.floor(rand()*3)],density=.35+rand()*.58,stretch=.72+rand()*.7,accent=.7+rand()*.6;
-if(mode==='focus'){const env=focusEnvironment.value,envIndex={rain:0,beach:1,forest:2,mountain:3}[env],palettes={rain:[0,2,7,9],beach:[0,4,7,9],forest:[0,2,5,7],mountain:[0,5,7,12]},rootShift={rain:0,beach:-5,forest:-7,mountain:-12}[env],pent=palettes[env],droneRoot=root+rootShift;add(0,60,droneRoot,.028,5);add(5+rand()*9,52+rand()*3,droneRoot+12,.009,5);if(rand()>.72)add(19+rand()*12,27+rand()*10,droneRoot+pent[2]+12,.006,5);for(let t=12+rand()*10;t<58;t+=23+rand()*20){let degree=pent[Math.floor(rand()*pent.length)],pitch=root+12+degree;add(t,9+rand()*12,pitch,.009+rand()*.012,0)}add(0,60,envIndex,.004+rand()*.003,10);const birdCount=birdsEnabled.checked?buildBirdEcosystem(root,pent,rand,E):0;if(chimesEnabled.checked){let t=.5+rand()*1.8;while(t<59){add(t,16,root-17+pent[Math.floor(rand()*pent.length)],.28+rand()*.12,12);t+=Math.max(5,Math.min(14,-Math.log(Math.max(.001,1-rand()))*8))}}ambientDetail=`seed ${id}, ${env}, ${birdCount} bird territories, breathing activity field, tube-mode chimes`}
-else if(mode==='drone'){let fundamental=root-36+Math.floor(rand()*8),partials=4+Math.floor(rand()*7);for(let n=1;n<=partials;n++){let pitch=fundamental+12*Math.log2(n),start=n===1?0:rand()*18,dur=28+rand()*32;add(start,dur,pitch,.28/Math.sqrt(n),n===1?3:5);if(rand()<.55)add((start+30+rand()*8)%58,20+rand()*20,pitch+12,.08/Math.sqrt(n),0)}ambientDetail=`seed ${id}, f₀=${hz(fundamental).toFixed(2)}Hz, partials=${partials}`}
-else if(mode==='minimal'){const S=[0,2,5,7,9,12],N=S.length,P=Array.from({length:N},()=>{let row=Array.from({length:N},()=>.05+rand()**2),sum=row.reduce((a,b)=>a+b);return row.map(x=>x/sum)});let state=Math.floor(rand()*N),t=0,events=0;while(t<60){let u=rand(),sum=0,next=0;for(let j=0;j<N;j++){sum+=P[state][j];if(u<=sum){next=j;break}}state=next;let dur=[.5,1,1.5,2,3,5][Math.floor(rand()*6)]*stretch;if(rand()<density){add(t,dur*1.8,root+register+S[state],.1+rand()*.15,0);events++;if(rand()<.3)add(t+dur*.5,dur*2,root-12+S[(state+2)%N],.08,5)}t+=dur}ambientDetail=`seed ${id}, ${events} events, self-transition=${P[0][0].toFixed(2)}`}
-else if(mode==='tape'){let eps=8+rand()*34,omega=.025+rand()*.12,phi=rand()*Math.PI*2,base=[0,3,7,10][Math.floor(rand()*4)],step=2+rand()*4;for(let t=0;t<60;t+=step){let cents=eps*Math.sin(omega*t+phi)+eps*.35*Math.sin(omega*2.07*t-phi),pitch=root+register+base+cents/100;add(t,8+rand()*12,pitch,.07+rand()*.11,0);if(rand()<density*.65)add(t+rand()*2,12+rand()*12,pitch-12+(rand()>.5?7:0),.12,3)}ambientDetail=`seed ${id}, ε=${eps.toFixed(1)}¢, ω=${omega.toFixed(3)}, φ=${phi.toFixed(2)}`}
-else if(mode==='celestial'){let bodies=3+Math.floor(rand()*6),axes=Array.from({length:bodies},(_,i)=>.45+i*(.3+rand()*.5));axes.forEach((a,i)=>{let T=Math.sqrt(a*a*a),period=2.5+T*(4+rand()*4),phase=rand()*period,pitch=root+register+[0,5,7,9,12,16,19,21][i];for(let t=phase;t<60;t+=period)add(t,Math.min(period*1.8,16),pitch,.07+.12/(1+a),i===0?3:5)});ambientDetail=`seed ${id}, a=${axes.map(x=>x.toFixed(2)).join('/')}, T=a³ᐟ²`}
-else if(mode==='ocean'){let count=2+Math.floor(rand()*4),waves=Array.from({length:count},()=>{let k=.12+rand()*1.1;return{A:.15+rand()*.8,k,w:Math.sqrt(9.81*k),p:rand()*Math.PI*2,Q:.4+rand()*.5}});let step=1.2+rand()*2.8;for(let t=0;t<60;t+=step){let x=0,z=0;waves.forEach(w=>{let phase=w.k*(t*.18)-w.w*t+w.p;x-=w.Q*w.A*Math.sin(phase);z+=w.A*Math.cos(phase)});let field=.5+.5*Math.tanh(z),pitch=root-12+register+[0,2,5,7,10,12][Math.min(5,Math.floor(field*6))];add(t,5+Math.abs(x)*2+rand()*5,pitch,.07+field*.13,0);if(z>.25)add(t+.8,10+rand()*8,pitch-12,.16,3);if(rand()<density*.18)add(t,.06,42,.1+rand()*.12,9)}ambientDetail=`seed ${id}, ${count} waves, k=${waves.map(w=>w.k.toFixed(2)).join('/')}, ω²=gk`}
-else if(mode==='plants'){const golden=Math.PI*(3-Math.sqrt(5)),epsilon=(rand()-.5)*.045,alpha=golden+epsilon,c=.6+rand()*1.4,points=20+Math.floor(rand()*35);for(let n=0;n<points;n++){let theta=n*alpha,r=c*Math.sqrt(n),t=(n/points)*58+(Math.sin(theta)+1)*.6,pitch=root+register+[0,2,4,7,9,14][Math.floor(((theta%(Math.PI*2)+Math.PI*2)%(Math.PI*2))/(Math.PI*2)*6)];add(t,4+Math.min(10,r*.55),pitch,.06+.13*(n/points),0);if(n%8===0)add(t,12,pitch-24,.2,3)}ambientDetail=`seed ${id}, α=${(alpha*180/Math.PI).toFixed(4)}°, c=${c.toFixed(2)}, N=${points}`}
-else if(mode==='mycelium'){const W=14,H=14,Du=.14+rand()*.08,Dv=.06+rand()*.06,F=.025+rand()*.035,K=.048+rand()*.022,dt=.7,u=new Float64Array(W*H).fill(1),v=new Float64Array(W*H);for(let q=0;q<8;q++){let x=Math.floor(rand()*W),y=Math.floor(rand()*H);v[y*W+x]=.7+rand()*.3;u[y*W+x]=.3}let lap=(a,x,y)=>a[y*W+((x+1)%W)]+a[y*W+((x+W-1)%W)]+a[((y+1)%H)*W+x]+a[((y+H-1)%H)*W+x]-4*a[y*W+x];for(let step=0;step<180;step++){let nu=new Float64Array(u),nv=new Float64Array(v);for(let y=0;y<H;y++)for(let x=0;x<W;x++){let q=y*W+x,uvv=u[q]*v[q]*v[q];nu[q]=u[q]+(Du*lap(u,x,y)-uvv+F*(1-u[q]))*dt;nv[q]=v[q]+(Dv*lap(v,x,y)+uvv-(F+K)*v[q])*dt}u.set(nu);v.set(nv);if(step%8===0){let q=Math.floor(rand()*u.length),field=Math.max(0,Math.min(.999,v[q]*2)),t=step/180*59,pitch=root-12+register+[0,1,5,6,10,13][Math.floor(field*6)];add(t,5+field*9,pitch,.07+field*.15,0);if(field>.35)add(t+.5,8,pitch-12,.18,3)}}ambientDetail=`seed ${id}, Dᵤ=${Du.toFixed(3)}, Dᵥ=${Dv.toFixed(3)}, F=${F.toFixed(3)}, k=${K.toFixed(3)}, 14×14 grid`}
-else{let M=.4+rand()*.8,S=.15+rand()*.55,p1=rand()*Math.PI*2,p2=rand()*Math.PI*2,compression=.65+rand()*1.8,step=1.4+rand()*2.6;for(let t=0;t<60;t+=step){let h=M*Math.cos(2*Math.PI*t/(12.42/compression)+p1)+S*Math.cos(2*Math.PI*t/(12/compression)+p2),field=.5+.5*h/(M+S),pitch=root-12+register+[0,2,7,9,12,16][Math.min(5,Math.floor(field*6))];add(t,6+rand()*9,pitch,.07+field*.14,0);if(h>.3)add(t,10,pitch-24,.2,3)}ambientDetail=`seed ${id}, M₂=${M.toFixed(2)}, S₂=${S.toFixed(2)}, compression=${compression.toFixed(2)}×`}
-window.ambientMath={mode,seed,detail:ambientDetail};showFormula();return E.sort((a,b)=>a.t-b.t)}
-const ambientSong=ambientSongCorrected;
-async function renderLiveArrangementOffline(events,sr=22050){events=events.map(e=>e.ch===11?{...e,v:e.v*BIRD_GAIN}:e.ch===12?{...e,v:e.v*CHIME_GAIN}:e);const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)throw new Error('Offline audio rendering unavailable');
-const ctx=new Offline(2,sr*90,sr),master=ctx.createGain(),compressor=ctx.createDynamicsCompressor();master.gain.value=Math.max(0,volume.value/100);master.connect(compressor);compressor.connect(ctx.destination);
-const connectTone=e=>{let at=e.t,isBass=e.n<50||e.ch===3,presets={bell:['sine',4200,.008,.7],pluck:['triangle',3000,.004,.34],pad:['sawtooth',1100,.18,1.35],focusPad:['sine',760,.8,1.8],organ:['square',950,.035,1.05],warm:['triangle',1450,.045,.9]},toneStyle=currentMode()==='focus'?(e.ch===5?'focusPad':'bell'):({drone:'pad',minimal:'pluck',tape:'warm',celestial:'bell',ocean:'bell',plants:'pluck',mycelium:'organ',tidal:'pad'}[ambientMode.value]||'bell'),pr=presets[toneStyle],o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter(),attack=isBass?.12:pr[2],release=isBass?Math.max(.8,e.d):Math.max(.12,e.d*pr[3]),peak=Math.max(.006,e.v*(isBass?1.05:.21));o.type=isBass&&currentMode()!=='focus'?'sawtooth':pr[0];o.frequency.value=hz(e.n);f.type='lowpass';f.frequency.value=isBass?520:pr[1];f.Q.value=1.2;g.gain.setValueAtTime(.001,at);g.gain.exponentialRampToValueAtTime(peak,at+attack);g.gain.exponentialRampToValueAtTime(.001,at+release);o.connect(f).connect(g).connect(master);o.start(at);o.stop(Math.min(90,at+release+.04))};
-const connectBass=e=>{let at=e.t,style=bassStyle.value,freq=hz(e.n),o=ctx.createOscillator(),f=ctx.createBiquadFilter(),g=ctx.createGain();o.type=style==='sub'?'sine':style==='fm'?'square':style==='pluck'?'triangle':'sawtooth';o.frequency.value=freq;f.type='lowpass';f.Q.value=style==='acid'?15:style==='pluck'?5:2;f.frequency.setValueAtTime(style==='acid'?1800:style==='fm'?750:style==='pluck'?1400:420,at);if(style==='acid')f.frequency.exponentialRampToValueAtTime(180,at+Math.max(.15,e.d));let peak=e.v*(style==='sub'?.95:style==='fm'?.55:.78);g.gain.setValueAtTime(.001,at);g.gain.exponentialRampToValueAtTime(peak,at+.006);g.gain.exponentialRampToValueAtTime(.001,at+Math.max(.12,e.d));o.connect(f).connect(g).connect(master);o.start(at);o.stop(Math.min(90,at+e.d+.05));if(style==='sub'||style==='fm'){let sub=ctx.createOscillator(),sg=ctx.createGain();sub.type='sine';sub.frequency.value=style==='fm'?freq*1.5:freq/2;sg.gain.setValueAtTime(e.v*(style==='fm'?.24:.7),at);sg.gain.exponentialRampToValueAtTime(.001,at+Math.max(.15,e.d));sub.connect(sg).connect(master);sub.start(at);sub.stop(Math.min(90,at+e.d+.05))}};
-const connectDrum=e=>{let at=e.t,kit=drumKit.value,isKick=e.n===35||e.n===36,isSnare=e.n===38||e.n===40;if(isKick){let o=ctx.createOscillator(),g=ctx.createGain();o.type=kit==='glitch'?'square':'sine';o.frequency.setValueAtTime(kit==='space'?110:kit==='soft'?75:145,at);o.frequency.exponentialRampToValueAtTime(kit==='glitch'?38:45,at+(kit==='space'?.42:.16));g.gain.setValueAtTime(e.v*(kit==='soft'?.38:.78),at);g.gain.exponentialRampToValueAtTime(.001,at+(kit==='space'?.5:.2));o.connect(g).connect(master);o.start(at);o.stop(Math.min(90,at+.55));return}let len=isSnare?(kit==='space'?.42:.18):(kit==='glitch'?.025:.07),buffer=ctx.createBuffer(1,Math.max(1,Math.floor(sr*len)),sr),samples=buffer.getChannelData(0),seed=((e.t*1000|0)^e.n^0x9e3779b9)>>>0;for(let i=0;i<samples.length;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;samples[i]=(seed/2147483648-1)*(1-i/samples.length)}let src=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();src.buffer=buffer;f.type=isSnare?'bandpass':'highpass';f.frequency.value=isSnare?(kit==='soft'?950:kit==='space'?1250:1900):(kit==='glitch'?6800:4800);f.Q.value=kit==='space'?4:1;g.gain.value=e.v*(isSnare?.3:.12);src.connect(f).connect(g).connect(master);src.start(at)};
-const connectWeather=e=>{let at=e.t,buffer=ctx.createBuffer(1,sr*4,sr),samples=buffer.getChannelData(0),brown=0,seed=((e.t*1000|0)^e.n^0x85ebca6b)>>>0;for(let i=0;i<samples.length;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;let white=seed/2147483648-1;brown=(brown+white*.018)/1.018;samples[i]=brown*.97+white*.03}let src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain(),freq=[680,360,520,430][e.n]||460;src.buffer=buffer;src.loop=true;filter.type='lowpass';filter.frequency.setValueAtTime(freq*.9,at);filter.frequency.exponentialRampToValueAtTime(freq*1.06,at+e.d*.55);filter.frequency.exponentialRampToValueAtTime(freq*.94,at+e.d);filter.Q.value=.18;gain.gain.setValueAtTime(.001,at);gain.gain.exponentialRampToValueAtTime(e.v,at+6);gain.gain.setValueAtTime(e.v,Math.max(at+6,at+e.d-6));gain.gain.exponentialRampToValueAtTime(.001,at+e.d);src.connect(filter).connect(gain).connect(master);src.start(at);src.stop(Math.min(90,at+e.d+.05))};
-const connectBird=e=>{const level=birdVolume.value/100,pattern=birdPattern(e),cluster=ctx.createGain(),pan=ctx.createStereoPanner(),clusterEnd=Math.min(89.95,e.t+pattern.length);pan.pan.value=pattern.pan;cluster.gain.setValueAtTime(.12,e.t);cluster.gain.linearRampToValueAtTime(1,e.t+.24);cluster.gain.setValueAtTime(1,Math.max(e.t+.24,clusterEnd-.55));cluster.gain.linearRampToValueAtTime(.12,clusterEnd);cluster.connect(pan).connect(compressor);pattern.calls.forEach(call=>{const start=e.t+call.offset,o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter();o.type=pattern.type===3?'triangle':'sine';o.frequency.setValueAtTime(call.from,start);o.frequency.exponentialRampToValueAtTime(call.mid,start+call.dur*.42);o.frequency.exponentialRampToValueAtTime(call.to,start+call.dur);f.type='lowpass';f.frequency.value=3000-pattern.distance*900;f.Q.value=.12;g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(Math.max(.006,e.v*level*call.amp*1.8),start+.035);g.gain.exponentialRampToValueAtTime(.001,start+call.dur);o.connect(f).connect(g).connect(cluster);o.start(start);o.stop(Math.min(90,start+call.dur+.04))})};const connectChime=e=>{const level=chimeVolume.value/100;chimePattern(e.n,e.t).forEach((mode,i)=>{let o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter(),start=e.t+mode.offset;o.type='sine';o.frequency.value=mode.freq;f.type='lowpass';f.frequency.value=2100;f.Q.value=.1;g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(Math.max(.0015,e.v*level*mode.amp),start+.16+i*.035);g.gain.exponentialRampToValueAtTime(.001,Math.min(89.99,start+mode.dur));o.connect(f).connect(g).connect(compressor);o.start(start);o.stop(Math.min(90,start+mode.dur+.08))})};events.forEach(e=>{if(e.ch===10)connectWeather(e);else if(e.ch===11)connectBird(e);else if(e.ch===12)connectChime(e);else if(e.ch===9)connectDrum(e);else if(e.ch===3||(e.n<50&&currentMode()!=='focus'))connectBass(e);else connectTone(e)});
-const rendered=await ctx.startRendering();return[new Float32Array(rendered.getChannelData(0)),new Float32Array(rendered.getChannelData(1)),sr]}
-saveLoop.onclick=async()=>{if(recording)return;if(!song.length){statusText.textContent='Generate an ambient loop first.';return}recording=true;saveLoop.disabled=true;saveLoop.textContent='RENDERING LIVE SYNTHS…';loading.classList.add('show');let worker;
-const finish=(error,buffer)=>{if(worker)worker.terminate();recording=false;saveLoop.disabled=false;saveLoop.textContent='↓ EXPORT 90S FLAC';loading.classList.remove('show');if(error){console.error(error);statusText.textContent='FLAC export failed.';return}const blob=new Blob([buffer],{type:'audio/flac'}),url=URL.createObjectURL(blob),a=document.createElement('a'),now=new Date(),pad=n=>String(n).padStart(2,'0'),stamp=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;a.href=url;a.download=`${currentMode()}_${stamp}.flac`;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);statusText.textContent=`90-second FLAC exported · ${(blob.size/1048576).toFixed(1)} MB · live synth arrangement`};try{const exportEvents=focusActive?[...song,...ambientSong().filter(e=>e.t<30).map(e=>({...e,t:e.t+60,d:Math.min(e.d,30-e.t)}))]:song,[left,right,sampleRate]=await renderLiveArrangementOffline(exportEvents);worker=createFlacWorker();worker.onmessage=e=>{if(e.data.stage==='encoding'){saveLoop.textContent='ENCODING FLAC…';return}if(e.data.error)finish(new Error(e.data.error));else if(e.data.buffer)finish(null,e.data.buffer)};worker.onerror=e=>finish(e.error||new Error(e.message));worker.postMessage({left:left.buffer,right:right.buffer,sampleRate},[left.buffer,right.buffer])}catch(error){finish(error)}};
-play.onclick=()=>playing?stop():song.length?playEvents(song,loopEnabled):transitionGenerate(false,true,false);
-bassStyle.onchange=invalidateComposition;
-drumKit.onchange=invalidateComposition;
-scale.onchange=invalidateComposition;
-const saveLibrary=document.querySelector('#saveLibrary'),libraryItems=document.querySelector('#libraryItems'),libraryCount=document.querySelector('#libraryCount'),LIBRARY_KEY='starlight-saved-loops-v2',CLEAN_BUILD_KEY='starlight-clean-build-20260714';
-try{if(!localStorage.getItem(CLEAN_BUILD_KEY)){localStorage.removeItem('starlight-saved-loops-v1');localStorage.removeItem(LIBRARY_KEY);localStorage.setItem(CLEAN_BUILD_KEY,'1')}}catch{}
-function readLibrary(){try{const value=JSON.parse(localStorage.getItem(LIBRARY_KEY)||'[]');return Array.isArray(value)?value.slice(0,10):[]}catch{return[]}}
-function writeLibrary(items){try{localStorage.setItem(LIBRARY_KEY,JSON.stringify(items));return true}catch{statusText.textContent='Browser storage is full or unavailable.';return false}}
-function loopSettings(){return{ambientMode:ambientMode.value,focusActive,focusEnvironment:focusEnvironment.value,birdsEnabled:birdsEnabled.checked,chimesEnabled:chimesEnabled.checked,birdVolume:birdVolume.value,chimeVolume:chimeVolume.value,bassStyle:bassStyle.value,drumKit:drumKit.value,scale:scale.value,bpm:bpm.value,glow:glow.value,volume:volume.value,math:window.ambientMath||{mode:currentMode(),seed:Date.now(),detail:ambientDetail}}}
-function renderLibrary(){const items=readLibrary();libraryCount.textContent=`${items.length} / 10`;saveLibrary.disabled=items.length>=10||!song.length;libraryItems.replaceChildren();if(!items.length){const empty=document.createElement('p');empty.className='library-empty';empty.textContent='Your saved mathematical loops will appear here.';libraryItems.append(empty);return}items.forEach((item,index)=>{const row=document.createElement('div'),load=document.createElement('button'),remove=document.createElement('button');row.className='library-item';load.className='library-load';remove.className='library-delete';load.innerHTML=`<strong>▶ ${item.name}</strong><small>${item.mode.toUpperCase()} · ${item.scaleName} · ${item.bpm} BPM</small>`;load.onclick=()=>loadSavedLoop(index);remove.textContent='×';remove.title='Delete saved loop';remove.onclick=()=>{const next=readLibrary();next.splice(index,1);writeLibrary(next);renderLibrary();statusText.textContent='Saved loop removed.'};row.append(load,remove);libraryItems.append(row)})}
-function loadSavedLoop(index){const item=readLibrary()[index];if(!item||!Array.isArray(item.events))return;stop(true);
-const s=item.settings||{};focusActive=!!s.focusActive||item.mode==='focus';ambientMode.value=s.ambientMode&&s.ambientMode!=='focus'?s.ambientMode:'drone';focusEnvironment.value=s.focusEnvironment||'rain';birdsEnabled.checked=!!s.birdsEnabled;chimesEnabled.checked=!!s.chimesEnabled;birdVolume.value=s.birdVolume||18;chimeVolume.value=s.chimeVolume||14;birdVolOut.value=birdVolume.value+'%';chimeVolOut.value=chimeVolume.value+'%';bassStyle.value=s.bassStyle||'sub';drumKit.value=s.drumKit||'soft';scale.value=s.scale||'57';bpm.value=s.bpm||60;glow.value=s.glow||72;volume.value=s.volume||55;bpmOut.value=bpm.value+' BPM';glowOut.value=glow.value+'%';volOut.value=volume.value+'%';ambientDetail=s.math?.detail||'';window.ambientMath=s.math||{mode:currentMode(),seed:item.id,detail:ambientDetail};showFormula();song=item.events.map(e=>({...e}));songName.textContent=item.name;playEvents(song,true);statusText.textContent=`Playing saved loop · ${item.scaleName} · ${item.bpm} BPM`}
-saveLibrary.onclick=()=>{if(!song.length){statusText.textContent='Generate a loop before saving it.';return}const items=readLibrary();if(items.length>=10){statusText.textContent='Loop library is full. Delete one to save another.';return}const now=new Date(),mode=currentMode(),modeName=focusActive?'FOCUS':ambientMode.options[ambientMode.selectedIndex].text.split(' · ')[0],item={id:Date.now(),name:`${modeName} · ${now.toLocaleDateString([],{month:'short',day:'numeric'})} ${now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`,mode,bpm:bpm.value,scaleName:scale.options[scale.selectedIndex].text,settings:loopSettings(),events:song.map(e=>({t:e.t,d:e.d,n:e.n,v:e.v,ch:e.ch,bird:e.bird}))};if(writeLibrary([...items,item])){renderLibrary();statusText.textContent=`Loop saved locally · ${items.length+1} of 10`}};
+function ambientSongCorrected() {
+  const mode = currentMode(),
+    root = +scale.value,
+    E = [],
+    rand = () => cryptoUnit(),
+    seed = (cryptoUnit() * 0xffffffff) >>> 0,
+    id = seed.toString(16).padStart(8, "0").toUpperCase(),
+    add = (t, d, n, v = 0.14, ch = 5) => {
+      if (t < 60) E.push({ t, d: Math.min(d, 60 - t), n, v, ch });
+    },
+    register = [-12, 0, 12][Math.floor(rand() * 3)],
+    density = 0.35 + rand() * 0.58,
+    stretch = 0.72 + rand() * 0.7,
+    accent = 0.7 + rand() * 0.6;
+  if (mode === "focus") {
+    const env = focusEnvironment.value,
+      envIndex = { rain: 0, beach: 1, forest: 2, mountain: 3 }[env],
+      palettes = {
+        rain: [0, 2, 7, 9],
+        beach: [0, 4, 7, 9],
+        forest: [0, 2, 5, 7],
+        mountain: [0, 5, 7, 12],
+      },
+      rootShift = { rain: 0, beach: -5, forest: -7, mountain: -12 }[env],
+      pent = palettes[env],
+      droneRoot = root + rootShift;
+    add(0, 60, droneRoot, 0.028, 5);
+    add(5 + rand() * 9, 52 + rand() * 3, droneRoot + 12, 0.009, 5);
+    if (rand() > 0.72)
+      add(
+        19 + rand() * 12,
+        27 + rand() * 10,
+        droneRoot + pent[2] + 12,
+        0.006,
+        5,
+      );
+    for (let t = 12 + rand() * 10; t < 58; t += 23 + rand() * 20) {
+      let degree = pent[Math.floor(rand() * pent.length)],
+        pitch = root + 12 + degree;
+      add(t, 9 + rand() * 12, pitch, 0.009 + rand() * 0.012, 0);
+    }
+    add(0, 60, envIndex, 0.004 + rand() * 0.003, 10);
+    const birdCount = birdsEnabled.checked
+      ? buildBirdEcosystem(root, pent, rand, E)
+      : 0;
+    if (chimesEnabled.checked) {
+      let t = 0.5 + rand() * 1.8;
+      while (t < 59) {
+        add(
+          t,
+          16,
+          root - 17 + pent[Math.floor(rand() * pent.length)],
+          0.28 + rand() * 0.12,
+          12,
+        );
+        t += Math.max(
+          5,
+          Math.min(14, -Math.log(Math.max(0.001, 1 - rand())) * 8),
+        );
+      }
+    }
+    ambientDetail = `seed ${id}, ${env}, ${birdCount} bird territories, breathing activity field, tube-mode chimes`;
+  } else if (mode === "drone") {
+    let fundamental = root - 36 + Math.floor(rand() * 8),
+      partials = 4 + Math.floor(rand() * 7);
+    for (let n = 1; n <= partials; n++) {
+      let pitch = fundamental + 12 * Math.log2(n),
+        start = n === 1 ? 0 : rand() * 18,
+        dur = 28 + rand() * 32;
+      add(start, dur, pitch, 0.28 / Math.sqrt(n), n === 1 ? 3 : 5);
+      if (rand() < 0.55)
+        add(
+          (start + 30 + rand() * 8) % 58,
+          20 + rand() * 20,
+          pitch + 12,
+          0.08 / Math.sqrt(n),
+          0,
+        );
+    }
+    ambientDetail = `seed ${id}, f₀=${hz(fundamental).toFixed(2)}Hz, partials=${partials}`;
+  } else if (mode === "minimal") {
+    const S = [0, 2, 5, 7, 9, 12],
+      N = S.length,
+      P = Array.from({ length: N }, () => {
+        let row = Array.from({ length: N }, () => 0.05 + rand() ** 2),
+          sum = row.reduce((a, b) => a + b);
+        return row.map((x) => x / sum);
+      });
+    let state = Math.floor(rand() * N),
+      t = 0,
+      events = 0;
+    while (t < 60) {
+      let u = rand(),
+        sum = 0,
+        next = 0;
+      for (let j = 0; j < N; j++) {
+        sum += P[state][j];
+        if (u <= sum) {
+          next = j;
+          break;
+        }
+      }
+      state = next;
+      let dur = [0.5, 1, 1.5, 2, 3, 5][Math.floor(rand() * 6)] * stretch;
+      if (rand() < density) {
+        add(t, dur * 1.8, root + register + S[state], 0.1 + rand() * 0.15, 0);
+        events++;
+        if (rand() < 0.3)
+          add(t + dur * 0.5, dur * 2, root - 12 + S[(state + 2) % N], 0.08, 5);
+      }
+      t += dur;
+    }
+    ambientDetail = `seed ${id}, ${events} events, self-transition=${P[0][0].toFixed(2)}`;
+  } else if (mode === "tape") {
+    let eps = 8 + rand() * 34,
+      omega = 0.025 + rand() * 0.12,
+      phi = rand() * Math.PI * 2,
+      base = [0, 3, 7, 10][Math.floor(rand() * 4)],
+      step = 2 + rand() * 4;
+    for (let t = 0; t < 60; t += step) {
+      let cents =
+          eps * Math.sin(omega * t + phi) +
+          eps * 0.35 * Math.sin(omega * 2.07 * t - phi),
+        pitch = root + register + base + cents / 100;
+      add(t, 8 + rand() * 12, pitch, 0.07 + rand() * 0.11, 0);
+      if (rand() < density * 0.65)
+        add(
+          t + rand() * 2,
+          12 + rand() * 12,
+          pitch - 12 + (rand() > 0.5 ? 7 : 0),
+          0.12,
+          3,
+        );
+    }
+    ambientDetail = `seed ${id}, ε=${eps.toFixed(1)}¢, ω=${omega.toFixed(3)}, φ=${phi.toFixed(2)}`;
+  } else if (mode === "celestial") {
+    let bodies = 3 + Math.floor(rand() * 6),
+      axes = Array.from(
+        { length: bodies },
+        (_, i) => 0.45 + i * (0.3 + rand() * 0.5),
+      );
+    axes.forEach((a, i) => {
+      let T = Math.sqrt(a * a * a),
+        period = 2.5 + T * (4 + rand() * 4),
+        phase = rand() * period,
+        pitch = root + register + [0, 5, 7, 9, 12, 16, 19, 21][i];
+      for (let t = phase; t < 60; t += period)
+        add(
+          t,
+          Math.min(period * 1.8, 16),
+          pitch,
+          0.07 + 0.12 / (1 + a),
+          i === 0 ? 3 : 5,
+        );
+    });
+    ambientDetail = `seed ${id}, a=${axes.map((x) => x.toFixed(2)).join("/")}, T=a³ᐟ²`;
+  } else if (mode === "ocean") {
+    let count = 2 + Math.floor(rand() * 4),
+      waves = Array.from({ length: count }, () => {
+        let k = 0.12 + rand() * 1.1;
+        return {
+          A: 0.15 + rand() * 0.8,
+          k,
+          w: Math.sqrt(9.81 * k),
+          p: rand() * Math.PI * 2,
+          Q: 0.4 + rand() * 0.5,
+        };
+      });
+    let step = 1.2 + rand() * 2.8;
+    for (let t = 0; t < 60; t += step) {
+      let x = 0,
+        z = 0;
+      waves.forEach((w) => {
+        let phase = w.k * (t * 0.18) - w.w * t + w.p;
+        x -= w.Q * w.A * Math.sin(phase);
+        z += w.A * Math.cos(phase);
+      });
+      let field = 0.5 + 0.5 * Math.tanh(z),
+        pitch =
+          root -
+          12 +
+          register +
+          [0, 2, 5, 7, 10, 12][Math.min(5, Math.floor(field * 6))];
+      add(t, 5 + Math.abs(x) * 2 + rand() * 5, pitch, 0.07 + field * 0.13, 0);
+      if (z > 0.25) add(t + 0.8, 10 + rand() * 8, pitch - 12, 0.16, 3);
+      if (rand() < density * 0.18) add(t, 0.06, 42, 0.1 + rand() * 0.12, 9);
+    }
+    ambientDetail = `seed ${id}, ${count} waves, k=${waves.map((w) => w.k.toFixed(2)).join("/")}, ω²=gk`;
+  } else if (mode === "plants") {
+    const golden = Math.PI * (3 - Math.sqrt(5)),
+      epsilon = (rand() - 0.5) * 0.045,
+      alpha = golden + epsilon,
+      c = 0.6 + rand() * 1.4,
+      points = 20 + Math.floor(rand() * 35);
+    for (let n = 0; n < points; n++) {
+      let theta = n * alpha,
+        r = c * Math.sqrt(n),
+        t = (n / points) * 58 + (Math.sin(theta) + 1) * 0.6,
+        pitch =
+          root +
+          register +
+          [0, 2, 4, 7, 9, 14][
+            Math.floor(
+              ((((theta % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) /
+                (Math.PI * 2)) *
+                6,
+            )
+          ];
+      add(t, 4 + Math.min(10, r * 0.55), pitch, 0.06 + 0.13 * (n / points), 0);
+      if (n % 8 === 0) add(t, 12, pitch - 24, 0.2, 3);
+    }
+    ambientDetail = `seed ${id}, α=${((alpha * 180) / Math.PI).toFixed(4)}°, c=${c.toFixed(2)}, N=${points}`;
+  } else if (mode === "mycelium") {
+    const W = 14,
+      H = 14,
+      Du = 0.14 + rand() * 0.08,
+      Dv = 0.06 + rand() * 0.06,
+      F = 0.025 + rand() * 0.035,
+      K = 0.048 + rand() * 0.022,
+      dt = 0.7,
+      u = new Float64Array(W * H).fill(1),
+      v = new Float64Array(W * H);
+    for (let q = 0; q < 8; q++) {
+      let x = Math.floor(rand() * W),
+        y = Math.floor(rand() * H);
+      v[y * W + x] = 0.7 + rand() * 0.3;
+      u[y * W + x] = 0.3;
+    }
+    let lap = (a, x, y) =>
+      a[y * W + ((x + 1) % W)] +
+      a[y * W + ((x + W - 1) % W)] +
+      a[((y + 1) % H) * W + x] +
+      a[((y + H - 1) % H) * W + x] -
+      4 * a[y * W + x];
+    for (let step = 0; step < 180; step++) {
+      let nu = new Float64Array(u),
+        nv = new Float64Array(v);
+      for (let y = 0; y < H; y++)
+        for (let x = 0; x < W; x++) {
+          let q = y * W + x,
+            uvv = u[q] * v[q] * v[q];
+          nu[q] = u[q] + (Du * lap(u, x, y) - uvv + F * (1 - u[q])) * dt;
+          nv[q] = v[q] + (Dv * lap(v, x, y) + uvv - (F + K) * v[q]) * dt;
+        }
+      u.set(nu);
+      v.set(nv);
+      if (step % 8 === 0) {
+        let q = Math.floor(rand() * u.length),
+          field = Math.max(0, Math.min(0.999, v[q] * 2)),
+          t = (step / 180) * 59,
+          pitch =
+            root - 12 + register + [0, 1, 5, 6, 10, 13][Math.floor(field * 6)];
+        add(t, 5 + field * 9, pitch, 0.07 + field * 0.15, 0);
+        if (field > 0.35) add(t + 0.5, 8, pitch - 12, 0.18, 3);
+      }
+    }
+    ambientDetail = `seed ${id}, Dᵤ=${Du.toFixed(3)}, Dᵥ=${Dv.toFixed(3)}, F=${F.toFixed(3)}, k=${K.toFixed(3)}, 14×14 grid`;
+  } else {
+    let M = 0.4 + rand() * 0.8,
+      S = 0.15 + rand() * 0.55,
+      p1 = rand() * Math.PI * 2,
+      p2 = rand() * Math.PI * 2,
+      compression = 0.65 + rand() * 1.8,
+      step = 1.4 + rand() * 2.6;
+    for (let t = 0; t < 60; t += step) {
+      let h =
+          M * Math.cos((2 * Math.PI * t) / (12.42 / compression) + p1) +
+          S * Math.cos((2 * Math.PI * t) / (12 / compression) + p2),
+        field = 0.5 + (0.5 * h) / (M + S),
+        pitch =
+          root -
+          12 +
+          register +
+          [0, 2, 7, 9, 12, 16][Math.min(5, Math.floor(field * 6))];
+      add(t, 6 + rand() * 9, pitch, 0.07 + field * 0.14, 0);
+      if (h > 0.3) add(t, 10, pitch - 24, 0.2, 3);
+    }
+    ambientDetail = `seed ${id}, M₂=${M.toFixed(2)}, S₂=${S.toFixed(2)}, compression=${compression.toFixed(2)}×`;
+  }
+  window.ambientMath = { mode, seed, detail: ambientDetail };
+  showFormula();
+  return E.sort((a, b) => a.t - b.t);
+}
+const ambientSong = ambientSongCorrected;
+async function renderLiveArrangementOffline(events, sr = 22050) {
+  events = events.map((e) =>
+    e.ch === 11
+      ? { ...e, v: e.v * BIRD_GAIN }
+      : e.ch === 12
+        ? { ...e, v: e.v * CHIME_GAIN }
+        : e,
+  );
+  const Offline =
+    window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  if (!Offline) throw new Error("Offline audio rendering unavailable");
+  const ctx = new Offline(2, sr * 90, sr),
+    master = ctx.createGain(),
+    compressor = ctx.createDynamicsCompressor();
+  master.gain.value = Math.max(0, volume.value / 100);
+  master.connect(compressor);
+  compressor.connect(ctx.destination);
+  const connectTone = (e) => {
+    let at = e.t,
+      isBass = e.n < 50 || e.ch === 3,
+      presets = {
+        bell: ["sine", 4200, 0.008, 0.7],
+        pluck: ["triangle", 3000, 0.004, 0.34],
+        pad: ["sawtooth", 1100, 0.18, 1.35],
+        focusPad: ["sine", 760, 0.8, 1.8],
+        organ: ["square", 950, 0.035, 1.05],
+        warm: ["triangle", 1450, 0.045, 0.9],
+      },
+      toneStyle =
+        currentMode() === "focus"
+          ? e.ch === 5
+            ? "focusPad"
+            : "bell"
+          : {
+              drone: "pad",
+              minimal: "pluck",
+              tape: "warm",
+              celestial: "bell",
+              ocean: "bell",
+              plants: "pluck",
+              mycelium: "organ",
+              tidal: "pad",
+            }[ambientMode.value] || "bell",
+      pr = presets[toneStyle],
+      o = ctx.createOscillator(),
+      g = ctx.createGain(),
+      f = ctx.createBiquadFilter(),
+      attack = isBass ? 0.12 : pr[2],
+      release = isBass ? Math.max(0.8, e.d) : Math.max(0.12, e.d * pr[3]),
+      peak = Math.max(0.006, e.v * (isBass ? 1.05 : 0.21));
+    o.type = isBass && currentMode() !== "focus" ? "sawtooth" : pr[0];
+    o.frequency.value = hz(e.n);
+    f.type = "lowpass";
+    f.frequency.value = isBass ? 520 : pr[1];
+    f.Q.value = 1.2;
+    g.gain.setValueAtTime(0.001, at);
+    g.gain.exponentialRampToValueAtTime(peak, at + attack);
+    g.gain.exponentialRampToValueAtTime(0.001, at + release);
+    o.connect(f).connect(g).connect(master);
+    o.start(at);
+    o.stop(Math.min(90, at + release + 0.04));
+  };
+  const connectBass = (e) => {
+    let at = e.t,
+      style = bassStyle.value,
+      freq = hz(e.n),
+      o = ctx.createOscillator(),
+      f = ctx.createBiquadFilter(),
+      g = ctx.createGain();
+    o.type =
+      style === "sub"
+        ? "sine"
+        : style === "fm"
+          ? "square"
+          : style === "pluck"
+            ? "triangle"
+            : "sawtooth";
+    o.frequency.value = freq;
+    f.type = "lowpass";
+    f.Q.value = style === "acid" ? 15 : style === "pluck" ? 5 : 2;
+    f.frequency.setValueAtTime(
+      style === "acid"
+        ? 1800
+        : style === "fm"
+          ? 750
+          : style === "pluck"
+            ? 1400
+            : 420,
+      at,
+    );
+    if (style === "acid")
+      f.frequency.exponentialRampToValueAtTime(180, at + Math.max(0.15, e.d));
+    let peak = e.v * (style === "sub" ? 0.95 : style === "fm" ? 0.55 : 0.78);
+    g.gain.setValueAtTime(0.001, at);
+    g.gain.exponentialRampToValueAtTime(peak, at + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.001, at + Math.max(0.12, e.d));
+    o.connect(f).connect(g).connect(master);
+    o.start(at);
+    o.stop(Math.min(90, at + e.d + 0.05));
+    if (style === "sub" || style === "fm") {
+      let sub = ctx.createOscillator(),
+        sg = ctx.createGain();
+      sub.type = "sine";
+      sub.frequency.value = style === "fm" ? freq * 1.5 : freq / 2;
+      sg.gain.setValueAtTime(e.v * (style === "fm" ? 0.24 : 0.7), at);
+      sg.gain.exponentialRampToValueAtTime(0.001, at + Math.max(0.15, e.d));
+      sub.connect(sg).connect(master);
+      sub.start(at);
+      sub.stop(Math.min(90, at + e.d + 0.05));
+    }
+  };
+  const connectDrum = (e) => {
+    let at = e.t,
+      kit = drumKit.value,
+      isKick = e.n === 35 || e.n === 36,
+      isSnare = e.n === 38 || e.n === 40;
+    if (isKick) {
+      let o = ctx.createOscillator(),
+        g = ctx.createGain();
+      o.type = kit === "glitch" ? "square" : "sine";
+      o.frequency.setValueAtTime(
+        kit === "space" ? 110 : kit === "soft" ? 75 : 145,
+        at,
+      );
+      o.frequency.exponentialRampToValueAtTime(
+        kit === "glitch" ? 38 : 45,
+        at + (kit === "space" ? 0.42 : 0.16),
+      );
+      g.gain.setValueAtTime(e.v * (kit === "soft" ? 0.38 : 0.78), at);
+      g.gain.exponentialRampToValueAtTime(
+        0.001,
+        at + (kit === "space" ? 0.5 : 0.2),
+      );
+      o.connect(g).connect(master);
+      o.start(at);
+      o.stop(Math.min(90, at + 0.55));
+      return;
+    }
+    let len = isSnare
+        ? kit === "space"
+          ? 0.42
+          : 0.18
+        : kit === "glitch"
+          ? 0.025
+          : 0.07,
+      buffer = ctx.createBuffer(1, Math.max(1, Math.floor(sr * len)), sr),
+      samples = buffer.getChannelData(0),
+      seed = (((e.t * 1000) | 0) ^ e.n ^ 0x9e3779b9) >>> 0;
+    for (let i = 0; i < samples.length; i++) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      samples[i] = (seed / 2147483648 - 1) * (1 - i / samples.length);
+    }
+    let src = ctx.createBufferSource(),
+      f = ctx.createBiquadFilter(),
+      g = ctx.createGain();
+    src.buffer = buffer;
+    f.type = isSnare ? "bandpass" : "highpass";
+    f.frequency.value = isSnare
+      ? kit === "soft"
+        ? 950
+        : kit === "space"
+          ? 1250
+          : 1900
+      : kit === "glitch"
+        ? 6800
+        : 4800;
+    f.Q.value = kit === "space" ? 4 : 1;
+    g.gain.value = e.v * (isSnare ? 0.3 : 0.12);
+    src.connect(f).connect(g).connect(master);
+    src.start(at);
+  };
+  const connectWeather = (e) => {
+    let at = e.t,
+      buffer = ctx.createBuffer(1, sr * 4, sr),
+      samples = buffer.getChannelData(0),
+      brown = 0,
+      seed = (((e.t * 1000) | 0) ^ e.n ^ 0x85ebca6b) >>> 0;
+    for (let i = 0; i < samples.length; i++) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      let white = seed / 2147483648 - 1;
+      brown = (brown + white * 0.018) / 1.018;
+      samples[i] = brown * 0.97 + white * 0.03;
+    }
+    let src = ctx.createBufferSource(),
+      filter = ctx.createBiquadFilter(),
+      gain = ctx.createGain(),
+      freq = [680, 360, 520, 430][e.n] || 460;
+    src.buffer = buffer;
+    src.loop = true;
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(freq * 0.9, at);
+    filter.frequency.exponentialRampToValueAtTime(freq * 1.06, at + e.d * 0.55);
+    filter.frequency.exponentialRampToValueAtTime(freq * 0.94, at + e.d);
+    filter.Q.value = 0.18;
+    gain.gain.setValueAtTime(0.001, at);
+    gain.gain.exponentialRampToValueAtTime(e.v, at + 6);
+    gain.gain.setValueAtTime(e.v, Math.max(at + 6, at + e.d - 6));
+    gain.gain.exponentialRampToValueAtTime(0.001, at + e.d);
+    src.connect(filter).connect(gain).connect(master);
+    src.start(at);
+    src.stop(Math.min(90, at + e.d + 0.05));
+  };
+  const connectBird = (e) => {
+    const level = birdVolume.value / 100,
+      pattern = birdPattern(e),
+      cluster = ctx.createGain(),
+      pan = ctx.createStereoPanner(),
+      clusterEnd = Math.min(89.95, e.t + pattern.length);
+    pan.pan.value = pattern.pan;
+    cluster.gain.setValueAtTime(0.12, e.t);
+    cluster.gain.linearRampToValueAtTime(1, e.t + 0.24);
+    cluster.gain.setValueAtTime(1, Math.max(e.t + 0.24, clusterEnd - 0.55));
+    cluster.gain.linearRampToValueAtTime(0.12, clusterEnd);
+    cluster.connect(pan).connect(compressor);
+    pattern.calls.forEach((call) => {
+      const start = e.t + call.offset,
+        o = ctx.createOscillator(),
+        g = ctx.createGain(),
+        f = ctx.createBiquadFilter();
+      o.type = pattern.type === 3 ? "triangle" : "sine";
+      o.frequency.setValueAtTime(call.from, start);
+      o.frequency.exponentialRampToValueAtTime(
+        call.mid,
+        start + call.dur * 0.42,
+      );
+      o.frequency.exponentialRampToValueAtTime(call.to, start + call.dur);
+      f.type = "lowpass";
+      f.frequency.value = 3000 - pattern.distance * 900;
+      f.Q.value = 0.12;
+      g.gain.setValueAtTime(0.001, start);
+      g.gain.exponentialRampToValueAtTime(
+        Math.max(0.006, e.v * level * call.amp * 1.8),
+        start + 0.035,
+      );
+      g.gain.exponentialRampToValueAtTime(0.001, start + call.dur);
+      o.connect(f).connect(g).connect(cluster);
+      o.start(start);
+      o.stop(Math.min(90, start + call.dur + 0.04));
+    });
+  };
+  const connectChime = (e) => {
+    const level = chimeVolume.value / 100;
+    chimePattern(e.n, e.t).forEach((mode, i) => {
+      let o = ctx.createOscillator(),
+        g = ctx.createGain(),
+        f = ctx.createBiquadFilter(),
+        start = e.t + mode.offset;
+      o.type = "sine";
+      o.frequency.value = mode.freq;
+      f.type = "lowpass";
+      f.frequency.value = 2100;
+      f.Q.value = 0.1;
+      g.gain.setValueAtTime(0.001, start);
+      g.gain.exponentialRampToValueAtTime(
+        Math.max(0.0015, e.v * level * mode.amp),
+        start + 0.16 + i * 0.035,
+      );
+      g.gain.exponentialRampToValueAtTime(
+        0.001,
+        Math.min(89.99, start + mode.dur),
+      );
+      o.connect(f).connect(g).connect(compressor);
+      o.start(start);
+      o.stop(Math.min(90, start + mode.dur + 0.08));
+    });
+  };
+  events.forEach((e) => {
+    if (e.ch === 10) connectWeather(e);
+    else if (e.ch === 11) connectBird(e);
+    else if (e.ch === 12) connectChime(e);
+    else if (e.ch === 9) connectDrum(e);
+    else if (e.ch === 3 || (e.n < 50 && currentMode() !== "focus"))
+      connectBass(e);
+    else connectTone(e);
+  });
+  const rendered = await ctx.startRendering();
+  return [
+    new Float32Array(rendered.getChannelData(0)),
+    new Float32Array(rendered.getChannelData(1)),
+    sr,
+  ];
+}
+saveLoop.onclick = async () => {
+  if (recording) return;
+  if (!song.length) {
+    statusText.textContent = "Generate an ambient loop first.";
+    return;
+  }
+  recording = true;
+  saveLoop.disabled = true;
+  saveLoop.textContent = "RENDERING LIVE SYNTHS…";
+  loading.classList.add("show");
+  let worker;
+  const finish = (error, buffer) => {
+    if (worker) worker.terminate();
+    recording = false;
+    saveLoop.disabled = false;
+    saveLoop.textContent = "↓ EXPORT 90S FLAC";
+    loading.classList.remove("show");
+    if (error) {
+      console.error(error);
+      statusText.textContent = "FLAC export failed.";
+      return;
+    }
+    const blob = new Blob([buffer], { type: "audio/flac" }),
+      url = URL.createObjectURL(blob),
+      a = document.createElement("a"),
+      now = new Date(),
+      pad = (n) => String(n).padStart(2, "0"),
+      stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+    a.href = url;
+    a.download = `${currentMode()}_${stamp}.flac`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+    statusText.textContent = `90-second FLAC exported · ${(blob.size / 1048576).toFixed(1)} MB · live synth arrangement`;
+  };
+  try {
+    const exportEvents = focusActive
+        ? [
+            ...song,
+            ...ambientSong()
+              .filter((e) => e.t < 30)
+              .map((e) => ({ ...e, t: e.t + 60, d: Math.min(e.d, 30 - e.t) })),
+          ]
+        : song,
+      [left, right, sampleRate] =
+        await renderLiveArrangementOffline(exportEvents);
+    worker = createFlacWorker();
+    worker.onmessage = (e) => {
+      if (e.data.stage === "encoding") {
+        saveLoop.textContent = "ENCODING FLAC…";
+        return;
+      }
+      if (e.data.error) finish(new Error(e.data.error));
+      else if (e.data.buffer) finish(null, e.data.buffer);
+    };
+    worker.onerror = (e) => finish(e.error || new Error(e.message));
+    worker.postMessage({ left: left.buffer, right: right.buffer, sampleRate }, [
+      left.buffer,
+      right.buffer,
+    ]);
+  } catch (error) {
+    finish(error);
+  }
+};
+play.onclick = () =>
+  playing
+    ? stop()
+    : song.length
+      ? playEvents(song, loopEnabled)
+      : transitionGenerate(false, true, false);
+bassStyle.onchange = invalidateComposition;
+drumKit.onchange = invalidateComposition;
+scale.onchange = invalidateComposition;
+const saveLibrary = document.querySelector("#saveLibrary"),
+  libraryItems = document.querySelector("#libraryItems"),
+  libraryCount = document.querySelector("#libraryCount"),
+  LIBRARY_KEY = "starlight-saved-loops-v2",
+  CLEAN_BUILD_KEY = "starlight-clean-build-20260714";
+try {
+  if (!localStorage.getItem(CLEAN_BUILD_KEY)) {
+    localStorage.removeItem("starlight-saved-loops-v1");
+    localStorage.removeItem(LIBRARY_KEY);
+    localStorage.setItem(CLEAN_BUILD_KEY, "1");
+  }
+} catch {}
+function readLibrary() {
+  try {
+    const value = JSON.parse(localStorage.getItem(LIBRARY_KEY) || "[]");
+    return Array.isArray(value) ? value.slice(0, 10) : [];
+  } catch {
+    return [];
+  }
+}
+function writeLibrary(items) {
+  try {
+    localStorage.setItem(LIBRARY_KEY, JSON.stringify(items));
+    return true;
+  } catch {
+    statusText.textContent = "Browser storage is full or unavailable.";
+    return false;
+  }
+}
+function loopSettings() {
+  return {
+    ambientMode: ambientMode.value,
+    focusActive,
+    focusEnvironment: focusEnvironment.value,
+    birdsEnabled: birdsEnabled.checked,
+    chimesEnabled: chimesEnabled.checked,
+    birdVolume: birdVolume.value,
+    chimeVolume: chimeVolume.value,
+    bassStyle: bassStyle.value,
+    drumKit: drumKit.value,
+    scale: scale.value,
+    bpm: bpm.value,
+    glow: glow.value,
+    volume: volume.value,
+    math: window.ambientMath || {
+      mode: currentMode(),
+      seed: Date.now(),
+      detail: ambientDetail,
+    },
+  };
+}
+function renderLibrary() {
+  const items = readLibrary();
+  libraryCount.textContent = `${items.length} / 10`;
+  saveLibrary.disabled = items.length >= 10 || !song.length;
+  libraryItems.replaceChildren();
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "library-empty";
+    empty.textContent = "Your saved mathematical loops will appear here.";
+    libraryItems.append(empty);
+    return;
+  }
+  items.forEach((item, index) => {
+    const row = document.createElement("div"),
+      load = document.createElement("button"),
+      remove = document.createElement("button");
+    row.className = "library-item";
+    load.className = "library-load";
+    remove.className = "library-delete";
+    load.innerHTML = `<strong>▶ ${item.name}</strong><small>${item.mode.toUpperCase()} · ${item.scaleName} · ${item.bpm} BPM</small>`;
+    load.onclick = () => loadSavedLoop(index);
+    remove.textContent = "×";
+    remove.title = "Delete saved loop";
+    remove.onclick = () => {
+      const next = readLibrary();
+      next.splice(index, 1);
+      writeLibrary(next);
+      renderLibrary();
+      statusText.textContent = "Saved loop removed.";
+    };
+    row.append(load, remove);
+    libraryItems.append(row);
+  });
+}
+function loadSavedLoop(index) {
+  const item = readLibrary()[index];
+  if (!item || !Array.isArray(item.events)) return;
+  stop(true);
+  const s = item.settings || {};
+  focusActive = !!s.focusActive || item.mode === "focus";
+  ambientMode.value =
+    s.ambientMode && s.ambientMode !== "focus" ? s.ambientMode : "drone";
+  focusEnvironment.value = s.focusEnvironment || "rain";
+  birdsEnabled.checked = !!s.birdsEnabled;
+  chimesEnabled.checked = !!s.chimesEnabled;
+  birdVolume.value = s.birdVolume || 18;
+  chimeVolume.value = s.chimeVolume || 14;
+  birdVolOut.value = birdVolume.value + "%";
+  chimeVolOut.value = chimeVolume.value + "%";
+  bassStyle.value = s.bassStyle || "sub";
+  drumKit.value = s.drumKit || "soft";
+  scale.value = s.scale || "57";
+  bpm.value = s.bpm || 60;
+  glow.value = s.glow || 72;
+  volume.value = s.volume || 55;
+  bpmOut.value = bpm.value + " BPM";
+  glowOut.value = glow.value + "%";
+  volOut.value = volume.value + "%";
+  ambientDetail = s.math?.detail || "";
+  window.ambientMath = s.math || {
+    mode: currentMode(),
+    seed: item.id,
+    detail: ambientDetail,
+  };
+  showFormula();
+  song = item.events.map((e) => ({ ...e }));
+  songName.textContent = item.name;
+  playEvents(song, true);
+  statusText.textContent = `Playing saved loop · ${item.scaleName} · ${item.bpm} BPM`;
+}
+saveLibrary.onclick = () => {
+  if (!song.length) {
+    statusText.textContent = "Generate a loop before saving it.";
+    return;
+  }
+  const items = readLibrary();
+  if (items.length >= 10) {
+    statusText.textContent =
+      "Loop library is full. Delete one to save another.";
+    return;
+  }
+  const now = new Date(),
+    mode = currentMode(),
+    modeName = focusActive
+      ? "FOCUS"
+      : ambientMode.options[ambientMode.selectedIndex].text.split(" · ")[0],
+    item = {
+      id: Date.now(),
+      name: `${modeName} · ${now.toLocaleDateString([], { month: "short", day: "numeric" })} ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`,
+      mode,
+      bpm: bpm.value,
+      scaleName: scale.options[scale.selectedIndex].text,
+      settings: loopSettings(),
+      events: song.map((e) => ({
+        t: e.t,
+        d: e.d,
+        n: e.n,
+        v: e.v,
+        ch: e.ch,
+        bird: e.bird,
+      })),
+    };
+  if (writeLibrary([...items, item])) {
+    renderLibrary();
+    statusText.textContent = `Loop saved locally · ${items.length + 1} of 10`;
+  }
+};
 renderLibrary();
-setInterval(()=>clock.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),1000);
+setInterval(
+  () =>
+    (clock.textContent = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })),
+  1000,
+);
