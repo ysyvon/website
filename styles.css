@@ -265,6 +265,7 @@ button {
   display: grid;
   place-items: center;
   margin: 4px auto 22px;
+  padding-top: 10px;
 }
 
 img {
@@ -354,6 +355,13 @@ img {
 
 .panel-inner {
   padding: 2px 4px;
+}
+
+.about-image {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+  margin: 0 auto 22px;
 }
 
 .panel-text p {
