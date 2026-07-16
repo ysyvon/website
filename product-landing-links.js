@@ -9,9 +9,20 @@
   function updateProductLinks(root = document) {
     root.querySelectorAll('a[href*="/p/"]').forEach((link) => {
       const match = link.getAttribute("href")?.match(/\/p\/(\d+)/);
-      if (match && landingPages[match[1]]) link.href = landingPages[match[1]];
+      if (match && landingPages[match[1]]) {
+        link.href = landingPages[match[1]];
+        link.dataset.productLanding = "true";
+      }
     });
   }
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[data-product-landing="true"]');
+    if (!link) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.assign(link.href);
+  }, true);
 
   updateProductLinks();
   new MutationObserver(() => updateProductLinks()).observe(document.documentElement, { childList: true, subtree: true });
