@@ -1134,9 +1134,25 @@ body.sample-reader-open {
   font-size: 16px !important;
 }
 
-.product-buy-button {
-  display: inline-flex;
+.product-purchase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 18px;
+}
+
+.product-buy-button,
+.product-coming-soon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-coming-soon {
+  cursor: default;
+  color: var(--muted);
+  border-color: var(--line);
+  opacity: .72;
 }
 
 @media (prefers-color-scheme: dark) {

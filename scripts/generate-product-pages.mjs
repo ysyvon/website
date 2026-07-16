@@ -86,7 +86,10 @@ for (const product of products) {
           <h1>${product.title}</h1>
           <p class="product-landing-description">${product.description}</p>
           <p>${product.detail}</p>
-          <a class="cta-button product-buy-button" href="${product.ecwid}">Buy Digital Edition →</a>
+          <div class="product-purchase-actions">
+            <a class="cta-button product-buy-button" href="${product.ecwid}">Buy Digital Edition →</a>
+            <span class="cta-button product-coming-soon" aria-disabled="true">Print Edition Coming Soon</span>
+          </div>
         </div>
       </article>
       <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>
