@@ -28,7 +28,7 @@ button {
 
 .standalone-reader {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
   width: min(100%, 980px);
   height: 100dvh;
   margin: 0 auto;
@@ -81,7 +81,7 @@ button {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: calc(100dvh - 142px);
+  max-height: calc(100dvh - 170px);
   aspect-ratio: 306 / 504;
   background: #ffffff;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.48);
@@ -144,6 +144,22 @@ button {
   padding-top: 5px;
 }
 
+.standalone-site-footer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 7px;
+  color: var(--reader-muted);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.standalone-site-footer a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
 @media (max-width: 620px) {
   .standalone-reader {
     padding: 10px 8px;
@@ -158,6 +174,6 @@ button {
   }
 
   .standalone-reader-page img {
-    max-height: calc(100dvh - 132px);
+    max-height: calc(100dvh - 160px);
   }
 }
