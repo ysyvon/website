@@ -182,6 +182,10 @@ button {
   max-width: 100% !important;
 }
 
+.books-page #my-store-139267004 .grid-product__price {
+  display: none !important;
+}
+
 .books-page #my-store-139267004 .grid-product__wrap,
 .books-page #my-store-139267004 .grid-product__wrap-inner,
 .books-page #my-store-139267004 .grid-product__image,
