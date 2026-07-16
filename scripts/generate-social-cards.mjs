@@ -38,10 +38,10 @@ const cards = [
   { file: "sample-even-if.jpg", kicker: "READ A SAMPLE", title: "Even if the Light Forgets", detail: "Volume I · Ys Goldt", cta: "START READING →", image: "assets/eitlf-sample/pages/page-01.jpg", fit: "contain" },
   { file: "sample-strange-mercy.jpg", kicker: "READ A SAMPLE", title: "The Strange Mercy of Listening", detail: "Opening pages · Ys Goldt", cta: "START READING →", image: "assets/strange-mercy-sample/pages/page-01.jpg", fit: "contain" },
   { file: "privacy.jpg", kicker: "YS GOLDT", title: "Privacy Policy", detail: "How this website handles information", cta: "READ THE POLICY →", image: "ysprofile.jpg" },
-  { file: "shop-an-index-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "An Index of Vanishing — Part I", detail: "He was sent to watch her. He never expected her to see him.", cta: "VIEW THE EDITION →", image: "shop-assets/an-index-digital.jpg", fit: "contain", grayscale: false },
-  { file: "shop-even-if-digital.jpg", kicker: "DIGITAL EDITION · $8", title: "Even if the Light Forgets — Volume I", detail: "A world of alchemy, ruin, slow-burn love, and fragile hope", cta: "VIEW THE EDITION →", image: "shop-assets/even-if-digital.jpg", fit: "contain", grayscale: false },
-  { file: "shop-strange-mercy-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "The Strange Mercy of Listening", detail: "A quiet devotion becomes something far more dangerous", cta: "VIEW THE EDITION →", image: "shop-assets/strange-mercy-digital.jpg", fit: "contain", grayscale: false },
-  { file: "shop-shelves-memory-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "Shelves of Memory", detail: "Poems for grief, longing, love, and what cannot return", cta: "VIEW THE EDITION →", image: "shop-assets/shelves-of-memory-digital.jpg", fit: "contain", grayscale: false },
+  { file: "shop-an-index-digital.jpg", kicker: "NOVELLA", title: "An Index of Vanishing", detail: "He was sent to watch her. He never expected her to see him.", image: "shop-assets/an-index-digital.jpg", fit: "contain", grayscale: false, minimal: true },
+  { file: "shop-even-if-digital.jpg", kicker: "NOVEL", title: "Even if the Light Forgets", detail: "A world of alchemy, ruin, slow-burn love, and fragile hope", image: "shop-assets/even-if-digital.jpg", fit: "contain", grayscale: false, minimal: true },
+  { file: "shop-strange-mercy-digital.jpg", kicker: "NOVEL", title: "The Strange Mercy of Listening", detail: "A quiet devotion becomes something far more dangerous", image: "shop-assets/strange-mercy-digital.jpg", fit: "contain", grayscale: false, minimal: true },
+  { file: "shop-shelves-memory-digital.jpg", kicker: "POETRY", title: "Shelves of Memory", detail: "Poems for grief, longing, love, and what cannot return", image: "shop-assets/shelves-of-memory-digital.jpg", fit: "contain", grayscale: false, minimal: true },
 ];
 
 function escapeXml(value) {
@@ -125,9 +125,9 @@ for (const card of cards) {
       <text x="70" y="78" class="kicker" fill="#191919">${escapeXml(card.kicker)}</text>
       ${title}
       <text x="70" y="430" class="detail" fill="#55524d">${escapeXml(card.detail)}</text>
-      <text x="70" y="526" class="cta" fill="#191919">${escapeXml(card.cta)}</text>
+      ${card.minimal ? "" : `<text x="70" y="526" class="cta" fill="#191919">${escapeXml(card.cta)}</text>
       <line x1="70" y1="540" x2="310" y2="540" stroke="#191919" stroke-width="1"/>
-      <text x="70" y="588" class="brand" fill="#77736c">YSGOLDT.COM</text>
+      <text x="70" y="588" class="brand" fill="#77736c">YSGOLDT.COM</text>`}
     </svg>
   `);
 
