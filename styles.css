@@ -265,6 +265,14 @@ button {
   transform: none !important;
 }
 
+@media (prefers-color-scheme: dark) {
+  .books-page #my-store-139267004 .grid-product__picture,
+  .books-page #my-store-139267004 .details-gallery__picture {
+    opacity: 0.8;
+    filter: brightness(0.88) contrast(0.94);
+  }
+}
+
 .books-page #my-store-139267004 .details-gallery__image,
 .books-page #my-store-139267004 .details-gallery__image:hover,
 .books-page #my-store-139267004 .details-gallery__image *,
@@ -343,7 +351,7 @@ img {
   border: 0;
   background: transparent;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 11.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
@@ -382,9 +390,42 @@ img {
 
 .about-image {
   display: block;
-  width: min(100%, 420px);
+  width: min(100%, 320px);
   height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--line);
   margin: 0 auto 22px;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 30px;
+  align-items: start;
+}
+
+.about-image-frame {
+  width: 240px;
+  height: 240px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+
+.about-layout .about-image {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  transform: scale(1.2);
+}
+
+.about-copy p:last-child {
+  margin-bottom: 0;
 }
 
 .panel-text p {
@@ -398,7 +439,8 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
 }
 
 .work-list {
@@ -483,16 +525,24 @@ img {
   gap: 18px;
 }
 
+.visual-work-page .site-detail {
+  width: min(calc(100vw - 32px), 760px);
+}
+
+.visual-work-page .detail-frame {
+  width: 100%;
+}
+
 .material-item {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 8px;
+  padding: 0;
   aspect-ratio: 4 / 3;
-  border: 1px solid var(--line);
-  background: #fff;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .material-image {
@@ -500,6 +550,13 @@ img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+@media (prefers-color-scheme: dark) {
+  .material-image {
+    opacity: 0.8;
+    filter: brightness(0.88) contrast(0.94);
+  }
 }
 
 .section-label {
@@ -976,9 +1033,14 @@ body.sample-reader-open {
   width: 100%;
 }
 
-.visual-novel-page .detail-title {
+.work-detail-page .detail-title {
   font-size: 24px;
   letter-spacing: 0.1em;
+}
+
+.work-detail-page .detail-subtitle {
+  margin-top: 6px;
+  line-height: 1.5;
 }
 
 .visual-novel-page .detail-hero,
@@ -1347,6 +1409,18 @@ body.sample-reader-open {
 
   .panel {
     padding: 18px 14px 16px;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .about-image-frame {
+    width: min(100%, 260px);
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
   }
 
   .work-item {

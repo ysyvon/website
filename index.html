@@ -37,7 +37,6 @@
       <section class="tabs" aria-label="Sections">
         <a class="tab" href="./books.html">Books</a>
         <button class="tab active" type="button" data-panel="work">Works</button>
-        <button class="tab" type="button" data-panel="materials">Materials</button>
         <button class="tab" type="button" data-panel="about">About</button>
         <button class="tab" type="button" data-panel="contact">Contact</button>
       </section>
@@ -45,6 +44,13 @@
       <section class="panel-shell" aria-live="polite">
         <div class="panel active" data-panel="work">
           <div class="work-list compact-list">
+            <section class="work-group" aria-labelledby="works-visual">
+              <h2 class="work-group-title" id="works-visual">Visual</h2>
+              <div class="work-group-items">
+                <article class="work-item"><div class="work-meta"><h3 class="work-title">Visual Work</h3><p class="work-kicker">Selected visual and design work</p></div><div class="work-action"><a class="work-button" href="./visual-work.html">View</a></div></article>
+              </div>
+            </section>
+
             <section class="work-group" aria-labelledby="works-scores">
               <h2 class="work-group-title" id="works-scores">Scores</h2>
               <div class="work-group-items">
@@ -72,54 +78,27 @@
         </div>
 
         <div class="panel" data-panel="about" hidden>
-          <div class="panel-inner panel-text">
-            <img class="about-image" src="./ysprofile.jpg" alt="Ys Goldt profile image" />
-            <p>
-              Ys Goldt is a multidisciplinary writer and artist working across fiction, interactive media, design, and performance.
-            </p>
+          <div class="panel-inner panel-text about-layout">
+            <div class="about-image-frame">
+              <img class="about-image" src="./ysprofile.jpg" alt="Ys Goldt profile image" />
+            </div>
+            <div class="about-copy">
+              <p>
+                Ys Goldt is a multidisciplinary writer and artist working across fiction, interactive media, design, and performance.
+              </p>
 
-            <p>
-              The form changes, but the question remains: What is the truest form for an idea? And what can be removed until that form becomes unmistakable? Her practice moves between the sentence, the image, the interface, and the object. Across these forms, she returns to attention, devotion, psychological transformation, and the interior cost of being seen.
-            </p>
+              <p>
+                The form changes, but the question remains: What is the truest form for an idea? And what can be removed until that form becomes unmistakable? Her practice moves between the sentence, the image, the interface, and the object. Across these forms, she returns to attention, devotion, psychological transformation, and the interior cost of being seen.
+              </p>
 
-            <p>
-              She is the founding editor of <a class="bio-link" href="https://www.nachtljocht.com/" target="_blank" rel="noreferrer"><em>Nachtljocht</em></a>, a quarterly journal for fiction and short plays, whose editorial, visual, and material language she developed.
-            </p>
+              <p>
+                She is the founding editor of <a class="bio-link" href="https://www.nachtljocht.com/" target="_blank" rel="noreferrer"><em>Nachtljocht</em></a>, a quarterly journal for fiction and short plays, whose editorial, visual, and material language she developed.
+              </p>
 
-            <p>
-              Born and raised in the Everglades, Ys still lives there among things that may or may not exist.
-            </p>
-          </div>
-        </div>
-
-        <div class="panel" data-panel="materials" hidden>
-          <div class="materials-grid">
-            <figure class="material-item">
-              <img
-                class="material-image"
-                src="./gallery-assets/nachtljocht-work-margin-paper-transparent.png"
-                alt="Nachtljocht work margin manifesto on lined paper"
-                draggable="false"
-              />
-            </figure>
-
-            <figure class="material-item">
-              <img
-                class="material-image"
-                src="./gallery-assets/nachtljocht-manifesto-screenshot.png"
-                alt="Nachtljocht manifesto page with typewritten text and a circular mark"
-                draggable="false"
-              />
-            </figure>
-
-            <figure class="material-item">
-              <img
-                class="material-image"
-                src="./gallery-assets/quiet-work.gif"
-                alt="Animated quiet work artwork"
-                draggable="false"
-              />
-            </figure>
+              <p>
+                Born and raised in the Everglades, Ys still lives there among things that may or may not exist.
+              </p>
+            </div>
           </div>
         </div>
 
