@@ -3,113 +3,59 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ys Goldt</title>
+    <title>Ys Goldt | Writer, Artist & Interactive Storyteller</title>
     <meta name="description" content="Ys Goldt is a multidisciplinary writer and artist creating strange and tender things across fiction, interactive media, visual work, and performance.">
     <link rel="canonical" href="https://ysgoldt.com/">
     <meta property="og:site_name" content="Ys Goldt">
-    <meta property="og:title" content="Ys Goldt">
+    <meta property="og:title" content="Ys Goldt — Writer, Artist & Interactive Storyteller">
     <meta property="og:description" content="Writer and artist creating strange and tender things across fiction, interactive media, visual work, and performance.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ysgoldt.com/">
-    <meta property="og:image" content="https://ysgoldt.com/ysprofile.jpg">
-    <meta property="og:image:alt" content="Portrait of Ys Goldt">
+    <meta property="og:image" content="https://ysgoldt.com/social-cards/home.jpg">
+    <meta property="og:image:alt" content="Ys Goldt — writer, artist, and interactive storyteller">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ys Goldt">
-    <meta name="twitter:description" content="Writer and artist creating strange and tender things.">
-    <meta name="twitter:image" content="https://ysgoldt.com/ysprofile.jpg">
+    <meta name="twitter:title" content="Ys Goldt — Writer, Artist & Interactive Storyteller">
+    <meta name="twitter:description" content="Writer and artist creating strange and tender things across fiction, interactive media, visual work, and performance.">
+    <meta name="twitter:image" content="https://ysgoldt.com/social-cards/home.jpg">
+    <meta name="twitter:image:alt" content="Ys Goldt — writer, artist, and interactive storyteller">
     <link rel="icon" type="image/png" href="./favicon.png">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css?v=20260714-7">
     <script src="./disable-context-menu.js" defer></script>
-    <script>
-      if (!window.location.hash) {
-        window.location.replace('./books.html');
-      }
-    </script>
   </head>
-  <body data-disable-context-menu>
-    <main class="site site-home">
-      <section class="hero" aria-label="Featured image">
-        <!-- Profile/title-card image remains in the social metadata and appears in the About section below.
-        <img class="hero-image" src="./ysprofile.jpg" alt="Ys Goldt profile image" />
+  <body class="books-page" data-disable-context-menu>
+    <main class="site">
+      <section class="hero books-hero" aria-label="Ys Goldt">
+        <!-- Profile/title-card image is intentionally shown only in the About section.
+        <img class="hero-image" src="./ysprofile.jpg" alt="Ys Goldt profile image">
         -->
         <h1 class="page-title">Ys Goldt</h1>
         <p class="page-subtitle">creator of strange and tender things</p>
       </section>
 
-      <section class="tabs" aria-label="Sections">
-        <a class="tab" href="./books.html">Books</a>
-        <button class="tab active" type="button" data-panel="work">Works</button>
-        <button class="tab" type="button" data-panel="about">About</button>
-        <button class="tab" type="button" data-panel="contact">Contact</button>
-      </section>
+      <nav class="tabs" aria-label="Sections">
+        <a class="tab active" href="./" aria-current="page">Books</a>
+        <a class="tab" href="./works.html">Works</a>
+        <a class="tab" href="./about.html">About</a>
+        <a class="tab" href="./contact.html">Contact</a>
+      </nav>
 
-      <section class="panel-shell" aria-live="polite">
-        <div class="panel active" data-panel="work">
-          <div class="work-list compact-list">
-            <section class="work-group" aria-labelledby="works-visual">
-              <h2 class="work-group-title" id="works-visual">Visual</h2>
-              <div class="work-group-items">
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Visual Work</h3><p class="work-kicker">Selected visual and design work</p></div><div class="work-action"><a class="work-button" href="./visual-work.html">View</a></div></article>
-              </div>
-            </section>
+      <header class="books-store-header">
+        <p>Digital and print editions by Ys Goldt.</p>
+      </header>
 
-            <section class="work-group" aria-labelledby="works-scores">
-              <h2 class="work-group-title" id="works-scores">Scores</h2>
-              <div class="work-group-items">
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Ordinary Scores</h3><p class="work-kicker">2026 · Participatory performance scores</p></div><div class="work-action"><a class="work-button" href="./ordinary-scores.html">View</a></div></article>
-              </div>
-            </section>
+      <div class="books-catalog-navigation" data-books-catalog-navigation hidden>
+        <a class="books-back-to-catalog" href="./">← Back to Catalog</a>
+      </div>
 
-            <section class="work-group" aria-labelledby="works-interactive">
-              <h2 class="work-group-title" id="works-interactive">Interactive</h2>
-              <div class="work-group-items">
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">The Boundary Research Institute Terminal</h3><p class="work-kicker">2026 · Interactive lore website</p></div><div class="work-action"><a class="work-button" href="./boundary-research-institute-terminal.html">View</a></div></article>
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Stilling Duty</h3><p class="work-kicker">2026 · Mini visual novel</p></div><div class="work-action"><a class="work-button" href="./stilling-duty.html">View</a></div></article>
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Mid-Band Contact</h3><p class="work-kicker">2026 · Mini visual novel</p></div><div class="work-action"><a class="work-button" href="./mid-band-contact.html">View</a></div></article>
-              </div>
-            </section>
+      <div class="books-cart" aria-label="Shopping bag">
+        <div class="ec-cart-widget"></div>
+      </div>
 
-            <section class="work-group" aria-labelledby="works-music">
-              <h2 class="work-group-title" id="works-music">Music &amp; Sound</h2>
-              <div class="work-group-items">
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Starlight Synth</h3><p class="work-kicker">Procedurally generated mathematical ambient synthesis</p></div><div class="work-action"><a class="work-button" href="https://ysyvon.github.io/website/starlight_synth/" target="_blank" rel="noreferrer">View</a></div></article>
-                <article class="work-item"><div class="work-meta"><h3 class="work-title">Music / Sound Collage</h3><p class="work-kicker">Bandcamp</p></div><div class="work-action"><a class="work-button" href="https://ysgoldt.bandcamp.com/" target="_blank" rel="noreferrer">View</a></div></article>
-              </div>
-            </section>
-          </div>
-        </div>
-
-        <div class="panel" data-panel="about" hidden>
-          <div class="panel-inner panel-text about-layout">
-            <div class="about-image-frame">
-              <img class="about-image" src="./ysprofile.jpg" alt="Ys Goldt profile image" />
-            </div>
-            <div class="about-copy">
-              <p>
-                Ys Goldt is a multidisciplinary writer and artist working across fiction, interactive media, design, and performance.
-              </p>
-
-              <p>
-                The form changes, but the question remains: What is the truest form for an idea? And what can be removed until that form becomes unmistakable? Her practice moves between the sentence, the image, the interface, and the object. Across these forms, she returns to attention, devotion, psychological transformation, and the interior cost of being seen.
-              </p>
-
-              <p>
-                She is the founding editor of <a class="bio-link" href="https://www.nachtljocht.com/" target="_blank" rel="noreferrer"><em>Nachtljocht</em></a>, a quarterly journal for fiction and short plays, whose editorial, visual, and material language she developed.
-              </p>
-
-              <p>
-                Born and raised in the Everglades, Ys still lives there among things that may or may not exist.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel" data-panel="contact" hidden>
-          <div class="panel-inner panel-contact">
-            <p class="contact-note">For all inquiries, including press, please use the email below.</p>
-            <a class="contact-link contact-large" href="mailto:hello@ysgoldt.com">hello@ysgoldt.com</a>
-          </div>
-        </div>
+      <section class="books-store" aria-label="Books by Ys Goldt">
+        <div id="my-store-139267004"></div>
       </section>
 
       <footer class="site-footer">
@@ -118,115 +64,27 @@
       </footer>
     </main>
 
+    <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-14" charset="utf-8"></script>
     <script>
-      const tabs = document.querySelectorAll('.tab[data-panel]');
-      const panels = document.querySelectorAll('.panel');
+      Ecwid.init();
+      xProductBrowser(
+        "categoriesPerRow=3",
+        "views=grid(20,3) list(60) table(60)",
+        "categoryView=grid",
+        "searchView=list",
+        "defaultCategoryId=203498829",
+        "id=my-store-139267004"
+      );
 
-      function activatePanel(name) {
-        tabs.forEach((tab) => {
-          const active = tab.dataset.panel === name;
-          tab.classList.toggle('active', active);
-          tab.setAttribute('aria-pressed', active ? 'true' : 'false');
-        });
+      const catalogNavigation = document.querySelector('[data-books-catalog-navigation]');
 
-        panels.forEach((panel) => {
-          const active = panel.dataset.panel === name;
-          panel.hidden = !active;
-          panel.classList.toggle('active', active);
-        });
-      }
+      const updateCatalogNavigation = () => {
+        if (!catalogNavigation) return;
+        catalogNavigation.hidden = !/\/p\/\d+/.test(window.location.hash);
+      };
 
-      tabs.forEach((tab) => {
-        tab.addEventListener('click', () => {
-          activatePanel(tab.dataset.panel);
-          history.replaceState(null, '', '#' + tab.dataset.panel);
-        });
-      });
-
-      const requestedPanel = window.location.hash.slice(1);
-      if (requestedPanel && document.querySelector('.panel[data-panel="' + requestedPanel + '"]')) {
-        activatePanel(requestedPanel);
-      }
+      window.addEventListener('hashchange', updateCatalogNavigation);
+      updateCatalogNavigation();
     </script>
-
-    <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
-      <div class="newsletter-backdrop"></div>
-      <section class="newsletter-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
-        <button class="newsletter-close" type="button" aria-label="Close newsletter signup" data-close-newsletter>×</button>
-        <h2 id="newsletter-title" class="newsletter-kicker">Subscribe to the Mailing List</h2>
-        <p class="newsletter-copy">Get a free novella when you subscribe, plus occasional book news and new posts.</p>
-        <form action="https://buttondown.com/api/emails/embed-subscribe/ysgoldt" method="post" class="embeddable-buttondown-form newsletter-form">
-          <label for="bd-email">Enter your email</label>
-          <input type="email" name="email" id="bd-email" placeholder="Email address" autocomplete="email" required />
-          <input type="submit" value="Subscribe" />
-          <p class="newsletter-powered"><a href="https://buttondown.com/refer/ysgoldt" target="_blank" rel="noreferrer">Powered by Buttondown.</a></p>
-        </form>
-      </section>
-    </div>
-
-    <script>
-      (function () {
-        const popup = document.getElementById('newsletter-popup');
-        if (!popup) return;
-        const dismissers = popup.querySelectorAll('[data-close-newsletter]');
-        const openDelay = 1200;
-
-        const openPopup = () => {
-          popup.hidden = false;
-          popup.setAttribute('aria-hidden', 'false');
-          requestAnimationFrame(() => popup.classList.add('is-open'));
-        };
-
-        const closePopup = () => {
-          popup.classList.remove('is-open');
-          popup.setAttribute('aria-hidden', 'true');
-          window.setTimeout(() => { popup.hidden = true; }, 220);
-        };
-
-        const dismissedAt = Number(window.localStorage.getItem('ysgoldt-newsletter-dismissed-v2'));
-        const recentlyDismissed = Number.isFinite(dismissedAt)
-          && Date.now() - dismissedAt < 24 * 60 * 60 * 1000;
-
-        if (!recentlyDismissed) {
-          window.setTimeout(openPopup, openDelay);
-        }
-
-        dismissers.forEach((el) => el.addEventListener('click', () => {
-          window.localStorage.setItem('ysgoldt-newsletter-dismissed-v2', String(Date.now()));
-          closePopup();
-        }));
-
-      })();
-    </script>
-
-    <script>
-      document.addEventListener('contextmenu', function (event) {
-        event.preventDefault();
-      });
-
-      document.addEventListener('selectstart', function (event) {
-        const target = event.target;
-        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
-          return;
-        }
-        event.preventDefault();
-      });
-    </script>  </body>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
