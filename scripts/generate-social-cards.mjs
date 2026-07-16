@@ -125,9 +125,6 @@ for (const card of cards) {
       <text x="70" y="78" class="kicker" fill="#191919">${escapeXml(card.kicker)}</text>
       ${title}
       <text x="70" y="430" class="detail" fill="#55524d">${escapeXml(card.detail)}</text>
-      ${card.minimal ? "" : `<text x="70" y="526" class="cta" fill="#191919">${escapeXml(card.cta)}</text>
-      <line x1="70" y1="540" x2="310" y2="540" stroke="#191919" stroke-width="1"/>
-      <text x="70" y="588" class="brand" fill="#77736c">YSGOLDT.COM</text>`}
     </svg>
   `);
 
