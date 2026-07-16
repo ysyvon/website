@@ -38,10 +38,10 @@ const cards = [
   { file: "sample-even-if.jpg", kicker: "READ A SAMPLE", title: "Even if the Light Forgets", detail: "Volume I · Ys Goldt", cta: "START READING →", image: "assets/eitlf-sample/pages/page-01.jpg", fit: "contain" },
   { file: "sample-strange-mercy.jpg", kicker: "READ A SAMPLE", title: "The Strange Mercy of Listening", detail: "Opening pages · Ys Goldt", cta: "START READING →", image: "assets/strange-mercy-sample/pages/page-01.jpg", fit: "contain" },
   { file: "privacy.jpg", kicker: "YS GOLDT", title: "Privacy Policy", detail: "How this website handles information", cta: "READ THE POLICY →", image: "ysprofile.jpg" },
-  { file: "shop-an-index-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "An Index of Vanishing — Part I", detail: "PDF + EPUB · A novella by Ys Goldt", cta: "VIEW THE EDITION →", image: "shop-assets/an-index-digital.jpg", fit: "contain", grayscale: false },
-  { file: "shop-even-if-digital.jpg", kicker: "DIGITAL EDITION · $8", title: "Even if the Light Forgets — Volume I", detail: "PDF + EPUB · A novel by Ys Goldt", cta: "VIEW THE EDITION →", image: "shop-assets/even-if-digital.jpg", fit: "contain", grayscale: false },
-  { file: "shop-strange-mercy-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "The Strange Mercy of Listening", detail: "PDF + EPUB · A novella by Ys Goldt", cta: "VIEW THE EDITION →", image: "shop-assets/strange-mercy-digital.jpg", fit: "contain", grayscale: false },
-  { file: "shop-shelves-memory-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "Shelves of Memory", detail: "PDF + EPUB · Poetry by Ys Goldt", cta: "VIEW THE EDITION →", image: "shop-assets/shelves-of-memory-digital.jpg", fit: "contain", grayscale: false },
+  { file: "shop-an-index-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "An Index of Vanishing — Part I", detail: "He was sent to watch her. He never expected her to see him.", cta: "VIEW THE EDITION →", image: "shop-assets/an-index-digital.jpg", fit: "contain", grayscale: false },
+  { file: "shop-even-if-digital.jpg", kicker: "DIGITAL EDITION · $8", title: "Even if the Light Forgets — Volume I", detail: "A world of alchemy, ruin, slow-burn love, and fragile hope", cta: "VIEW THE EDITION →", image: "shop-assets/even-if-digital.jpg", fit: "contain", grayscale: false },
+  { file: "shop-strange-mercy-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "The Strange Mercy of Listening", detail: "A quiet devotion becomes something far more dangerous", cta: "VIEW THE EDITION →", image: "shop-assets/strange-mercy-digital.jpg", fit: "contain", grayscale: false },
+  { file: "shop-shelves-memory-digital.jpg", kicker: "DIGITAL EDITION · $5", title: "Shelves of Memory", detail: "Poems for grief, longing, love, and what cannot return", cta: "VIEW THE EDITION →", image: "shop-assets/shelves-of-memory-digital.jpg", fit: "contain", grayscale: false },
 ];
 
 function escapeXml(value) {
