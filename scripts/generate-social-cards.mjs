@@ -25,9 +25,9 @@ const cards = [
   { file: "contact.jpg", kicker: "CONTACT", title: "Get in touch", detail: "Press and general inquiries", cta: "EMAIL YS GOLDT →", image: "ysprofile.jpg" },
   { file: "books.jpg", kicker: "BOOKS", title: "Fiction by Ys Goldt", detail: "Novels and novellas in print and digital editions", cta: "VIEW THE BOOKS →", image: "anindexcover.png", fit: "contain" },
   { file: "works.jpg", kicker: "SELECTED WORK", title: "Works by Ys Goldt", detail: "Visual · Interactive · Performance · Sound", cta: "EXPLORE THE WORK →", image: "gallery-assets/quiet-work.gif" },
-  { file: "visual-work.jpg", kicker: "VISUAL WORK", title: "Editorial art and design", detail: "Selected visual work by Ys Goldt", cta: "VIEW THE COLLECTION →", image: "gallery-assets/nachtljocht-manifesto-screenshot.png" },
-  { file: "ordinary-scores.jpg", kicker: "PERFORMANCE", title: "Ordinary Scores", detail: "Small invitations to attention, chance, and action", cta: "PERFORM A SCORE →", image: "ysprofile.jpg" },
-  { file: "boundary-terminal.jpg", kicker: "INTERACTIVE ARCHIVE", title: "The Boundary Research Institute Terminal", detail: "Personnel files · Containment records · Anomalous research", cta: "ENTER THE TERMINAL →", image: "BRI_Terminal/assets/share-card.png" },
+  { file: "visual-work.jpg", kicker: "VISUAL WORK", title: "Editorial art and design", detail: "Selected visual work by Ys Goldt", cta: "VIEW THE COLLECTION →", image: "gallery-assets/nachtljocht-work-margin-paper-transparent.png", fit: "contain", grayscale: false },
+  { file: "ordinary-scores.jpg", kicker: "PERFORMANCE", title: "Ordinary Scores", detail: "Small invitations to attention, chance, and action", cta: "PERFORM A SCORE →", artwork: "scores", grayscale: false },
+  { file: "boundary-terminal.jpg", kicker: "INTERACTIVE ARCHIVE", title: "The Boundary Research Institute Terminal", detail: "Personnel files · Containment records · Anomalous research", cta: "ENTER THE TERMINAL →", image: "BRI_Terminal/assets/share-card.png", position: "left top", grayscale: false },
   { file: "stilling-duty.jpg", kicker: "MINI VISUAL NOVEL", title: "Stilling Duty", detail: "A story from The Space Between Names", cta: "PLAY NOW →", image: "VisualNovel/Scene1/social-preview.png" },
   { file: "mid-band-contact.jpg", kicker: "MINI VISUAL NOVEL", title: "Mid-Band Contact", detail: "A story from The Space Between Names", cta: "PLAY NOW →", image: "VisualNovel/Reijnders_Reisz/Mid-BandImage.png" },
   { file: "journal.jpg", kicker: "JOURNAL", title: "Images, atmosphere, and process", detail: "Fragments from ongoing creative work", cta: "OPEN THE JOURNAL →", image: "journal-assets/moodboard_8_jul_2026_ys.png" },
@@ -62,13 +62,41 @@ function wrap(value, max = 22) {
 }
 
 for (const card of cards) {
-  const source = resolve(root, card.image);
-  const image = await sharp(source, { animated: false })
-    .resize(410, 630, { fit: card.fit ?? "cover", position: "centre", background: "#ddd8ce" })
-    .grayscale()
-    .modulate({ brightness: 0.92 })
-    .jpeg({ quality: 80, mozjpeg: true })
-    .toBuffer();
+  const scoreArtwork = Buffer.from(`
+    <svg width="720" height="900" xmlns="http://www.w3.org/2000/svg">
+      <style>${fontCss}
+        .score-title { font: 600 25px Plex, monospace; letter-spacing: 2px; }
+        .score-line { font: 300 17px Plex, monospace; }
+      </style>
+      <rect width="720" height="900" fill="#d9d2c6"/>
+      <g transform="translate(70 56) rotate(-3 270 190)">
+        <rect width="540" height="350" rx="4" fill="#f6f2e9" stroke="#272522" stroke-width="2"/>
+        <text x="38" y="62" class="score-title">SAME SKY</text>
+        <line x1="38" y1="80" x2="502" y2="80" stroke="#272522"/>
+        <text x="38" y="125" class="score-line">At a time of your choosing step outside.</text>
+        <text x="38" y="161" class="score-line">Picture someone you love beneath the same sky.</text>
+        <text x="38" y="197" class="score-line">Choose one point above you.</text>
+        <text x="38" y="233" class="score-line">Remain with it for one minute.</text>
+        <text x="38" y="269" class="score-line">Go back inside.</text>
+        <text x="38" y="320" class="score-line" fill="#77736c">ORDINARY SCORES · 01</text>
+      </g>
+      <g transform="translate(118 482) rotate(3 270 170)">
+        <rect width="540" height="330" rx="4" fill="#eee8dc" stroke="#272522" stroke-width="2"/>
+        <text x="38" y="62" class="score-title">WINDOW</text>
+        <line x1="38" y1="80" x2="502" y2="80" stroke="#272522"/>
+        <text x="38" y="132" class="score-line">Open a window.</text>
+        <text x="38" y="174" class="score-line">Listen until you notice a sound</text>
+        <text x="38" y="208" class="score-line">you had not heard before.</text>
+        <text x="38" y="250" class="score-line">Close the window.</text>
+        <text x="38" y="298" class="score-line" fill="#77736c">ORDINARY SCORES · 14</text>
+      </g>
+    </svg>
+  `);
+  const source = card.artwork === "scores" ? scoreArtwork : resolve(root, card.image);
+  let imagePipeline = sharp(source, { animated: false })
+    .resize(410, 630, { fit: card.fit ?? "cover", position: card.position ?? "centre", background: "#ddd8ce" });
+  if (card.grayscale !== false) imagePipeline = imagePipeline.grayscale().modulate({ brightness: 0.92 });
+  const image = await imagePipeline.jpeg({ quality: 80, mozjpeg: true }).toBuffer();
 
   const titleLines = wrap(card.title);
   const titleStart = titleLines.length === 1 ? 246 : titleLines.length === 2 ? 214 : 184;
