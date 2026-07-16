@@ -14,6 +14,16 @@
         link.dataset.productLanding = "true";
       }
     });
+
+    root.querySelectorAll(".grid-product__title").forEach((title) => {
+      const original = title.textContent.trim();
+      const cleaned = original.replace(/\s*\|\s*Digital Edition\s*$/i, "");
+      if (cleaned !== original) title.textContent = cleaned;
+    });
+
+    root.querySelectorAll('.grid-product img[alt$="Digital Edition"]').forEach((image) => {
+      image.alt = image.alt.replace(/\s*\|\s*Digital Edition\s*$/i, "");
+    });
   }
 
   document.addEventListener("click", (event) => {
