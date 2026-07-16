@@ -7,27 +7,37 @@
     <meta name="description" content="Stilling Duty by Ys Goldt.">
     <link rel="stylesheet" href="./styles.css">
     <script src="./disable-context-menu.js" defer></script>
+    <script src="./visual-novel-embed.js" defer></script>
   </head>
-  <body class="detail-page">
+  <body class="detail-page visual-novel-page">
     <main class="site site-detail">
       <section class="detail-frame">
-        <a class="back-link" href="./index.html">← Back</a>
+        <a class="back-link" href="./index.html#work">← Back</a>
 
         <div class="detail-hero">
-          <img alt="Stilling Duty" class="detail-image" src="https://ysyvon.github.io/website/VisualNovel/Scene1/social-preview.png" />
           <h1 class="detail-title">Stilling Duty</h1>
           <p class="detail-subtitle">Mini visual novel • The Boundary Institute</p>
         </div>
 
         <div class="detail-body">
-          <p>A short visual novel set within the world of The Space Between Names, following personnel working within the Boundary Research Institute.</p>
-          <p><a class="project-link" href="https://ysyvon.github.io/website/VisualNovel/Scene1/index.html" rel="noopener noreferrer" target="_blank">Play Stilling Duty →</a></p>
+          <p>A short visual novel set within the world of <em>The Space Between Names</em>, following personnel working within the Boundary Research Institute.</p>
+          <div class="visual-novel-embed">
+            <iframe
+              data-desktop-src="./VisualNovel/Scene1/index.html"
+              data-mobile-src="./VisualNovel/Scene1/mobile/index.html"
+              title="Play Stilling Duty"
+              allow="autoplay; fullscreen"
+              allowfullscreen
+              scrolling="no"
+            ></iframe>
+          </div>
+          <p class="visual-novel-fallback"><a class="project-link" href="./VisualNovel/Scene1/index.html" target="_blank" rel="noopener noreferrer">Open Stilling Duty in a new tab →</a></p>
         </div>
       </section>
     </main>
   
     <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
-      <div class="newsletter-backdrop" data-close-newsletter></div>
+      <div class="newsletter-backdrop"></div>
       <section class="newsletter-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
         <button class="newsletter-close" type="button" aria-label="Close newsletter signup" data-close-newsletter>×</button>
         <h2 id="newsletter-title" class="newsletter-kicker">Subscribe to the Mailing List</h2>
@@ -60,21 +70,19 @@
           window.setTimeout(() => { popup.hidden = true; }, 220);
         };
 
-        if (!window.localStorage.getItem('newsletter-dismissed')) {
+        const dismissedAt = Number(window.localStorage.getItem('ysgoldt-newsletter-dismissed-v2'));
+        const recentlyDismissed = Number.isFinite(dismissedAt)
+          && Date.now() - dismissedAt < 24 * 60 * 60 * 1000;
+
+        if (!recentlyDismissed) {
           window.setTimeout(openPopup, openDelay);
         }
 
         dismissers.forEach((el) => el.addEventListener('click', () => {
-          window.localStorage.setItem('newsletter-dismissed', '1');
+          window.localStorage.setItem('ysgoldt-newsletter-dismissed-v2', String(Date.now()));
           closePopup();
         }));
 
-        window.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !popup.hidden) {
-            window.localStorage.setItem('newsletter-dismissed', '1');
-            closePopup();
-          }
-        });
       })();
     </script>
 

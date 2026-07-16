@@ -49,7 +49,7 @@
     </main>
   
     <div class="newsletter-popup" id="newsletter-popup" hidden aria-hidden="true">
-      <div class="newsletter-backdrop" data-close-newsletter></div>
+      <div class="newsletter-backdrop"></div>
       <section class="newsletter-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
         <button class="newsletter-close" type="button" aria-label="Close newsletter signup" data-close-newsletter>×</button>
         <h2 id="newsletter-title" class="newsletter-kicker">Subscribe to the Mailing List</h2>
@@ -82,21 +82,19 @@
           window.setTimeout(() => { popup.hidden = true; }, 220);
         };
 
-        if (!window.localStorage.getItem('newsletter-dismissed')) {
+        const dismissedAt = Number(window.localStorage.getItem('ysgoldt-newsletter-dismissed-v2'));
+        const recentlyDismissed = Number.isFinite(dismissedAt)
+          && Date.now() - dismissedAt < 24 * 60 * 60 * 1000;
+
+        if (!recentlyDismissed) {
           window.setTimeout(openPopup, openDelay);
         }
 
         dismissers.forEach((el) => el.addEventListener('click', () => {
-          window.localStorage.setItem('newsletter-dismissed', '1');
+          window.localStorage.setItem('ysgoldt-newsletter-dismissed-v2', String(Date.now()));
           closePopup();
         }));
 
-        window.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !popup.hidden) {
-            window.localStorage.setItem('newsletter-dismissed', '1');
-            closePopup();
-          }
-        });
       })();
     </script>
 

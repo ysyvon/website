@@ -283,7 +283,7 @@ function renderFrame(index) {
   sceneImage.alt = `${frame.speaker} scene`;
   sceneImage.classList.toggle("reisz-frame", frame.speaker === "Director Reisz");
   dialogueSpeaker.textContent = frame.speaker;
-  dialogueLine.classList.toggle("compact", visibleTextLength(frame.line) > 135);
+  dialogueLine.classList.toggle("compact", visibleTextLength(frame.line) > 105);
   progressCurrent.textContent = String(index + 1).padStart(2, "0");
   typeLine(frame.line);
 }

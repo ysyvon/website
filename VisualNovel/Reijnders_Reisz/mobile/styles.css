@@ -161,6 +161,11 @@ button {
     0 0 18px rgba(255, 204, 235, 0.06);
 }
 
+.dialogue-line.compact {
+  font-size: clamp(13px, 1.8vh, 34px);
+  line-height: 1.38;
+}
+
 .dialogue-line.typing::after {
   content: "_";
   margin-left: 0.15em;

@@ -44,7 +44,7 @@ button {
   aspect-ratio: 9 / 16;
   overflow: hidden;
   display: grid;
-  grid-template-rows: 69% 31%;
+  grid-template-rows: 62% 38%;
   background:
     radial-gradient(circle at 50% 22%, rgba(166, 226, 255, 0.08), transparent 42%),
     #020307;
@@ -162,8 +162,8 @@ button {
 }
 
 .dialogue-line.compact {
-  font-size: clamp(14px, 1.95vh, 38px);
-  line-height: 1.4;
+  font-size: clamp(13px, 1.8vh, 34px);
+  line-height: 1.38;
 }
 
 .dialogue-line.typing::after {
