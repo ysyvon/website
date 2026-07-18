@@ -87,7 +87,7 @@ for (const product of products) {
           <p class="product-landing-description">${product.description}</p>
           <p>${product.detail}</p>
           <div class="product-purchase-actions">
-            <a class="cta-button product-buy-button" href="${product.ecwid}">Buy Digital Edition →</a>
+            <a class="cta-button product-buy-button" href="${product.ecwid}">Digital Edition →</a>
             <span class="cta-button product-coming-soon" aria-disabled="true">Print Edition Coming Soon</span>
           </div>
         </div>
