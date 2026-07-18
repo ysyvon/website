@@ -1,8 +1,8 @@
 (function () {
   const landingPages = {
-    "848367974": "./shop/an-index-of-vanishing-part-i-digital/index.html",
-    "848382763": "./shop/even-if-the-light-forgets-volume-i-digital/index.html",
-    "848382842": "./shop/the-strange-mercy-of-listening-digital/index.html",
+    "848367974": "./shop/an-index-of-vanishing-part-i/index.html",
+    "848382763": "./shop/even-if-the-light-forgets-volume-i/index.html",
+    "848382842": "./shop/the-strange-mercy-of-listening/index.html",
     "848382898": "./shop/shelves-of-memory-digital/index.html",
   };
 

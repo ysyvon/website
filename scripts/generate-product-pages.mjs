@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const products = [
   {
-    slug: "an-index-of-vanishing-part-i-digital",
+    slug: "an-index-of-vanishing-part-i",
     title: "An Index of Vanishing — Part I",
     type: "Novella",
     image: "an-index-digital.jpg",
@@ -14,7 +14,7 @@ const products = [
     ecwid: "https://ysgoldt.com/#!/An-Index-of-Vanishing-Part-I-Digital-Edition/p/848367974",
   },
   {
-    slug: "even-if-the-light-forgets-volume-i-digital",
+    slug: "even-if-the-light-forgets-volume-i",
     title: "Even if the Light Forgets — Volume I",
     type: "Novel",
     image: "even-if-digital.jpg",
@@ -24,7 +24,7 @@ const products = [
     ecwid: "https://ysgoldt.com/#!/Even-If-the-Light-Forgets-Volume-I-Digital-Edition/p/848382763",
   },
   {
-    slug: "the-strange-mercy-of-listening-digital",
+    slug: "the-strange-mercy-of-listening",
     title: "The Strange Mercy of Listening",
     type: "Novel",
     image: "strange-mercy-digital.jpg",
@@ -78,7 +78,7 @@ for (const product of products) {
   </head>
   <body class="product-landing-page" data-disable-context-menu>
     <main class="site product-landing-site">
-      <nav class="product-landing-nav" aria-label="Product navigation"><a href="../../">← Books</a></nav>
+      <nav class="product-landing-nav" aria-label="Product navigation"><a href="../../index.html">← Books</a></nav>
       <article class="product-landing-card">
         <div class="product-landing-art"><img src="../../shop-assets/${product.image}" alt="${product.title} cover"></div>
         <div class="product-landing-copy">
