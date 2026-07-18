@@ -791,6 +791,31 @@ img {
   margin: 0 0 38px;
 }
 
+.book-publication-details {
+  margin: 2.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.book-publication-details div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.book-publication-details dt {
+  font-weight: 600;
+}
+
+.book-publication-details dt::after {
+  content: ":";
+}
+
+.book-publication-details dd {
+  margin: 0;
+}
+
 .book-product-page .site-detail {
   width: min(calc(100vw - 40px), 1180px);
 }
