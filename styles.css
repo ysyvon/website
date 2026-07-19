@@ -270,10 +270,27 @@ button {
 }
 
 @media (prefers-color-scheme: dark) {
-  .books-page #my-store-139267004 .grid-product__picture,
+  .books-page #my-store-139267004 .grid-product__picture {
+    opacity: 1;
+    filter: none;
+  }
+
+  .books-page #my-store-139267004 .grid-product__image {
+    position: relative !important;
+  }
+
+  .books-page #my-store-139267004 .grid-product__image::after {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background: rgba(16, 16, 15, 0.28);
+  }
+
   .books-page #my-store-139267004 .details-gallery__picture {
-    opacity: 0.8;
-    filter: brightness(0.88) contrast(0.94);
+    opacity: 1;
+    filter: brightness(0.72) contrast(0.94);
   }
 }
 
