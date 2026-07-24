@@ -65,14 +65,22 @@
     </main>
 
     <script>
-      const updateEcwidDarkModePalette = () => {
+      let ecwidPaletteMode = 'dark';
+
+      const updateEcwidDarkModePalette = (useLightCheckout) => {
         if (!window.matchMedia('(prefers-color-scheme: dark)').matches) return;
 
-        const isCheckout = /^#!\/~\/cart/.test(window.location.hash);
+        const nextMode = useLightCheckout ? 'light' : 'dark';
+        if (nextMode === ecwidPaletteMode) {
+          document.body.classList.toggle('ecwid-light-checkout', useLightCheckout);
+          return;
+        }
+
+        ecwidPaletteMode = nextMode;
         window.ec = window.ec || {};
         window.ec.config = window.ec.config || {};
         window.ec.config.chameleon = window.ec.config.chameleon || {};
-        window.ec.config.chameleon.colors = isCheckout
+        window.ec.config.chameleon.colors = useLightCheckout
           ? {
               'color-background': '#ffffff',
               'color-foreground': '#202027',
@@ -88,16 +96,30 @@
               'color-price': '#eeeeea'
             };
 
-        document.body.classList.toggle('ecwid-light-checkout', isCheckout);
+        document.body.classList.toggle('ecwid-light-checkout', useLightCheckout);
         window.Ecwid?.refreshConfig?.();
       };
 
-      window.addEventListener('hashchange', updateEcwidDarkModePalette);
-      updateEcwidDarkModePalette();
+      window.ec = window.ec || {};
+      window.ec.config = window.ec.config || {};
+      window.ec.config.chameleon = window.ec.config.chameleon || {};
+      window.ec.config.chameleon.colors = {
+        'color-background': '#10100f',
+        'color-foreground': '#eeeeea',
+        'color-link': '#eeeeea',
+        'color-button': '#eeeeea',
+        'color-price': '#eeeeea'
+      };
     </script>
     <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-24" charset="utf-8"></script>
     <script src="./product-landing-links.js?v=20260724-1" defer></script>
     <script>
+      Ecwid.OnAPILoaded.add(() => {
+        Ecwid.OnPageLoaded.add((page) => {
+          updateEcwidDarkModePalette(page.type === 'CHECKOUT_PAYMENT_DETAILS');
+        });
+      });
+
       Ecwid.init();
       xProductBrowser(
         "categoriesPerRow=3",
