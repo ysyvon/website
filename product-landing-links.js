@@ -5,10 +5,16 @@
     "848382842": "./shop/the-strange-mercy-of-listening/index.html",
     "848382898": "./shop/shelves-of-memory-digital/index.html",
   };
+  const catalogOnlyProducts = new Set(["849883982"]);
 
   function updateProductLinks(root = document) {
     root.querySelectorAll('a[href*="/p/"]').forEach((link) => {
       const match = link.getAttribute("href")?.match(/\/p\/(\d+)/);
+      if (match && catalogOnlyProducts.has(match[1])) {
+        link.closest(".grid-product")?.remove();
+        return;
+      }
+
       if (match && landingPages[match[1]]) {
         const destination = landingPages[match[1]];
         link.href = destination;
