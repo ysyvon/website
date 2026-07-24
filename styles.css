@@ -270,6 +270,11 @@ button {
 }
 
 @media (prefers-color-scheme: dark) {
+  .books-page.ecwid-light-checkout #my-store-139267004 {
+    color-scheme: light;
+    background: #ffffff;
+  }
+
   .books-page #my-store-139267004 .grid-product__picture {
     opacity: 1;
     filter: none;

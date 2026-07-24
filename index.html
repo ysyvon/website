@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="https://ysgoldt.com/social-cards/ys-goldt-books.png">
     <meta name="twitter:image:alt" content="Four books by Ys Goldt arranged in a sunlit room">
     <link rel="icon" type="image/png" href="./favicon.png">
-    <link rel="stylesheet" href="./styles.css?v=20260718-8">
+    <link rel="stylesheet" href="./styles.css?v=20260724-1">
     <script src="./disable-context-menu.js" defer></script>
   </head>
   <body class="books-page" data-disable-context-menu>
@@ -64,7 +64,38 @@
       </footer>
     </main>
 
-    <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-14" charset="utf-8"></script>
+    <script>
+      const updateEcwidDarkModePalette = () => {
+        if (!window.matchMedia('(prefers-color-scheme: dark)').matches) return;
+
+        const isCheckout = /^#!\/~\/cart/.test(window.location.hash);
+        window.ec = window.ec || {};
+        window.ec.config = window.ec.config || {};
+        window.ec.config.chameleon = window.ec.config.chameleon || {};
+        window.ec.config.chameleon.colors = isCheckout
+          ? {
+              'color-background': '#ffffff',
+              'color-foreground': '#202027',
+              'color-link': '#202027',
+              'color-button': '#202027',
+              'color-price': '#202027'
+            }
+          : {
+              'color-background': '#10100f',
+              'color-foreground': '#eeeeea',
+              'color-link': '#eeeeea',
+              'color-button': '#eeeeea',
+              'color-price': '#eeeeea'
+            };
+
+        document.body.classList.toggle('ecwid-light-checkout', isCheckout);
+        window.Ecwid?.refreshConfig?.();
+      };
+
+      window.addEventListener('hashchange', updateEcwidDarkModePalette);
+      updateEcwidDarkModePalette();
+    </script>
+    <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-24" charset="utf-8"></script>
     <script src="./product-landing-links.js?v=20260724-1" defer></script>
     <script>
       Ecwid.init();
