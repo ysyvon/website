@@ -1,18 +1,26 @@
 /* Shared accessibility enhancements. Retains the historic filename so every
    existing page receives the improvements without additional markup. */
 (() => {
-  // Allow selection and browser context tools despite older inline blockers.
-  ['selectstart', 'contextmenu'].forEach((type) => {
+  const isEditable = (target) => target instanceof HTMLElement && (
+    target.matches('input, textarea') || target.isContentEditable
+  );
+
+  // Protect marked pages while keeping newsletter fields usable.
+  ['selectstart', 'contextmenu', 'copy', 'cut', 'dragstart'].forEach((type) => {
     document.addEventListener(type, (event) => {
       event.stopPropagation();
-      if (type === 'contextmenu' && document.body?.hasAttribute('data-disable-context-menu')) {
+      const editable = isEditable(event.target) || isEditable(document.activeElement);
+      if (
+        type === 'contextmenu'
+        && document.body?.hasAttribute('data-disable-context-menu')
+        && !editable
+      ) {
         event.preventDefault();
       }
-      if (type === 'selectstart' && document.body?.hasAttribute('data-disable-selection')) {
-        const target = event.target;
-        const editable = target instanceof HTMLElement && (
-          target.matches('input, textarea') || target.isContentEditable
-        );
+      if (
+        ['selectstart', 'copy', 'cut', 'dragstart'].includes(type)
+        && document.body?.hasAttribute('data-disable-selection')
+      ) {
         if (!editable) event.preventDefault();
       }
     }, { capture: true });
