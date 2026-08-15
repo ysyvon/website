@@ -20,9 +20,9 @@ const fontCss = `
 `;
 
 const cards = [
-  { file: "home.jpg", kicker: "YS GOLDT", title: "Strange and tender things", detail: "Fiction · Interactive Media · Visual Work", cta: "EXPLORE THE WORK →", image: "ysprofile.jpg" },
-  { file: "about.jpg", kicker: "ABOUT", title: "Ys Goldt", detail: "Writer · Artist · Multidisciplinary Creator", cta: "READ THE BIOGRAPHY →", image: "ysprofile.jpg" },
-  { file: "contact.jpg", kicker: "CONTACT", title: "Get in touch", detail: "Press and general inquiries", cta: "EMAIL YS GOLDT →", image: "ysprofile.jpg" },
+  { file: "home.jpg", kicker: "YS GOLDT", title: "Strange and tender things", detail: "Fiction · Interactive Media · Visual Work", cta: "EXPLORE THE WORK →", image: "ysprofile.png" },
+  { file: "about.jpg", kicker: "ABOUT", title: "Ys Goldt", detail: "Writer · Artist · Multidisciplinary Creator", cta: "READ THE BIOGRAPHY →", image: "ysprofile.png" },
+  { file: "contact.jpg", kicker: "CONTACT", title: "Get in touch", detail: "Press and general inquiries", cta: "EMAIL YS GOLDT →", image: "ysprofile.png" },
   { file: "books.jpg", kicker: "BOOKS", title: "Fiction by Ys Goldt", detail: "Novels and novellas in print and digital editions", cta: "VIEW THE BOOKS →", image: "anindexcover.png", fit: "contain" },
   { file: "works.jpg", kicker: "SELECTED WORK", title: "Works by Ys Goldt", detail: "Visual · Interactive · Performance · Sound", cta: "EXPLORE THE WORK →", image: "gallery-assets/quiet-work.gif" },
   { file: "visual-work.jpg", kicker: "VISUAL WORK", title: "Editorial art and design", detail: "Selected visual work by Ys Goldt", cta: "VIEW THE COLLECTION →", image: "gallery-assets/nachtljocht-work-margin-paper-transparent.png", fit: "contain", grayscale: false },
@@ -37,7 +37,7 @@ const cards = [
   { file: "sample-an-index.jpg", kicker: "READ A SAMPLE", title: "An Index of Vanishing", detail: "Opening pages · Ys Goldt", cta: "START READING →", image: "assets/an-index-of-vanishing-sample/pages/page-01.jpg", fit: "contain" },
   { file: "sample-even-if.jpg", kicker: "READ A SAMPLE", title: "Even if the Light Forgets", detail: "Volume I · Ys Goldt", cta: "START READING →", image: "assets/eitlf-sample/pages/page-01.jpg", fit: "contain" },
   { file: "sample-strange-mercy.jpg", kicker: "READ A SAMPLE", title: "The Strange Mercy of Listening", detail: "Opening pages · Ys Goldt", cta: "START READING →", image: "assets/strange-mercy-sample/pages/page-01.jpg", fit: "contain" },
-  { file: "privacy.jpg", kicker: "YS GOLDT", title: "Privacy Policy", detail: "How this website handles information", cta: "READ THE POLICY →", image: "ysprofile.jpg" },
+  { file: "privacy.jpg", kicker: "YS GOLDT", title: "Privacy Policy", detail: "How this website handles information", cta: "READ THE POLICY →", image: "ysprofile.png" },
   { file: "shop-an-index-digital.jpg", kicker: "NOVELLA", title: "An Index of Vanishing", detail: "Tibet, 1938. A man sent to observe a weapon begins to forget his orders.", image: "shop-assets/an-index-digital.jpg", fit: "contain", grayscale: false, minimal: true },
   { file: "shop-even-if-digital.jpg", kicker: "NOVEL", title: "Even if the Light Forgets", detail: "In a ruined world of alchemy and crystal, two wounded survivors risk everything for fragile hope.", image: "shop-assets/even-if-digital.jpg", fit: "contain", grayscale: false, minimal: true },
   { file: "shop-strange-mercy-digital.jpg", kicker: "NOVEL", title: "The Strange Mercy of Listening", detail: "East Prussia, 1935. A telegraph operator’s quiet devotion becomes something far more dangerous.", image: "shop-assets/strange-mercy-digital.jpg", fit: "contain", grayscale: false, minimal: true },
