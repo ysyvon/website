@@ -62,16 +62,16 @@ for (const product of products) {
     <meta property="og:description" content="${product.description}">
     <meta property="og:type" content="product">
     <meta property="og:url" content="${url}">
-    <meta property="og:image" content="https://ysgoldt.com/social-cards/${product.card}">
-    <meta property="og:image:alt" content="${product.title} by Ys Goldt">
+    <meta property="og:image" content="https://ysgoldt.com/social-cards/opengraph.jpg">
+    <meta property="og:image:alt" content="Painting of a woman holding a white dove">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="1795">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${product.title}">
     <meta name="twitter:description" content="${product.description}">
-    <meta name="twitter:image" content="https://ysgoldt.com/social-cards/${product.card}">
-    <meta name="twitter:image:alt" content="${product.title} by Ys Goldt">
+    <meta name="twitter:image" content="https://ysgoldt.com/social-cards/opengraph.jpg">
+    <meta name="twitter:image:alt" content="Painting of a woman holding a white dove">
     <link rel="icon" type="image/png" href="../../favicon.png">
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../disable-context-menu.js" defer></script>

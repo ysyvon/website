@@ -25,11 +25,11 @@ export const serials = [
       height: 1969,
     },
     socialImage: {
-      url: "https://ysgoldt.com/social-cards/how-long-things-hold.png",
-      alt: "How Long Things Hold illustrated title artwork with Eîra beneath the title.",
-      type: "image/png",
-      width: 1483,
-      height: 1445,
+      url: "https://ysgoldt.com/social-cards/opengraph.jpg",
+      alt: "Painting of a woman holding a white dove",
+      type: "image/jpeg",
+      width: 1200,
+      height: 1795,
     },
     installments: [
       {
