@@ -21,8 +21,8 @@ const pages = {
   "privacy-policy.html": "Privacy Policy | Official Website of Ys Goldt",
 };
 
-const socialImage = "https://ysgoldt.com/social-cards/opengraph.jpg";
-const socialImageAlt = "Painting of a woman holding a white dove";
+const socialImage = "https://ysgoldt.com/social-cards/ysgoldtsocial-v2.png";
+const socialImageAlt = "Illustration of a dark-haired woman reclining on a couch and holding an open book";
 
 for (const [file, title] of Object.entries(pages)) {
   const path = resolve(root, file);
@@ -30,7 +30,7 @@ for (const [file, title] of Object.entries(pages)) {
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`);
   html = html.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${socialImage}">`);
   html = html.replace(/\n\s*<meta property="og:image:(?:type|width|height)"[^>]*>/g, "");
-  html = html.replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${socialImageAlt}">\n    <meta property="og:image:type" content="image/jpeg">\n    <meta property="og:image:width" content="1200">\n    <meta property="og:image:height" content="1795">`);
+  html = html.replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${socialImageAlt}">\n    <meta property="og:image:type" content="image/png">\n    <meta property="og:image:width" content="1305">\n    <meta property="og:image:height" content="1155">`);
   html = html.replace(/\n\s*<meta name="twitter:image:alt"[^>]*>/g, "");
   html = html.replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${socialImage}">\n    <meta name="twitter:image:alt" content="${socialImageAlt}">`);
   await writeFile(path, html);

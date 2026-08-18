@@ -25,11 +25,11 @@ export const serials = [
       height: 1969,
     },
     socialImage: {
-      url: "https://ysgoldt.com/social-cards/opengraph.jpg",
-      alt: "Painting of a woman holding a white dove",
+      url: "https://ysgoldt.com/serial/assets/how-long-things-hold-cover.jpg",
+      alt: "Cover of How Long Things Hold by Ys Goldt, featuring a white-haired figure with a halo",
       type: "image/jpeg",
-      width: 1200,
-      height: 1795,
+      width: 1234,
+      height: 1969,
     },
     installments: [
       {

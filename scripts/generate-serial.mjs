@@ -142,7 +142,7 @@ function documentShell({ head, bodyClass, content, rootPrefix }) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 ${head}
-    <link rel="icon" type="image/png" href="${rootPrefix}favicon.png">
+    <link rel="icon" type="image/png" href="${rootPrefix}favicon.png?v=20260818">
     <link rel="stylesheet" href="${rootPrefix}styles.css">
     <script src="${rootPrefix}disable-context-menu.js" defer></script>
   </head>

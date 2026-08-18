@@ -8,7 +8,8 @@ const products = [
     title: "An Index of Vanishing — Part I",
     type: "Novella",
     image: "an-index-digital.jpg",
-    card: "shop-an-index-digital.jpg",
+    imageWidth: 486,
+    imageHeight: 800,
     description: "Tibet, 1938. Matthias Krüger was sent to watch the Reich’s most classified asset. He never expected her to see him.",
     detail: "A slow-burn historical romance about obsession, longing, and the cost of being seen.",
     ecwid: "https://ysgoldt.com/#!/An-Index-of-Vanishing-Part-I-Digital-Edition/p/848367974",
@@ -18,7 +19,8 @@ const products = [
     title: "Even if the Light Forgets — Volume I",
     type: "Novel",
     image: "even-if-digital.jpg",
-    card: "shop-even-if-digital.jpg",
+    imageWidth: 486,
+    imageHeight: 800,
     description: "She’s spent her whole life learning not to need anyone. He’s spent his learning he doesn’t deserve to be needed.",
     detail: "An adult fantasy of alchemy, ruin, slow-burn romance, found family, and fragile hope.",
     ecwid: "https://ysgoldt.com/#!/Even-If-the-Light-Forgets-Volume-I-Digital-Edition/p/848382763",
@@ -28,7 +30,8 @@ const products = [
     title: "The Strange Mercy of Listening",
     type: "Novel",
     image: "strange-mercy-digital.jpg",
-    card: "shop-strange-mercy-digital.jpg",
+    imageWidth: 501,
+    imageHeight: 800,
     description: "A quiet devotion becomes something far more dangerous when silence learns to speak back.",
     detail: "An atmospheric historical novel with a dark romantic core.",
     ecwid: "https://ysgoldt.com/#!/The-Strange-Mercy-of-Listening-Digital-Edition/p/848382842",
@@ -38,7 +41,8 @@ const products = [
     title: "Shelves of Memory",
     type: "Poetry",
     image: "shelves-of-memory-digital.jpg",
-    card: "shop-shelves-memory-digital.jpg",
+    imageWidth: 501,
+    imageHeight: 800,
     description: "Poems for the moments you cannot name aloud, the faces you still search for, and the letters you are still waiting to receive.",
     detail: "A 32-page collection living in the quiet spaces between grief, longing, and love.",
     ecwid: "https://ysgoldt.com/#!/Shelves-of-Memory-Digital-Edition/p/848382898",
@@ -62,17 +66,17 @@ for (const product of products) {
     <meta property="og:description" content="${product.description}">
     <meta property="og:type" content="product">
     <meta property="og:url" content="${url}">
-    <meta property="og:image" content="https://ysgoldt.com/social-cards/opengraph.jpg">
-    <meta property="og:image:alt" content="Painting of a woman holding a white dove">
+    <meta property="og:image" content="https://ysgoldt.com/shop-assets/${product.image}">
+    <meta property="og:image:alt" content="Cover of ${product.title} by Ys Goldt">
     <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="1795">
+    <meta property="og:image:width" content="${product.imageWidth}">
+    <meta property="og:image:height" content="${product.imageHeight}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${product.title}">
     <meta name="twitter:description" content="${product.description}">
-    <meta name="twitter:image" content="https://ysgoldt.com/social-cards/opengraph.jpg">
-    <meta name="twitter:image:alt" content="Painting of a woman holding a white dove">
-    <link rel="icon" type="image/png" href="../../favicon.png">
+    <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/${product.image}">
+    <meta name="twitter:image:alt" content="Cover of ${product.title} by Ys Goldt">
+    <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../disable-context-menu.js" defer></script>
   </head>
