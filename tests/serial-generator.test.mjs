@@ -99,6 +99,8 @@ test("launch pages keep the story public without chapter links", () => {
   assert.doesNotMatch(story, /Chapter One|Chapter Two/);
   assert.match(story, /Receive and read past instalments via email/);
   assert.match(story, /id="how-long-things-hold-home-signup"/);
+  assert.match(story, /href="\.\.\/\.\.\/index\.html">← Home<\/a>/);
+  assert.doesNotMatch(story, />← Serial<\/a>/);
   assert.match(
     story,
     /action="https:\/\/buttondown\.com\/api\/emails\/embed-subscribe\/how-long-things-hold"/,
@@ -135,7 +137,7 @@ test("SERIAL follows Books in every main navigation copy", async () => {
     const serialPosition = html.indexOf(">Serial</a>", booksPosition);
     assert.ok(booksPosition !== -1, `${file} is missing Books`);
     assert.ok(serialPosition > booksPosition, `${file} does not place Serial after Books`);
-    assert.match(html, /href="\.\/serial\/index\.html">Serial<\/a>/);
+    assert.match(html, /href="\.\/serial\/how-long-things-hold\/index\.html">Serial<\/a>/);
   }
 });
 

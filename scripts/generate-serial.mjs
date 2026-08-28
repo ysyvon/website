@@ -160,7 +160,7 @@ function mainNavigation(active, rootPrefix) {
   const items = [
     ["Books", `${rootPrefix}index.html`, "books"],
     ["Coming Soon", `${rootPrefix}coming-soon.html`, "coming-soon"],
-    ["Serial", `${rootPrefix}serial/index.html`, "serial"],
+    ["Serial", `${rootPrefix}serial/how-long-things-hold/index.html`, "serial"],
     ["Works", `${rootPrefix}works.html`, "works"],
     ["About", `${rootPrefix}about.html`, "about"],
     ["Contact", `${rootPrefix}contact.html`, "contact"],
@@ -293,7 +293,7 @@ export function renderStoryHome(serial) {
   const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
   const content = `    <main class="site site-detail serial-story-site">
       <section class="detail-frame serial-story-frame">
-        <a class="back-link" href="../index.html">← Serial</a>
+        <a class="back-link" href="../../index.html">← Home</a>
         <article class="serial-story">
           <div class="serial-story-hero">
             <div class="serial-story-cover-column">
