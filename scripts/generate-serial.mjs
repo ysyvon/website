@@ -48,8 +48,11 @@ export function validateSerials(entries) {
     if (!Array.isArray(serial.blurb) || serial.blurb.length === 0) {
       throw new Error(`${serial.title} requires a story-home blurb.`);
     }
-    if (!Array.isArray(serial.installments) || serial.installments.length === 0) {
-      throw new Error(`${serial.title} requires at least one instalment.`);
+    if (!Array.isArray(serial.installments)) {
+      throw new Error(`${serial.title} requires an instalments list.`);
+    }
+    if (serial.installments.length === 0 && !/^\d{4}-\d{2}-\d{2}$/.test(serial.updated || "")) {
+      throw new Error(`${serial.title} requires an updated date when no instalments are published.`);
     }
 
     const numbers = new Set();
@@ -156,6 +159,7 @@ ${content}
 function mainNavigation(active, rootPrefix) {
   const items = [
     ["Books", `${rootPrefix}index.html`, "books"],
+    ["Coming Soon", `${rootPrefix}coming-soon.html`, "coming-soon"],
     ["Serial", `${rootPrefix}serial/index.html`, "serial"],
     ["Works", `${rootPrefix}works.html`, "works"],
     ["About", `${rootPrefix}about.html`, "about"],
@@ -187,11 +191,16 @@ function siteFooter(rootPrefix) {
       </footer>`;
 }
 
-function subscribePanel(id, compact = false) {
+function subscribePanel(
+  id,
+  compact = false,
+  heading = "Receive instalments by email",
+  caption = "New instalments delivered through Buttondown.",
+) {
+  const captionMarkup = caption ? `\n          <p>${escapeHtml(caption)}</p>` : "";
   return `      <section class="serial-subscribe${compact ? " serial-subscribe-compact" : ""}" id="${id}-signup" aria-labelledby="${id}-title">
         <div class="serial-subscribe-copy">
-          <h2 id="${id}-title">Receive instalments by email</h2>
-          <p>New instalments delivered through Buttondown.</p>
+          <h2 id="${id}-title">${escapeHtml(heading)}</h2>${captionMarkup}
         </div>
         <form action="https://buttondown.com/api/emails/embed-subscribe/how-long-things-hold" method="post" class="embeddable-buttondown-form serial-subscribe-form">
           <label for="${id}-email">Email address</label>
@@ -274,12 +283,6 @@ ${ordered
 
 export function renderStoryHome(serial) {
   const rootPrefix = "../../";
-  const ordered = orderedInstallments(serial);
-  const first = ordered[0];
-  const latest = ordered.at(-1);
-  const latestAction = latest.slug !== first.slug
-    ? `\n              <a class="cta-button serial-secondary-action" href="./${latest.slug}/index.html">Latest Instalment</a>`
-    : "";
   const head = metadata({
     title: `${serial.title} | A Novel in Instalments by Ys Goldt`,
     description: serial.metadataDescription,
@@ -297,7 +300,6 @@ export function renderStoryHome(serial) {
               <div class="serial-story-cover">
                 <img src="${escapeAttribute(localSitePath(rootPrefix, serial.cover.path))}" alt="${escapeAttribute(serial.cover.alt)}" width="${serial.cover.width}" height="${serial.cover.height}">
               </div>
-              <a class="serial-cover-subscribe-link" href="#${serial.slug}-home-signup">Receive instalments by email</a>
             </div>
             <div class="serial-story-introduction">
               <p class="serial-status">${escapeHtml(serial.status)}</p>
@@ -305,18 +307,9 @@ export function renderStoryHome(serial) {
               <div class="serial-story-blurb">
 ${blurb}
               </div>
-              <div class="serial-story-actions">
-                <a class="cta-button" href="./${first.slug}/index.html">Start Reading</a>${latestAction}
-              </div>
+${subscribePanel(`${serial.slug}-home`, true, "Receive and read past instalments via email", "").replace(/^/gm, "        ")}
             </div>
           </div>
-${subscribePanel(`${serial.slug}-home`)}
-          <section class="serial-contents" aria-labelledby="contents-title">
-            <header class="serial-contents-header">
-              <h2 id="contents-title">Contents</h2>
-            </header>
-${contentsList(serial)}
-          </section>
         </article>
       </section>
 ${siteFooter(rootPrefix)}
@@ -372,7 +365,7 @@ function renderSitemapEntries(entries) {
   const urls = [];
   for (const serial of entries) {
     const ordered = orderedInstallments(serial);
-    const lastmod = ordered.at(-1).published;
+    const lastmod = ordered.at(-1)?.published ?? serial.updated;
     urls.push([`${siteUrl}/serial/`, lastmod]);
     urls.push([`${siteUrl}${serialPath(serial)}`, lastmod]);
     for (const installment of ordered) {
