@@ -9,11 +9,12 @@
   if (!reader || !image || !currentLabel || !stage) return;
 
   const pageCount = Number(reader.dataset.pageCount);
+  const pageStart = Number(reader.dataset.pageStart || 1);
   const pagePath = reader.dataset.pagePath;
   let currentPage = 1;
   let touchStartX = 0;
 
-  const pageSource = (page) => pagePath + '/page-' + String(page).padStart(2, '0') + '.jpg';
+  const pageSource = (page) => pagePath + '/page-' + String(pageStart + page - 1).padStart(2, '0') + '.jpg';
 
   const preloadPage = (page) => {
     if (page < 1 || page > pageCount) return;
