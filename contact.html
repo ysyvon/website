@@ -31,8 +31,48 @@
       <nav class="tabs" aria-label="Sections">
         <a class="tab" href="./index.html">Books</a><a class="tab" href="./coming-soon.html">Coming Soon</a><a class="tab" href="./serial/how-long-things-hold/index.html">Serial</a><a class="tab" href="./works.html">Works</a><a class="tab" href="./about.html">About</a><a class="tab active" href="./contact.html" aria-current="page">Contact</a><a class="tab" href="https://nachtljocht.com" target="_blank" rel="noopener noreferrer">Nachtljocht</a>
       </nav>
-      <section class="panel-shell"><div class="panel active"><div class="panel-inner panel-contact"><p class="contact-note">For all inquiries, including press, please use the email below.</p><a class="contact-link contact-large" href="mailto:hello@ysgoldt.com">hello@ysgoldt.com</a></div></div></section>
+      <section class="panel-shell">
+        <div class="panel active">
+          <div class="panel-inner panel-contact">
+            <p class="contact-note">For all inquiries, including press and review copy requests, please use the form below.</p>
+            <iframe
+              class="tally-contact-form"
+              data-tally-src="https://tally.so/embed/zx6jv1?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1&amp;dynamicHeight=1"
+              loading="lazy"
+              width="100%"
+              height="100"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              title="Ys Goldt Contact Form"
+            ></iframe>
+          </div>
+        </div>
+      </section>
       <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>
     </main>
+    <script>
+      var d = document;
+      var w = "https://tally.so/widgets/embed.js";
+      var v = function () {
+        if (typeof Tally !== "undefined") {
+          Tally.loadEmbeds();
+        } else {
+          d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function (iframe) {
+            iframe.src = iframe.dataset.tallySrc;
+          });
+        }
+      };
+
+      if (typeof Tally !== "undefined") {
+        v();
+      } else if (d.querySelector('script[src="' + w + '"]') === null) {
+        var s = d.createElement("script");
+        s.src = w;
+        s.onload = v;
+        s.onerror = v;
+        d.body.appendChild(s);
+      }
+    </script>
   </body>
 </html>

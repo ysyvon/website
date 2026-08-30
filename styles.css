@@ -620,12 +620,7 @@ img {
 }
 
 .panel-contact {
-  min-height: 160px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  width: 100%;
 }
 
 .work-list {
@@ -754,19 +749,24 @@ img {
 
 
 .contact-note {
-  margin: 0 0 10px;
+  margin: 0 8px 18px;
   font-size: 12px;
   line-height: 1.6;
   color: var(--fg);
 }
 
-.contact-link {
-  display: inline-block;
-  font-size: 14px;
+.tally-contact-form {
+  display: block;
+  width: 100%;
+  border: 0;
+  color-scheme: light;
 }
 
-.contact-large {
-  font-size: 16px;
+@media (prefers-color-scheme: dark) {
+  .tally-contact-form {
+    color-scheme: dark;
+    filter: invert(1) hue-rotate(180deg);
+  }
 }
 
 .site-footer {
