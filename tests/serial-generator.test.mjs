@@ -93,6 +93,14 @@ test("launch pages keep the story public without chapter links", () => {
   assert.match(shelf, /They back up their memories and restore themselves from death/);
   assert.match(shelf, /href="\.\/how-long-things-hold\/index\.html"/);
   assert.match(story, /The Vasentia were built to endure/);
+  assert.match(
+    story,
+    /href="\.\.\/\.\.\/sample-how-long-things-hold\.html" target="_blank" rel="noopener noreferrer">Read a Sample →<\/a>/,
+  );
+  assert.ok(
+    story.indexOf("Read a Sample") < story.indexOf('id="how-long-things-hold-home-signup"'),
+    "the sample button should appear before the newsletter form",
+  );
   assert.doesNotMatch(story, /Start Reading/);
   assert.doesNotMatch(story, /serial-cover-subscribe-link/);
   assert.doesNotMatch(story, /serial-contents/);
@@ -109,8 +117,12 @@ test("launch pages keep the story public without chapter links", () => {
   assert.doesNotMatch(story, /New instalments delivered through Buttondown/);
 });
 
-test("generated local links and assets resolve", async () => {
-  const pages = ["serial/index.html", "serial/how-long-things-hold/index.html"];
+test("generated local links and sample assets resolve", async () => {
+  const pages = [
+    "serial/index.html",
+    "serial/how-long-things-hold/index.html",
+    "sample-how-long-things-hold.html",
+  ];
 
   for (const page of pages) {
     const html = await readFile(resolve(root, page), "utf8");
@@ -127,6 +139,18 @@ test("generated local links and assets resolve", async () => {
       if (clean.endsWith("/")) target = resolve(target, "index.html");
       await access(target);
     }
+  }
+
+  const sample = await readFile(resolve(root, "sample-how-long-things-hold.html"), "utf8");
+  assert.match(sample, /data-page-count="17" data-page-start="5"/);
+  for (let page = 5; page <= 21; page += 1) {
+    await access(
+      resolve(
+        root,
+        "assets/how-long-things-hold-sample/pages",
+        `page-${String(page).padStart(2, "0")}.jpg`,
+      ),
+    );
   }
 });
 

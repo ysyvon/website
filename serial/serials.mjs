@@ -12,6 +12,7 @@ export const serials = [
     updated: "2026-08-28",
     metadataDescription:
       "Read How Long Things Hold, a speculative novel in instalments by Ys Goldt.",
+    samplePath: "/sample-how-long-things-hold.html",
     blurb: [
       "The Vasentia were built to endure, to preserve, to remember, and to outlast humanity itself.",
       "They back up their memories and restore themselves from death, unchanged across centuries. But anything lost between preservation and damage is gone forever, and they can never know what is missing.",

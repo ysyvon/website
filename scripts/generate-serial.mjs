@@ -291,6 +291,11 @@ export function renderStoryHome(serial) {
     type: "book",
   });
   const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
+  const sampleAction = serial.samplePath
+    ? `              <div class="serial-story-actions">
+                <a class="cta-button" href="${escapeAttribute(localSitePath(rootPrefix, serial.samplePath))}" target="_blank" rel="noopener noreferrer">Read a Sample →</a>
+              </div>\n`
+    : "";
   const content = `    <main class="site site-detail serial-story-site">
       <section class="detail-frame serial-story-frame">
         <a class="back-link" href="../../index.html">← Home</a>
@@ -307,7 +312,7 @@ export function renderStoryHome(serial) {
               <div class="serial-story-blurb">
 ${blurb}
               </div>
-${subscribePanel(`${serial.slug}-home`, true, "Receive and read past instalments via email", "").replace(/^/gm, "        ")}
+${sampleAction}${subscribePanel(`${serial.slug}-home`, true, "Receive and read past instalments via email", "").replace(/^/gm, "        ")}
             </div>
           </div>
         </article>
