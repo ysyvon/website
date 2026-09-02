@@ -795,6 +795,12 @@ img {
 .site-footer p { margin: 0; }
 .site-footer a { text-decoration: underline; text-underline-offset: 2px; }
 
+.site-footer .footer-social-note {
+  margin-top: 0.4em;
+  font-style: italic;
+  text-transform: none;
+}
+
 .back-link {
   display: inline-block;
   margin-bottom: 18px;
