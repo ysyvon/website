@@ -755,6 +755,18 @@ img {
   color: var(--fg);
 }
 
+.social-media-note {
+  font-style: italic;
+}
+
+.social-media-note p {
+  margin: 0 0 0.65em;
+}
+
+.social-media-note p:last-child {
+  margin-bottom: 0;
+}
+
 .tally-contact-form {
   display: block;
   width: 100%;
