@@ -164,6 +164,7 @@ function mainNavigation(active, rootPrefix) {
     ["Works", `${rootPrefix}works.html`, "works"],
     ["About", `${rootPrefix}about.html`, "about"],
     ["Contact", `${rootPrefix}contact.html`, "contact"],
+    ["Press", `${rootPrefix}press.html`, "press"],
   ];
   const links = items
     .map(([label, href, key]) => {
@@ -173,7 +174,6 @@ function mainNavigation(active, rootPrefix) {
     .join("\n");
   return `      <nav class="tabs" aria-label="Sections">
 ${links}
-        <a class="tab" href="https://nachtljocht.com" target="_blank" rel="noopener noreferrer">Nachtljocht</a>
       </nav>`;
 }
 
@@ -186,7 +186,7 @@ function siteHero() {
 
 function siteFooter(rootPrefix) {
   return `      <footer class="site-footer">
-        <p><a href="${rootPrefix}privacy-policy.html">Privacy Policy</a></p>
+        <p><a href="${rootPrefix}press.html">Press</a> · <a href="${rootPrefix}privacy-policy.html">Privacy Policy</a></p>
         <p>©2026 Ys Goldt</p>
       </footer>`;
 }
