@@ -11,7 +11,8 @@ export const serials = [
     publicationSchedule: "New chapter every Friday",
     updated: "2026-08-28",
     metadataDescription:
-      "Eîra has been alone for eleven hundred years. Then she hears footsteps. How Long Things Hold is a science-fantasy novel about fragile memories and what refuses to be forgotten. Subscribe for free to read from the beginning and receive each new chapter by email.",
+      "Eîra has been alone for eleven hundred years. Then she hears footsteps. How Long Things Hold is a science-fantasy novel about fragile memories and what refuses to be forgotten. Read the instalments for free in the archive.",
+    archiveUrl: "https://buttondown.com/how-long-things-hold/archive",
     samplePath: "/sample-how-long-things-hold.html",
     blurb: [
       "For eleven hundred years, Eîra has lived alone among the ruins of a dead civilisation.",

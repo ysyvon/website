@@ -291,11 +291,14 @@ export function renderStoryHome(serial) {
     type: "book",
   });
   const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
-  const sampleAction = serial.samplePath
-    ? `              <div class="serial-story-actions">
-                <a class="cta-button" href="${escapeAttribute(localSitePath(rootPrefix, serial.samplePath))}" target="_blank" rel="noopener noreferrer">Read a Sample →</a>
-              </div>\n`
-    : "";
+  const coverActions = [
+    serial.archiveUrl
+      ? `                <a class="cta-button" href="${escapeAttribute(serial.archiveUrl)}" target="_blank" rel="noopener noreferrer">read for free here</a>`
+      : "",
+    serial.samplePath
+      ? `                <a class="cta-button" href="${escapeAttribute(localSitePath(rootPrefix, serial.samplePath))}" target="_blank" rel="noopener noreferrer">Read a Sample →</a>`
+      : "",
+  ].filter(Boolean).join("\n");
   const content = `    <main class="site site-detail serial-story-site">
       <section class="detail-frame serial-story-frame">
         <a class="back-link" href="../../index.html">← Home</a>
@@ -305,6 +308,9 @@ export function renderStoryHome(serial) {
               <div class="serial-story-cover">
                 <img src="${escapeAttribute(localSitePath(rootPrefix, serial.cover.path))}" alt="${escapeAttribute(serial.cover.alt)}" width="${serial.cover.width}" height="${serial.cover.height}">
               </div>
+              <div class="serial-cover-actions">
+${coverActions}
+              </div>
             </div>
             <div class="serial-story-introduction">
               <p class="serial-status">${escapeHtml(serial.status)}</p>
@@ -312,7 +318,6 @@ export function renderStoryHome(serial) {
               <div class="serial-story-blurb">
 ${blurb}
               </div>
-${sampleAction}${subscribePanel(`${serial.slug}-home`, true, "Receive and read past instalments via email", "").replace(/^/gm, "        ")}
             </div>
           </div>
         </article>

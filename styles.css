@@ -2574,25 +2574,15 @@ body.sample-reader-open {
   min-width: 0;
 }
 
-.serial-cover-subscribe-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
+.serial-cover-actions {
+  display: grid;
+  gap: 10px;
   margin-top: 12px;
-  padding: 8px 12px;
-  border: 1px solid var(--line-strong);
-  background: var(--button-bg);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  line-height: 1.5;
   text-align: center;
-  text-transform: uppercase;
 }
 
-.serial-cover-subscribe-link:hover,
-.serial-cover-subscribe-link:focus-visible {
-  background: var(--button-hover);
+.serial-cover-actions .cta-button {
+  min-height: 44px;
 }
 
 .serial-story-introduction h1 {

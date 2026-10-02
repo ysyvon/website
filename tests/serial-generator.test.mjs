@@ -98,22 +98,18 @@ test("launch pages keep the story public without chapter links", () => {
     /href="\.\.\/\.\.\/sample-how-long-things-hold\.html" target="_blank" rel="noopener noreferrer">Read a Sample →<\/a>/,
   );
   assert.ok(
-    story.indexOf("Read a Sample") < story.indexOf('id="how-long-things-hold-home-signup"'),
-    "the sample button should appear before the newsletter form",
+    story.indexOf('class="serial-story-cover"') < story.indexOf('class="serial-cover-actions"') &&
+      story.indexOf("read for free here") < story.indexOf("Read a Sample") &&
+      story.indexOf("Read a Sample") < story.indexOf('class="serial-story-introduction"'),
+    "the archive and sample buttons should appear in that order below the cover",
   );
+  assert.match(story, /href="https:\/\/buttondown\.com\/how-long-things-hold\/archive"[^>]*>read for free here<\/a>/);
   assert.doesNotMatch(story, /Start Reading/);
-  assert.doesNotMatch(story, /serial-cover-subscribe-link/);
   assert.doesNotMatch(story, /serial-contents/);
   assert.doesNotMatch(story, /Chapter One|Chapter Two/);
-  assert.match(story, /Receive and read past instalments via email/);
-  assert.match(story, /id="how-long-things-hold-home-signup"/);
+  assert.doesNotMatch(story, /<form|home-signup/);
   assert.match(story, /href="\.\.\/\.\.\/index\.html">← Home<\/a>/);
   assert.doesNotMatch(story, />← Serial<\/a>/);
-  assert.match(
-    story,
-    /action="https:\/\/buttondown\.com\/api\/emails\/embed-subscribe\/how-long-things-hold"/,
-  );
-  assert.match(story, /href="https:\/\/buttondown\.com\/refer\/how-long-things-hold"/);
   assert.doesNotMatch(story, /New instalments delivered through Buttondown/);
 });
 
