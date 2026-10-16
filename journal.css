@@ -247,8 +247,13 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .reader-note strong { font: 600 11px/1.5 var(--mono); }
 .reader-note time { margin-left: 12px; color: var(--muted); font: 10px/1.5 var(--mono); }
 .reader-note p { margin: 12px 0 0; color: var(--fg); font: 17px/1.55 var(--serif); white-space: pre-wrap; overflow-wrap: anywhere; }
-.author-reply { margin: 19px 0 0 15px; padding: 12px 0 2px 17px; border-left: 1px solid var(--line); }
-.author-reply p { font-size: 15px; }
+.note-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+.note-actions button { padding: 0; border: 0; background: none; color: var(--fg); font: 600 11px/1.5 var(--mono); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.note-actions button:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+.thread-replies[hidden] { display: none; }
+.author-reply, .visitor-reply { margin: 12px 0 0 15px; padding: 12px 0 2px 17px; border-left: 1px solid var(--line); }
+.author-reply p, .visitor-reply p { font-size: 15px; }
+.inline-reply-form { margin: 16px 0 0 15px; padding: 16px 0 0 17px; border: 0; border-left: 1px solid var(--line); }
 .notes-form { display: grid; gap: 14px; margin: 18px 0 27px; padding: 20px 0 24px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .notes-form[hidden] { display: none; }
 .notes-form label { display: grid; gap: 6px; color: var(--fg); font: 600 10px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
