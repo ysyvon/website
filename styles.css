@@ -130,6 +130,16 @@ button {
   font-size: 12px;
 }
 
+.books-store-header .books-featured-link {
+  margin-top: 12px;
+  color: var(--fg);
+}
+
+.books-featured-link a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .books-cart {
   display: flex;
   justify-content: flex-end;
@@ -1757,6 +1767,24 @@ body.sample-reader-open {
   font-size: 16px !important;
 }
 
+.product-about {
+  width: min(100%, 680px);
+  margin: 36px auto 0;
+  padding: 0 8px;
+}
+
+.product-about h2 {
+  margin: 0 0 20px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.product-about p {
+  margin: 0 0 1.25em;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
 .product-purchase-actions {
   display: flex;
   flex-wrap: wrap;
@@ -3019,7 +3047,8 @@ body.sample-reader-open {
 .serial-index-page :is(a, button, input):focus-visible,
 .serial-story-page :is(a, button, input):focus-visible,
 .serial-installment-page :is(a, button, input):focus-visible,
-.serial-sample-page a:focus-visible {
+.serial-sample-page a:focus-visible,
+.book-sample-page a:focus-visible {
   outline: 2px solid var(--fg);
   outline-offset: 3px;
 }

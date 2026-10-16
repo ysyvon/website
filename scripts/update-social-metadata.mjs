@@ -13,9 +13,7 @@ const pages = {
   "boundary-research-institute-terminal.html": "Boundary Research Institute Terminal | Interactive Archive",
   "stilling-duty.html": "Stilling Duty | A Visual Novel by Ys Goldt",
   "mid-band-contact.html": "Mid-Band Contact | A Visual Novel by Ys Goldt",
-  "even-if-the-light-forgets-volume-1.html": "Even if the Light Forgets: Volume I | Ys Goldt",
   "sample-an-index-of-vanishing.html": "Read An Index of Vanishing | Free Sample by Ys Goldt",
-  "sample-even-if-the-light-forgets.html": "Read Even if the Light Forgets | Free Sample by Ys Goldt",
   "sample-the-strange-mercy-of-listening.html": "Read The Strange Mercy of Listening | Sample by Ys Goldt",
   "privacy-policy.html": "Privacy Policy | Official Website of Ys Goldt",
 };
