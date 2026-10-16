@@ -253,12 +253,17 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .notes-form[hidden] { display: none; }
 .notes-form label { display: grid; gap: 6px; color: var(--fg); font: 600 10px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .notes-form label:first-child { max-width: 320px; }
+.notes-form .reply-opt-in { display: flex; align-items: start; gap: 10px; font: 11px/1.5 var(--mono); letter-spacing: 0; text-transform: none; }
+.notes-form .reply-opt-in input { flex: 0 0 16px; width: 16px; height: 16px; margin: 2px 0 0; padding: 0; border: 0; background: transparent; accent-color: var(--fg); }
+.notes-form .reply-email { max-width: 360px; }
+.notes-form .reply-email[hidden] { display: none; }
 .notes-form input, .notes-form textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 var(--serif); }
 .notes-form textarea { min-height: 96px; resize: vertical; }
 .notes-form input:focus-visible, .notes-form textarea:focus-visible, .notes-form button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
 .notes-form button { justify-self: start; min-height: 42px; padding: 9px 15px; border: 1px solid var(--fg); background: var(--fg); color: var(--bg); font: 600 11px var(--mono); cursor: pointer; }
 .notes-form button:disabled { opacity: .55; cursor: wait; }
 .notes-form .notes-privacy { margin: 0; font: 11px/1.5 var(--mono); }
+.notes-form .notes-privacy a { color: inherit; text-underline-offset: 3px; }
 .notes-form .form-status { margin: 0; color: var(--muted); font: 11px/1.5 var(--mono); }
 .form-status:empty { display: none; }
 @media (max-width: 560px) {

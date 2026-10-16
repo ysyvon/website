@@ -10,10 +10,19 @@
   const formStatus = form.querySelector('.form-status');
   const widget = form.querySelector('.turnstile-widget');
   const button = form.querySelector('button[type="submit"]');
+  const notify = form.elements.notify;
+  const email = form.elements.email;
+  const emailField = form.querySelector('.reply-email');
   const api = 'https://ys-journal-comments.ysgoldt.workers.dev/api/comments';
   const post = section.dataset.postId;
   let widgetId = null;
   let challengeLoad = null;
+
+  notify.addEventListener('change', () => {
+    emailField.hidden = !notify.checked;
+    email.required = notify.checked;
+    if (!notify.checked) email.value = '';
+  });
 
   if (location.protocol !== 'https:' || !['ysgoldt.com', 'www.ysgoldt.com'].includes(location.hostname)) {
     status.textContent = 'Notes can be read and sent on the published website.';
@@ -120,14 +129,18 @@
           post,
           name: form.elements.name.value.trim() || 'A visitor',
           body: form.elements.body.value.trim(),
+          notify: notify.checked,
+          email: notify.checked ? email.value.trim() : '',
           token
         })
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Could not send your note.');
       form.reset();
+      emailField.hidden = true;
+      email.required = false;
       if (widgetId !== null) window.turnstile.reset(widgetId);
-      formStatus.textContent = 'Your note was received and is waiting for approval.';
+      formStatus.textContent = result.message || 'Your note was received and is waiting for approval.';
     } catch (error) {
       formStatus.textContent = error.message || 'Could not send your note. Please try again.';
       if (widgetId !== null) window.turnstile.reset(widgetId);
