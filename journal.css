@@ -228,17 +228,17 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .entry-figure { width: 100%; margin: 42px 0 48px; }
 .entry-figure img { display: block; width: auto; max-width: 100%; height: auto; max-height: 560px; margin: 0 auto; object-fit: contain; filter: contrast(.93) saturate(.76); }
 .entry-figure figcaption { margin: 12px auto 0; color: var(--muted); font: italic 13px/1.5 var(--serif); text-align: center; }
-.entry-end { margin-top: 67px; padding-top: 17px; border-top: 1px solid var(--line); color: var(--muted); font: 11px/1.5 var(--mono); }
+.entry-end { margin-top: 30px; padding-top: 17px; border-top: 1px solid var(--line); color: var(--muted); font: 11px/1.5 var(--mono); }
 .entry-end-row { display: flex; justify-content: space-between; gap: 20px; }
-.entry-tags { display: flex; flex-wrap: wrap; gap: 7px 16px; margin: 0 0 22px; }
+.entry-tags { display: flex; flex-wrap: wrap; gap: 7px 16px; margin: 40px 0 0; }
 .entry-tags a { color: var(--muted); text-transform: lowercase; text-decoration: underline; text-underline-offset: 3px; }
 .entry-tags a:hover { color: var(--fg); }
 .entry-end a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
 .sample-note { width: min(100%, 680px); margin: 45px auto 0; color: var(--muted); font: 11px/1.5 var(--mono); }
-.reader-notes { width: min(100%, 680px); margin: 60px auto 0; padding-top: 17px; border-top: 1px solid var(--line); }
+.reader-notes { width: 100%; margin: 58px 0 0; padding-top: 19px; border-top: 1px solid var(--line); }
 .notes-toolbar { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.notes-status { margin: 0; color: var(--muted); font: 11px/1.5 var(--mono); }
-.notes-toggle { padding: 3px 0; border: 0; background: none; color: var(--fg); font: 600 11px/1.5 var(--mono); letter-spacing: .08em; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.notes-status { margin: 0; color: var(--muted); font: 14px/1.5 var(--mono); }
+.notes-toggle { padding: 3px 0; border: 0; background: none; color: var(--fg); font: 600 14px/1.5 var(--mono); letter-spacing: .04em; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 .notes-toggle[hidden] { display: none; }
 .notes-toggle span { display: inline-block; width: 1.2em; text-align: left; text-decoration: none; }
 .notes-toggle:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
