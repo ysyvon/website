@@ -6,6 +6,7 @@
   const status = section.querySelector('.notes-status');
   const list = section.querySelector('.notes-list');
   const form = section.querySelector('.notes-form');
+  const formStatus = form.querySelector('.form-status');
   const button = form.querySelector('button[type="submit"]');
   const api = 'https://ys-journal-comments.ysgoldt.workers.dev/api/comments';
   const post = section.dataset.postId;
@@ -54,11 +55,11 @@
     event.preventDefault();
     const token = form.querySelector('[name="cf-turnstile-response"]')?.value;
     if (!token) {
-      status.textContent = 'Please complete the verification first.';
+      formStatus.textContent = 'Please complete the verification first.';
       return;
     }
     button.disabled = true;
-    status.textContent = 'Sending your note…';
+    formStatus.textContent = 'Sending your note…';
     try {
       const response = await fetch(api, {
         method: 'POST',
@@ -74,9 +75,9 @@
       if (!response.ok) throw new Error(result.error || 'Could not send your note.');
       form.reset();
       if (window.turnstile) window.turnstile.reset();
-      status.textContent = 'Your note was received and is waiting for approval.';
+      formStatus.textContent = 'Your note was received and is waiting for approval.';
     } catch (error) {
-      status.textContent = error.message || 'Could not send your note. Please try again.';
+      formStatus.textContent = error.message || 'Could not send your note. Please try again.';
       if (window.turnstile) window.turnstile.reset();
     } finally {
       button.disabled = false;
