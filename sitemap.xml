@@ -2,43 +2,69 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ysgoldt.com/</loc>
-    <lastmod>2026-07-18</lastmod>
   </url>
   <url>
-    <loc>https://ysgoldt.com/shop/an-index-of-vanishing-part-i/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <loc>https://ysgoldt.com/BRI_Terminal/</loc>
   </url>
   <url>
-    <loc>https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <loc>https://ysgoldt.com/VisualNovel/Reijnders_Reisz/</loc>
   </url>
   <url>
-    <loc>https://ysgoldt.com/shop/the-strange-mercy-of-listening/</loc>
-    <lastmod>2026-07-18</lastmod>
-  </url>
-  <url>
-    <loc>https://ysgoldt.com/shop/shelves-of-memory-digital/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <loc>https://ysgoldt.com/VisualNovel/Scene1/</loc>
   </url>
   <url>
     <loc>https://ysgoldt.com/about.html</loc>
-    <lastmod>2026-09-06</lastmod>
   </url>
   <url>
-    <loc>https://ysgoldt.com/works.html</loc>
-    <lastmod>2026-07-18</lastmod>
-  </url>
-  <url>
-    <loc>https://ysgoldt.com/contact.html</loc>
-    <lastmod>2026-09-06</lastmod>
-  </url>
-  <url>
-    <loc>https://ysgoldt.com/press.html</loc>
-    <lastmod>2026-09-06</lastmod>
+    <loc>https://ysgoldt.com/boundary-research-institute-terminal.html</loc>
   </url>
   <url>
     <loc>https://ysgoldt.com/coming-soon.html</loc>
-    <lastmod>2026-09-06</lastmod>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/contact.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/even-if-the-light-forgets-volume-1.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/mid-band-contact.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/ocean/</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/ordinary-scores.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/press.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/privacy-policy.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/shop/an-index-of-vanishing-part-i/</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/shop/shelves-of-memory-digital/</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/shop/the-strange-mercy-of-listening/</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/starlight_synth/</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/stilling-duty.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/visual-work.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/works.html</loc>
   </url>
   <!-- SERIAL-GENERATED:START -->
   <url>
@@ -50,4 +76,18 @@
     <lastmod>2026-08-28</lastmod>
   </url>
   <!-- SERIAL-GENERATED:END -->
+  <!-- JOURNAL-GENERATED:START -->
+  <url>
+    <loc>https://ysgoldt.com/journal.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/journal-posts/2026-10-15-a-place-for-thoughts-to-live-154dbb77.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/journal-posts/2026-10-15-untitled-95cbd233.html</loc>
+  </url>
+  <url>
+    <loc>https://ysgoldt.com/journal-tags/essays.html</loc>
+  </url>
+  <!-- JOURNAL-GENERATED:END -->
 </urlset>

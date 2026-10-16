@@ -1,0 +1,119 @@
+export default String.raw`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>An Index of Vanishing — Part I | A Book by Ys Goldt</title>
+    <meta name="description" content="A slow-burn historical romance set in Tibet, 1938: Matthias Krüger was sent to watch the Reich’s most classified asset. He never expected her to see him.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://ysgoldt.com/shop/an-index-of-vanishing-part-i/">
+    <meta property="og:site_name" content="Ys Goldt">
+    <meta property="og:title" content="An Index of Vanishing — Part I">
+    <meta property="og:description" content="A slow-burn historical romance set in Tibet, 1938: Matthias Krüger was sent to watch the Reich’s most classified asset. He never expected her to see him.">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://ysgoldt.com/shop/an-index-of-vanishing-part-i/">
+    <meta property="og:image" content="https://ysgoldt.com/shop-assets/an-index-digital.jpg">
+    <meta property="og:image:alt" content="Cover of An Index of Vanishing — Part I by Ys Goldt">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="486">
+    <meta property="og:image:height" content="800">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="An Index of Vanishing — Part I">
+    <meta name="twitter:description" content="A slow-burn historical romance set in Tibet, 1938: Matthias Krüger was sent to watch the Reich’s most classified asset. He never expected her to see him.">
+    <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/an-index-digital.jpg">
+    <meta name="twitter:image:alt" content="Cover of An Index of Vanishing — Part I by Ys Goldt">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        "@id": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/#work",
+        "name": "An Index of Vanishing — Part I",
+        "url": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
+        "mainEntityOfPage": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
+        "description": "A slow-burn historical romance about obsession, longing, and the cost of being seen, set in Tibet in 1938.",
+        "image": "https://ysgoldt.com/shop-assets/an-index-digital.jpg",
+        "genre": ["Historical fiction", "Historical romance", "Literary fiction"],
+        "keywords": ["slow burn historical romance", "obsession", "longing", "the cost of being seen", "Tibet 1938"],
+        "about": [
+          { "@type": "Thing", "name": "Devotion" },
+          { "@type": "Thing", "name": "Obsession" },
+          { "@type": "Thing", "name": "The cost of being seen" }
+        ],
+        "spatialCoverage": { "@type": "Place", "name": "Tibet" },
+        "temporalCoverage": "1938",
+        "author": {
+          "@type": "Person",
+          "@id": "https://ysgoldt.com/about.html#ys-goldt",
+          "name": "Ys Goldt",
+          "url": "https://ysgoldt.com/about.html"
+        },
+        "publisher": { "@type": "Organization", "name": "Nachtljocht Press", "url": "https://www.nachtljocht.com/" },
+        "sameAs": "https://openlibrary.org/works/OL45737213W",
+        "workExample": {
+          "@type": "Book",
+          "@id": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/#paperback",
+          "url": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
+          "sameAs": "https://openlibrary.org/books/OL62262615M",
+          "isbn": "9798996205219",
+          "numberOfPages": 110,
+          "bookEdition": "First Nachtljocht Press edition",
+          "bookFormat": "https://schema.org/Paperback",
+          "inLanguage": "en",
+          "datePublished": "2026-07-22"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ysgoldt.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "An Index of Vanishing — Part I",
+            "item": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/"
+          }
+        ]
+      }
+    </script>
+    <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="../../disable-context-menu.js" defer></script>
+  </head>
+  <body class="product-landing-page" data-disable-context-menu>
+    <main class="site product-landing-site">
+      <nav class="product-landing-nav" aria-label="Product navigation"><a href="../../index.html">← Books</a></nav>
+      <article class="product-landing-card">
+        <div class="product-landing-art"><img src="../../shop-assets/an-index-digital.jpg" alt="An Index of Vanishing — Part I cover"></div>
+        <div class="product-landing-copy">
+          <p class="product-landing-kicker">Novella</p>
+          <h1>An Index of Vanishing — Part I</h1>
+          <p><a class="cta-button product-buy-button" href="../../sample-an-index-of-vanishing.html" target="_blank" rel="noopener noreferrer">READ A SAMPLE →</a></p>
+          <p class="product-landing-description">Tibet, 1938. Matthias Krüger was sent to watch the Reich’s most classified asset. He never expected her to see him.</p>
+          <p>A slow-burn historical romance about obsession, longing, and the cost of being seen.</p>
+          <a class="forthcoming-rating" href="https://www.goodreads.com/book/show/255665379-an-index-of-vanishing---part-i" target="_blank" rel="noopener noreferrer" aria-label="4 out of 5 stars on Goodreads">
+            <span class="forthcoming-rating-star" aria-hidden="true">★</span>
+            <span><strong>4</strong> stars on Goodreads</span>
+          </a>
+          <div class="product-purchase-actions">
+            <a class="cta-button product-buy-button" href="https://ysgoldt.com/#!/An-Index-of-Vanishing-Part-I-Digital-Edition/p/848367974">Digital Edition →</a>
+            <a class="cta-button product-buy-button" href="https://www.lulu.com/shop/ys-goldt/an-index-of-vanishing-part-i/paperback/product-65kjnd6.html?page=1&amp;pageSize=4" target="_blank" rel="noopener noreferrer">PRINT EDITION →</a>
+          </div>
+          <dl class="book-publication-details" aria-label="Print edition details">
+            <div><dt>Print length</dt><dd>110 pages</dd></div>
+            <div><dt>ISBN</dt><dd>9798996205219</dd></div>
+          </dl>
+        </div>
+      </article>
+      <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>
+    </main>
+  </body>
+</html>
+`;

@@ -8,6 +8,28 @@ import { serials } from "../serial/serials.mjs";
 const scriptPath = fileURLToPath(import.meta.url);
 const root = resolve(dirname(scriptPath), "..");
 const siteUrl = "https://ysgoldt.com";
+const authorId = `${siteUrl}/about.html#ys-goldt`;
+
+function structuredData(value) {
+  const json = JSON.stringify({ "@context": "https://schema.org", ...value }, null, 2)
+    .replaceAll("<", "\\u003c")
+    .split("\n")
+    .map((line) => `      ${line}`)
+    .join("\n");
+  return `    <script type="application/ld+json">\n${json}\n    </script>`;
+}
+
+function breadcrumbs(items) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: items.map(([name, item], index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name,
+      item,
+    })),
+  };
+}
 
 export function escapeHtml(value) {
   return String(value)
@@ -243,7 +265,10 @@ export function renderSerialIndex(entries = serials) {
     description,
     canonical: `${siteUrl}/serial/`,
     image: latestSerial.socialImage,
-  });
+  }) + `\n${structuredData({ "@graph": [
+    { "@type": "CollectionPage", "@id": `${siteUrl}/serial/#page`, name: "Serial Fiction by Ys Goldt", url: `${siteUrl}/serial/`, author: { "@id": authorId } },
+    breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`]]),
+  ] })}`;
   const content = `    <main class="site">
 ${siteHero()}
 ${mainNavigation("serial", rootPrefix)}
@@ -283,13 +308,17 @@ ${ordered
 
 export function renderStoryHome(serial) {
   const rootPrefix = "../../";
+  const canonical = `${siteUrl}${serialPath(serial)}`;
   const head = metadata({
     title: `${serial.title} | A Novel in Instalments by Ys Goldt`,
     description: serial.metadataDescription,
-    canonical: `${siteUrl}${serialPath(serial)}`,
+    canonical,
     image: serial.socialImage,
     type: "book",
-  });
+  }) + `\n${structuredData({ "@graph": [
+    { "@type": "Book", "@id": `${canonical}#book`, name: serial.title, url: canonical, description: serial.metadataDescription, image: serial.socialImage.url, author: { "@id": authorId }, genre: "Science fantasy", inLanguage: "en" },
+    breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`], [serial.title, canonical]]),
+  ] })}`;
   const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
   const coverActions = [
     serial.archiveUrl
@@ -318,6 +347,7 @@ ${coverActions}
               <div class="serial-story-blurb">
 ${blurb}
               </div>
+              <p class="serial-related">Related: <a href="../../journal-posts/2026-10-15-untitled-95cbd233.html">Ys Goldt on writing the characters of <em>How Long Things Hold</em></a></p>
             </div>
           </div>
         </article>
@@ -353,7 +383,10 @@ export function renderInstallmentPage(serial, installment, manuscript) {
     image: serial.socialImage,
     type: "article",
     published: installment.published,
-  });
+  }) + `\n${structuredData({ "@graph": [
+    { "@type": "Article", "@id": `${canonical}#article`, headline: installment.title, url: canonical, datePublished: installment.published, author: { "@id": authorId }, isPartOf: { "@id": `${siteUrl}${serialPath(serial)}#book` }, inLanguage: "en" },
+    breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`], [serial.title, `${siteUrl}${serialPath(serial)}`], [installment.title, canonical]]),
+  ] })}`;
   const content = `    <main class="site site-detail serial-reader-site">
       <article class="serial-reader">
         <header class="serial-reader-header">

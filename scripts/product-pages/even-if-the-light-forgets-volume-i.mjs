@@ -1,0 +1,117 @@
+export default String.raw`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Even if the Light Forgets — Volume I | A Book by Ys Goldt</title>
+    <meta name="description" content="An adult fantasy romance of alchemy, ruin, found family, and fragile hope, where learning to need someone may be the greatest risk.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/">
+    <meta property="og:site_name" content="Ys Goldt">
+    <meta property="og:title" content="Even if the Light Forgets — Volume I">
+    <meta property="og:description" content="An adult fantasy romance of alchemy, ruin, found family, and fragile hope, where learning to need someone may be the greatest risk.">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/">
+    <meta property="og:image" content="https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg">
+    <meta property="og:image:alt" content="Cover of Even if the Light Forgets — Volume I by Ys Goldt">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1604">
+    <meta property="og:image:height" content="2560">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Even if the Light Forgets — Volume I">
+    <meta name="twitter:description" content="An adult fantasy romance of alchemy, ruin, found family, and fragile hope, where learning to need someone may be the greatest risk.">
+    <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg">
+    <meta name="twitter:image:alt" content="Cover of Even if the Light Forgets — Volume I by Ys Goldt">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        "@id": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/#work",
+        "name": "Even if the Light Forgets — Volume I",
+        "url": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+        "mainEntityOfPage": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+        "description": "An adult fantasy of alchemy, ruin, slow-burn romance, found family, and fragile hope.",
+        "image": "https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg",
+        "genre": ["Adult fantasy", "Post-apocalyptic fiction", "Romance"],
+        "keywords": ["adult fantasy", "alchemy", "ruin", "slow burn romance", "found family", "fragile hope"],
+        "about": [
+          { "@type": "Thing", "name": "Memory" },
+          { "@type": "Thing", "name": "Devotion" },
+          { "@type": "Thing", "name": "Found family" }
+        ],
+        "author": {
+          "@type": "Person",
+          "@id": "https://ysgoldt.com/about.html#ys-goldt",
+          "name": "Ys Goldt",
+          "url": "https://ysgoldt.com/about.html"
+        },
+        "publisher": { "@type": "Organization", "name": "Nachtljocht Press", "url": "https://www.nachtljocht.com/" },
+        "sameAs": "https://openlibrary.org/works/OL45193142W",
+        "workExample": {
+          "@type": "Book",
+          "@id": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/#paperback",
+          "url": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+          "sameAs": "https://openlibrary.org/books/OL61620204M",
+          "isbn": "9798996205202",
+          "numberOfPages": 298,
+          "bookEdition": "First Nachtljocht Press edition",
+          "bookFormat": "https://schema.org/Paperback",
+          "inLanguage": "en",
+          "datePublished": "2026"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ysgoldt.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Even if the Light Forgets — Volume I",
+            "item": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/"
+          }
+        ]
+      }
+    </script>
+    <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="../../disable-context-menu.js" defer></script>
+  </head>
+  <body class="product-landing-page" data-disable-context-menu>
+    <main class="site product-landing-site">
+      <nav class="product-landing-nav" aria-label="Product navigation"><a href="../../index.html">← Books</a></nav>
+      <article class="product-landing-card">
+        <div class="product-landing-art"><img src="../../shop-assets/even-if-the-light-forgets-generic.jpg" alt="Even if the Light Forgets — Volume I cover"></div>
+        <div class="product-landing-copy">
+          <p class="product-landing-kicker">Novel</p>
+          <h1>Even if the Light Forgets — Volume I</h1>
+          <p><a class="cta-button product-buy-button" href="../../sample-even-if-the-light-forgets.html" target="_blank" rel="noopener noreferrer">READ A SAMPLE →</a></p>
+          <p class="product-landing-description">She’s spent her whole life learning not to need anyone. He’s spent his learning he doesn’t deserve to be needed.</p>
+          <p>An adult fantasy of alchemy, ruin, slow-burn romance, found family, and fragile hope.</p>
+          <a class="forthcoming-rating" href="https://www.goodreads.com/book/show/252608342-even-if-the-light-forgets" target="_blank" rel="noopener noreferrer" aria-label="4.75 out of 5 stars on Goodreads">
+            <span class="forthcoming-rating-star" aria-hidden="true">★</span>
+            <span><strong>4.75</strong> stars on Goodreads</span>
+          </a>
+          <div class="product-purchase-actions">
+            <a class="cta-button product-buy-button" href="https://ysgoldt.com/#!/Even-If-the-Light-Forgets-Volume-I-Digital-Edition/p/848382763">Digital Edition →</a>
+            <a class="cta-button product-buy-button" href="https://www.lulu.com/shop/ys-goldt/even-if-the-light-forgets-volume-i/paperback/product-w484jym.html?page=1&amp;pageSize=4" target="_blank" rel="noopener noreferrer">PRINT EDITION →</a>
+          </div>
+          <dl class="book-publication-details" aria-label="Print edition details">
+            <div><dt>Print length</dt><dd>298 pages</dd></div>
+            <div><dt>ISBN</dt><dd>9798996205202</dd></div>
+          </dl>
+        </div>
+      </article>
+      <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>
+    </main>
+  </body>
+</html>
+`;

@@ -61,7 +61,9 @@ header {
   border-bottom: 2px solid #6e617c55;
 }
 .brand {
+  margin: 0;
   font-size: 22px;
+  font-weight: inherit;
   letter-spacing: 2px;
 }
 .brand span {

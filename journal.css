@@ -147,8 +147,8 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .entry-card .print { margin: 0 0 16px; padding: 11px 11px 24px; border: 1px solid #dad7cf; background: var(--print); box-shadow: var(--shadow); color: #5b5a54; }
 .entry-card .print img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; filter: contrast(.92) saturate(.73) brightness(1.02); }
 .card-copy time { display: block; color: var(--muted); font: 10px/1.5 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
-.card-copy h3 { margin: 9px 0 8px; font: 400 27px/1.13 var(--serif); letter-spacing: -.025em; }
-.card-copy h3 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.card-copy h2 { margin: 9px 0 8px; font: 400 27px/1.13 var(--serif); letter-spacing: -.025em; }
+.card-copy h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .card-copy .untitled { font-style: italic; }
 .card-copy p { margin: 0; font: 15px/1.55 var(--serif); }
 .read-link { display: inline-block; margin-top: 18px; padding-bottom: 3px; border-bottom: 1px solid var(--line-strong); font: 600 10px/1.5 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
@@ -182,7 +182,7 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .layout-b .cards { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 235px); align-items: start; gap: 44px 46px; }
 .layout-b .entry-card { padding-top: 18px; border-top: 1px solid var(--line); }
 .layout-b .entry-card:nth-child(even) { padding: 20px 0 0 17px; border-left: 1px solid var(--line); }
-.layout-b .entry-card:nth-child(even) .card-copy h3 { font-size: 22px; }
+.layout-b .entry-card:nth-child(even) .card-copy h2 { font-size: 22px; }
 .layout-b .entry-card:nth-child(even) .card-copy p { font-size: 14px; }
 .layout-b .entry-card:nth-child(6) .print { padding: 7px 7px 18px; }
 .layout-b .entry-card:first-child { border-top: 0; padding-top: 0; }
