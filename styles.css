@@ -165,6 +165,9 @@ button {
 .books-store {
   width: 100%;
   min-height: 360px;
+  padding: 24px 14px 30px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 #my-store-139267004,
