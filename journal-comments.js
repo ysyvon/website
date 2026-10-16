@@ -74,7 +74,7 @@
     const date = document.createElement('time');
     date.dateTime = value;
     date.textContent = new Date(value).toLocaleString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'
+      year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
     });
     return date;
   }
@@ -84,9 +84,12 @@
     reply.className = author ? 'author-reply' : 'visitor-reply';
     const label = document.createElement('strong');
     label.textContent = name;
+    const badge = document.createElement('span');
+    badge.className = author ? 'author-badge' : 'visitor-badge';
+    badge.textContent = author ? '✓ Verified author' : 'Visitor';
     const text = document.createElement('p');
     text.textContent = body;
-    reply.append(label, makeDate(created), text);
+    reply.append(label, badge, makeDate(created), text);
     return reply;
   }
 
@@ -110,18 +113,40 @@
     body.required = true;
     body.rows = 3;
     bodyLabel.append(body);
+    const notifyLabel = document.createElement('label');
+    notifyLabel.className = 'reply-opt-in';
+    const notify = document.createElement('input');
+    notify.type = 'checkbox';
+    notify.name = 'notify';
+    notifyLabel.append(notify, document.createTextNode(' Email me about new replies under this note (up to six months)'));
+    const emailLabel = document.createElement('label');
+    emailLabel.className = 'reply-email';
+    emailLabel.hidden = true;
+    emailLabel.textContent = 'Email for reply notifications';
+    const email = document.createElement('input');
+    email.type = 'email';
+    email.name = 'email';
+    email.maxLength = 254;
+    email.autocomplete = 'email';
+    email.inputMode = 'email';
+    emailLabel.append(email);
+    notify.addEventListener('change', () => {
+      emailLabel.hidden = !notify.checked;
+      email.required = notify.checked;
+      if (!notify.checked) email.value = '';
+    });
     const challenge = document.createElement('div');
     challenge.className = 'turnstile-widget';
     const privacy = document.createElement('p');
     privacy.className = 'notes-privacy';
-    privacy.textContent = 'Replies appear after approval. Please do not include private information.';
+    privacy.textContent = 'Replies appear after approval. Please do not include private information. Email notifications require confirmation and include an unsubscribe link.';
     const submit = document.createElement('button');
     submit.type = 'submit';
     submit.textContent = 'Send reply';
     const feedback = document.createElement('p');
     feedback.className = 'form-status';
     feedback.setAttribute('role', 'status');
-    replyForm.append(nameLabel, bodyLabel, challenge, privacy, submit, feedback);
+    replyForm.append(nameLabel, bodyLabel, notifyLabel, emailLabel, challenge, privacy, submit, feedback);
     let replyWidgetId = null;
     async function open() {
       replyForm.hidden = false;
@@ -150,11 +175,13 @@
         const response = await fetch(replyApi, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ post, commentId: note.id, name: name.value.trim() || 'A visitor', body: body.value.trim(), token })
+          body: JSON.stringify({ post, commentId: note.id, name: name.value.trim() || 'A visitor', body: body.value.trim(), notify: notify.checked, email: notify.checked ? email.value.trim() : '', token })
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || 'Could not send your reply.');
         replyForm.reset();
+        emailLabel.hidden = true;
+        email.required = false;
         feedback.textContent = result.message || 'Your reply is waiting for approval.';
         if (replyWidgetId !== null) window.turnstile.reset(replyWidgetId);
       } catch (error) {
@@ -183,9 +210,12 @@
         article.id = `reader-note-${note.id}`;
         const name = document.createElement('strong');
         name.textContent = note.display_name;
+        const visitorBadge = document.createElement('span');
+        visitorBadge.className = 'visitor-badge';
+        visitorBadge.textContent = 'Visitor';
         const body = document.createElement('p');
         body.textContent = note.body;
-        article.append(name, makeDate(note.created_at), body);
+        article.append(name, visitorBadge, makeDate(note.created_at), body);
         const thread = document.createElement('div');
         thread.className = 'thread-replies';
         if (note.reply_body) {

@@ -245,6 +245,9 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .notes-list { display: grid; gap: 15px; margin-top: 22px; }
 .reader-note { padding: 23px 25px; border: 1px solid var(--line); background: var(--paper); }
 .reader-note strong { font: 600 11px/1.5 var(--mono); }
+.author-badge, .visitor-badge { display: inline-block; margin-left: 9px; padding: 2px 5px; font: 600 9px/1.3 var(--mono); letter-spacing: .02em; vertical-align: middle; }
+.author-badge { border: 1px solid var(--fg); background: var(--fg); color: var(--bg); }
+.visitor-badge { border: 1px solid var(--line-strong); color: var(--muted); }
 .reader-note time { margin-left: 12px; color: var(--muted); font: 10px/1.5 var(--mono); }
 .reader-note p { margin: 12px 0 0; color: var(--fg); font: 17px/1.55 var(--serif); white-space: pre-wrap; overflow-wrap: anywhere; }
 .note-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
