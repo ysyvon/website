@@ -3,7 +3,7 @@ import { readFile, mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const require = createRequire(import.meta.url);
-const sharp = require("/Users/yiskahanderson/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp");
+const sharp = require("sharp");
 
 const root = resolve(import.meta.dirname, "..");
 const outputDir = resolve(root, "social-cards");
@@ -30,7 +30,7 @@ const cards = [
   { file: "boundary-terminal.jpg", kicker: "INTERACTIVE ARCHIVE", title: "The Boundary Research Institute Terminal", detail: "Personnel files · Containment records · Anomalous research", cta: "ENTER THE TERMINAL →", image: "BRI_Terminal/assets/share-card.png", position: "left top", grayscale: false },
   { file: "stilling-duty.jpg", kicker: "MINI VISUAL NOVEL", title: "Stilling Duty", detail: "A story from The Space Between Names", cta: "PLAY NOW →", image: "VisualNovel/Scene1/social-preview.png" },
   { file: "mid-band-contact.jpg", kicker: "MINI VISUAL NOVEL", title: "Mid-Band Contact", detail: "A story from The Space Between Names", cta: "PLAY NOW →", image: "VisualNovel/Reijnders_Reisz/Mid-BandImage.png" },
-  { file: "journal.jpg", kicker: "JOURNAL", title: "Images, atmosphere, and process", detail: "Fragments from ongoing creative work", cta: "OPEN THE JOURNAL →", image: "journal-assets/moodboard_8_jul_2026_ys.png" },
+  { file: "journal.jpg", kicker: "JOURNAL", title: "Images, atmosphere, and process", detail: "Fragments from ongoing creative work", cta: "OPEN THE JOURNAL →", image: "journal-media/fb8e6abc79dc408fa73edccab5a22746.jpg" },
   { file: "an-index-of-vanishing.jpg", kicker: "A NOVELLA", title: "An Index of Vanishing", detail: "Tibet, 1938. He was sent to watch her.", cta: "READ MORE →", image: "anindexcover.png", fit: "contain" },
   { file: "even-if-the-light-forgets.jpg", kicker: "A NOVEL", title: "Even if the Light Forgets", detail: "Volume I · Ys Goldt", cta: "READ MORE →", image: "assets/eitlf-sample/pages/page-01.jpg", fit: "contain" },
   { file: "strange-mercy.jpg", kicker: "A NOVELLA", title: "The Strange Mercy of Listening", detail: "A quiet devotion becomes something more dangerous", cta: "READ MORE →", image: "assets/strange-mercy-sample/pages/page-01.jpg", fit: "contain" },
