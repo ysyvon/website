@@ -326,7 +326,7 @@ export function renderStoryHome(serial) {
       ? `                <a class="cta-button" href="${escapeAttribute(serial.archiveUrl)}" target="_blank" rel="noopener noreferrer">Read for free</a>`
       : "",
     serial.samplePath
-      ? `                <a class="cta-button" href="${escapeAttribute(localSitePath(rootPrefix, serial.samplePath))}" target="_blank" rel="noopener noreferrer">Read a Sample →</a>`
+      ? `                <a class="cta-button" href="${escapeAttribute(localSitePath(rootPrefix, serial.samplePath))}">Read a Sample →</a>`
       : "",
   ].filter(Boolean).join("\n");
   const content = `    <main class="site site-detail serial-story-site">

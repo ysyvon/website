@@ -96,7 +96,7 @@ export default String.raw`<!doctype html>
         <div class="product-landing-copy">
           <p class="product-landing-kicker">Novella</p>
           <h1>An Index of Vanishing — Part I</h1>
-          <p><a class="cta-button product-buy-button" href="../../sample-an-index-of-vanishing.html" target="_blank" rel="noopener noreferrer">READ A SAMPLE →</a></p>
+          <p><a class="cta-button product-buy-button" href="../../sample-an-index-of-vanishing.html">READ A SAMPLE →</a></p>
           <p class="product-landing-description">Tibet, 1938. Matthias Krüger was sent to watch the Reich’s most classified asset. He never expected her to see him.</p>
           <p>A slow-burn historical romance about obsession, longing, and the cost of being seen.</p>
           <a class="forthcoming-rating" href="https://www.goodreads.com/book/show/255665379-an-index-of-vanishing---part-i" target="_blank" rel="noopener noreferrer" aria-label="4 out of 5 stars on Goodreads">

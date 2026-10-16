@@ -112,7 +112,7 @@ test("launch pages keep the story public without chapter links", () => {
   assert.match(story, /For eleven hundred years, Eîra has lived alone among the ruins of a dead civilisation\./);
   assert.match(
     story,
-    /href="\.\.\/\.\.\/sample-how-long-things-hold\.html" target="_blank" rel="noopener noreferrer">Read a Sample →<\/a>/,
+    /href="\.\.\/\.\.\/sample-how-long-things-hold\.html">Read a Sample →<\/a>/,
   );
   assert.ok(
     story.indexOf('class="serial-story-cover"') < story.indexOf('class="serial-cover-actions"') &&
