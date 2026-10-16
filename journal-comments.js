@@ -43,9 +43,7 @@
         article.append(name, date, body);
         list.append(article);
       }
-      status.textContent = data.comments.length
-        ? `${data.comments.length} approved ${data.comments.length === 1 ? 'note' : 'notes'}`
-        : 'No notes yet. You can leave the first one.';
+      status.textContent = `${data.comments.length} ${data.comments.length === 1 ? 'note' : 'notes'}`;
     } catch {
       status.textContent = 'Notes could not be loaded right now.';
     }
