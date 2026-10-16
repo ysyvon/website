@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exported_at": "2026-10-16T01:32:52.247Z",
+  "exported_at": "2026-10-16T02:02:21.945Z",
   "public_entries": 1,
   "files": [
     "journal-comments.js",
@@ -8,6 +8,7 @@
     "journal-posts/2026-10-15-test-4fe99416.html",
     "journal-tags/notes.html",
     "journal.css",
-    "journal.html"
+    "journal.html",
+    "journal.xml"
   ]
 }

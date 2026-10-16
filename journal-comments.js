@@ -66,19 +66,35 @@
       if (!response.ok) throw new Error('Could not load notes.');
       const data = await response.json();
       list.replaceChildren();
-      for (const note of data.comments) {
+      const newestFirst = [...data.comments].sort((a, b) => b.created_at.localeCompare(a.created_at));
+      for (const note of newestFirst) {
         const article = document.createElement('article');
         article.className = 'reader-note';
         const name = document.createElement('strong');
         name.textContent = note.display_name;
         const date = document.createElement('time');
         date.dateTime = note.created_at;
-        date.textContent = new Date(note.created_at).toLocaleDateString('en-US', {
-          year: 'numeric', month: 'long', day: 'numeric'
+        date.textContent = new Date(note.created_at).toLocaleString('en-US', {
+          year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'
         });
         const body = document.createElement('p');
         body.textContent = note.body;
         article.append(name, date, body);
+        if (note.reply_body) {
+          const reply = document.createElement('div');
+          reply.className = 'author-reply';
+          const author = document.createElement('strong');
+          author.textContent = 'Ys Goldt';
+          const replied = document.createElement('time');
+          replied.dateTime = note.replied_at;
+          replied.textContent = new Date(note.replied_at).toLocaleString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'
+          });
+          const answer = document.createElement('p');
+          answer.textContent = note.reply_body;
+          reply.append(author, replied, answer);
+          article.append(reply);
+        }
         list.append(article);
       }
       status.textContent = `${data.comments.length} ${data.comments.length === 1 ? 'note' : 'notes'}`;
