@@ -1146,6 +1146,11 @@ img {
   line-height: 1.65;
 }
 
+.about-social-note a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .tally-contact-form {
   display: block;
   width: 100%;
