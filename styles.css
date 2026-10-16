@@ -130,16 +130,6 @@ button {
   font-size: 12px;
 }
 
-.books-store-header .books-featured-link {
-  margin-top: 12px;
-  color: var(--fg);
-}
-
-.books-featured-link a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .books-cart {
   display: flex;
   justify-content: flex-end;
@@ -2916,6 +2906,44 @@ body.sample-reader-open {
 
 .serial-sample-prose .serial-scene-break {
   font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.index-sample-prose .index-sample-document-label,
+.index-sample-prose .index-sample-identity,
+.index-sample-prose .index-sample-date,
+.index-sample-prose .index-sample-heading,
+.index-sample-prose .index-sample-smallcaps {
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  font-style: normal;
+  letter-spacing: 0.06em;
+}
+
+.index-sample-prose .index-sample-document-label,
+.index-sample-prose .index-sample-identity,
+.index-sample-prose .index-sample-heading {
+  text-align: center;
+}
+
+.index-sample-prose .index-sample-document-label,
+.index-sample-prose .index-sample-identity {
+  margin-bottom: 0;
+}
+
+.index-sample-prose .index-sample-document-label + p:not(.index-sample-document-label),
+.index-sample-prose .index-sample-identity + p:not(.index-sample-identity) {
+  margin-top: 2em;
+}
+
+.index-sample-prose .index-sample-date,
+.index-sample-prose .index-sample-heading {
+  margin: 2.8em 0 1.6em;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.index-sample-prose .index-sample-date {
+  text-align: right;
 }
 
 .serial-sample-end {
