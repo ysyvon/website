@@ -8,6 +8,8 @@ import {
   getInstallmentNavigation,
   renderInstallmentContent,
   renderManuscript,
+  renderSampleMarkdown,
+  renderSamplePage,
   renderSerialIndex,
   renderStoryHome,
   validateSerials,
@@ -43,6 +45,21 @@ test("plain line sources remain escaped and preserve their scene break", () => {
   assert.match(rendered, /<p>One &lt; two<\/p>/);
   assert.match(rendered, /aria-label="Scene break">\*\*\*/);
   assert.match(rendered, /<p>Three &amp; four<\/p>/);
+});
+
+test("the text sample preserves emphasis, quoted small caps markup, and its scene break", () => {
+  const markdown = "# Chapter One\n\nText with *thoughts* and an escaped exclamation\\!\n\n> a remembered voice\\!\n\n\\*\\*\\*\n\nAfter.";
+  const rendered = renderSampleMarkdown(markdown);
+  assert.match(rendered, /<em>thoughts<\/em>/);
+  assert.match(rendered, /escaped exclamation!/);
+  assert.match(rendered, /<blockquote><p>a remembered voice!<\/p><\/blockquote>/);
+  assert.match(rendered, /aria-label="Scene break"/);
+  assert.match(rendered, /<p>After\.<\/p>/);
+  const page = renderSamplePage(serials[0], markdown);
+  assert.match(page, /<h1 id="chapter-title">Chapter One<\/h1>/);
+  assert.match(page, /<p class="page-title">Ys Goldt<\/p>/);
+  assert.match(page, /<link rel="canonical" href="https:\/\/ysgoldt\.com\/sample-how-long-things-hold\.html">/);
+  assert.doesNotMatch(page, /noindex|sample-reader\.js|sample-reader\.css/);
 });
 
 test("serial metadata rejects duplicate slugs and instalment numbers", () => {
@@ -99,17 +116,23 @@ test("launch pages keep the story public without chapter links", () => {
   );
   assert.ok(
     story.indexOf('class="serial-story-cover"') < story.indexOf('class="serial-cover-actions"') &&
-      story.indexOf("read for free here") < story.indexOf("Read a Sample") &&
+      story.indexOf("Read for free") < story.indexOf("Read a Sample") &&
       story.indexOf("Read a Sample") < story.indexOf('class="serial-story-introduction"'),
     "the archive and sample buttons should appear in that order below the cover",
   );
-  assert.match(story, /href="https:\/\/buttondown\.com\/how-long-things-hold\/archive"[^>]*>read for free here<\/a>/);
+  assert.match(story, /href="https:\/\/buttondown\.com\/how-long-things-hold\/archive"[^>]*>Read for free<\/a>/);
   assert.doesNotMatch(story, /Start Reading/);
   assert.doesNotMatch(story, /serial-contents/);
   assert.doesNotMatch(story, /Chapter One|Chapter Two/);
   assert.doesNotMatch(story, /<form|home-signup/);
-  assert.match(story, /href="\.\.\/\.\.\/index\.html">← Home<\/a>/);
-  assert.doesNotMatch(story, />← Serial<\/a>/);
+  assert.match(story, /<p class="page-title">Ys Goldt<\/p>/);
+  assert.match(story, /<a class="tab active" href="\.\.\/\.\.\/serial\/how-long-things-hold\/index\.html" aria-current="page">Serial<\/a>/);
+  assert.match(story, /<h1>How Long Things Hold<\/h1>/);
+  assert.doesNotMatch(story, /class="serial-format"/);
+  assert.doesNotMatch(story, /class="back-link"/);
+  assert.doesNotMatch(story, /class="serial-related"/);
+  const structuredData = JSON.parse(story.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(structuredData["@graph"][0].subjectOf.url, serials[0].relatedArticle.url);
   assert.doesNotMatch(story, /New instalments delivered through Buttondown/);
 });
 
@@ -138,16 +161,10 @@ test("generated local links and sample assets resolve", async () => {
   }
 
   const sample = await readFile(resolve(root, "sample-how-long-things-hold.html"), "utf8");
-  assert.match(sample, /data-page-count="17" data-page-start="5"/);
-  for (let page = 5; page <= 21; page += 1) {
-    await access(
-      resolve(
-        root,
-        "assets/how-long-things-hold-sample/pages",
-        `page-${String(page).padStart(2, "0")}.jpg`,
-      ),
-    );
-  }
+  assert.match(sample, /<div class="serial-sample-prose">/);
+  assert.match(sample, /Eîra had been climbing the tree every morning/);
+  assert.match(sample, /<blockquote><p>balance achieved on first attempt\. well done, my dear!<\/p><\/blockquote>/);
+  assert.match(sample, /Read for free<\/a>/);
 });
 
 test("SERIAL follows Books in every main navigation copy", async () => {

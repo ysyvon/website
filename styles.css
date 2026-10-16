@@ -2654,18 +2654,6 @@ body.sample-reader-open {
   margin-bottom: 0;
 }
 
-.serial-related {
-  margin: 20px 0 0;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.serial-related a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .serial-story-actions {
   display: flex;
   flex-wrap: wrap;
@@ -2838,6 +2826,81 @@ body.sample-reader-open {
   padding-top: 28px;
 }
 
+.serial-sample-site {
+  width: min(calc(100vw - 40px), 900px);
+}
+
+.serial-sample {
+  width: min(100%, 680px);
+  margin: 46px auto 0;
+}
+
+.serial-sample-header {
+  margin-bottom: 46px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.serial-sample-header > a {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.serial-sample-header > a:hover,
+.serial-sample-header > a:focus-visible {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.serial-sample-header h1 {
+  margin: 20px 0 0;
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 400;
+}
+
+.serial-sample-prose {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(17px, 2.4vw, 19px);
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+.serial-sample-prose p {
+  margin: 0 0 1.45em;
+}
+
+.serial-sample-prose blockquote {
+  margin: 1.5em 0 1.5em 1em;
+  padding-left: 1.1em;
+  border-left: 1px solid var(--line);
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  font-style: normal;
+}
+
+.serial-sample-prose blockquote p {
+  margin: 0;
+}
+
+.serial-sample-prose .serial-scene-break {
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.serial-sample-end {
+  margin-top: 60px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.serial-sample-end p {
+  margin: 0 0 18px;
+}
+
 .serial-reader {
   width: min(100%, 560px);
   margin: 0 auto;
@@ -2955,7 +3018,8 @@ body.sample-reader-open {
 
 .serial-index-page :is(a, button, input):focus-visible,
 .serial-story-page :is(a, button, input):focus-visible,
-.serial-installment-page :is(a, button, input):focus-visible {
+.serial-installment-page :is(a, button, input):focus-visible,
+.serial-sample-page a:focus-visible {
   outline: 2px solid var(--fg);
   outline-offset: 3px;
 }

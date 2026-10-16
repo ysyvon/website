@@ -160,7 +160,7 @@ function localSitePath(rootPrefix, absolutePath) {
   return `${rootPrefix}${absolutePath.replace(/^\//, "")}`;
 }
 
-function documentShell({ head, bodyClass, content, rootPrefix }) {
+function documentShell({ head, bodyClass, content, rootPrefix, selectable = false }) {
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -171,7 +171,7 @@ ${head}
     <link rel="stylesheet" href="${rootPrefix}styles.css">
     <script src="${rootPrefix}disable-context-menu.js" defer></script>
   </head>
-  <body class="${escapeAttribute(bodyClass)}" data-disable-context-menu data-disable-selection>
+  <body class="${escapeAttribute(bodyClass)}" data-disable-context-menu${selectable ? "" : " data-disable-selection"}>
 ${content}
   </body>
 </html>
@@ -184,6 +184,7 @@ function mainNavigation(active, rootPrefix) {
     ["Coming Soon", `${rootPrefix}coming-soon.html`, "coming-soon"],
     ["Serial", `${rootPrefix}serial/how-long-things-hold/index.html`, "serial"],
     ["Works", `${rootPrefix}works.html`, "works"],
+    ["Journal", `${rootPrefix}journal.html`, "journal"],
     ["About", `${rootPrefix}about.html`, "about"],
     ["Contact", `${rootPrefix}contact.html`, "contact"],
     ["Press", `${rootPrefix}press.html`, "press"],
@@ -199,9 +200,9 @@ ${links}
       </nav>`;
 }
 
-function siteHero() {
+function siteHero(titleTag = "h1") {
   return `      <section class="hero" aria-label="Ys Goldt">
-        <h1 class="page-title">Ys Goldt</h1>
+        <${titleTag} class="page-title">Ys Goldt</${titleTag}>
         <p class="page-subtitle">creator of strange and tender things</p>
       </section>`;
 }
@@ -310,27 +311,28 @@ export function renderStoryHome(serial) {
   const rootPrefix = "../../";
   const canonical = `${siteUrl}${serialPath(serial)}`;
   const head = metadata({
-    title: `${serial.title} | A Novel in Instalments by Ys Goldt`,
+    title: `${serial.title} | Free Science-Fantasy Web Serial`,
     description: serial.metadataDescription,
     canonical,
     image: serial.socialImage,
     type: "book",
   }) + `\n${structuredData({ "@graph": [
-    { "@type": "Book", "@id": `${canonical}#book`, name: serial.title, url: canonical, description: serial.metadataDescription, image: serial.socialImage.url, author: { "@id": authorId }, genre: "Science fantasy", inLanguage: "en" },
+    { "@type": "Book", "@id": `${canonical}#book`, name: serial.title, url: canonical, description: serial.metadataDescription, image: serial.socialImage.url, author: { "@id": authorId }, genre: "Science fantasy", inLanguage: "en", ...(serial.relatedArticle ? { subjectOf: { "@type": "BlogPosting", "@id": serial.relatedArticle.id, url: serial.relatedArticle.url } } : {}) },
     breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`], [serial.title, canonical]]),
   ] })}`;
   const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
   const coverActions = [
     serial.archiveUrl
-      ? `                <a class="cta-button" href="${escapeAttribute(serial.archiveUrl)}" target="_blank" rel="noopener noreferrer">read for free here</a>`
+      ? `                <a class="cta-button" href="${escapeAttribute(serial.archiveUrl)}" target="_blank" rel="noopener noreferrer">Read for free</a>`
       : "",
     serial.samplePath
       ? `                <a class="cta-button" href="${escapeAttribute(localSitePath(rootPrefix, serial.samplePath))}" target="_blank" rel="noopener noreferrer">Read a Sample →</a>`
       : "",
   ].filter(Boolean).join("\n");
   const content = `    <main class="site site-detail serial-story-site">
+${siteHero("p")}
+${mainNavigation("serial", rootPrefix)}
       <section class="detail-frame serial-story-frame">
-        <a class="back-link" href="../../index.html">← Home</a>
         <article class="serial-story">
           <div class="serial-story-hero">
             <div class="serial-story-cover-column">
@@ -347,7 +349,6 @@ ${coverActions}
               <div class="serial-story-blurb">
 ${blurb}
               </div>
-              <p class="serial-related">Related: <a href="../../journal-posts/2026-10-15-untitled-95cbd233.html">Ys Goldt on writing the characters of <em>How Long Things Hold</em></a></p>
             </div>
           </div>
         </article>
@@ -355,6 +356,63 @@ ${blurb}
 ${siteFooter(rootPrefix)}
     </main>`;
   return documentShell({ head, bodyClass: "detail-page serial-story-page", content, rootPrefix });
+}
+
+function renderSampleInline(text) {
+  return escapeHtml(text.replace(/\\([\\`*{}\[\]()#+\-.!_>])/g, "$1"))
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+}
+
+export function renderSampleMarkdown(markdown) {
+  const blocks = markdown.trim().split(/\r?\n\s*\r?\n/);
+  if (blocks.shift()?.trim() !== "# Chapter One") {
+    throw new Error("The sample must begin with the Chapter One heading.");
+  }
+  return blocks.map((block) => {
+    const lines = block.trim().split(/\r?\n/);
+    if (lines.every((line) => /^>\s?/.test(line))) {
+      return `          <blockquote><p>${renderSampleInline(lines.map((line) => line.replace(/^>\s?/, "")).join(" "))}</p></blockquote>`;
+    }
+    if (/^(?:\*\*\*|(?:\\\*){3})$/.test(block.trim())) {
+      return '          <div class="serial-scene-break" role="separator" aria-label="Scene break">* * *</div>';
+    }
+    return `          <p>${renderSampleInline(lines.join(" "))}</p>`;
+  }).join("\n");
+}
+
+export function renderSamplePage(serial, markdown) {
+  const rootPrefix = "./";
+  const canonical = `${siteUrl}${serial.samplePath}`;
+  const description = `Read Chapter One of ${serial.title}, a free science-fantasy web serial by Ys Goldt.`;
+  const head = metadata({
+    title: `Chapter One | ${serial.title} by Ys Goldt`,
+    description,
+    canonical,
+    image: serial.socialImage,
+    type: "article",
+  }) + `\n${structuredData({ "@graph": [
+    { "@type": "Chapter", "@id": `${canonical}#chapter`, name: "Chapter One", url: canonical, author: { "@id": authorId }, isPartOf: { "@id": `${siteUrl}${serialPath(serial)}#book` }, inLanguage: "en" },
+    breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`], [serial.title, `${siteUrl}${serialPath(serial)}`], ["Chapter One", canonical]]),
+  ] })}`;
+  const content = `    <main class="site site-detail serial-sample-site">
+${siteHero("p")}
+${mainNavigation("serial", rootPrefix)}
+      <article class="serial-sample" aria-labelledby="chapter-title">
+        <header class="serial-sample-header">
+          <a href="./serial/${escapeAttribute(serial.slug)}/index.html">${escapeHtml(serial.title)}</a>
+          <h1 id="chapter-title">Chapter One</h1>
+        </header>
+        <div class="serial-sample-prose">
+${renderSampleMarkdown(markdown)}
+        </div>
+        <div class="serial-sample-end">
+          <p>Continue reading <cite>${escapeHtml(serial.title)}</cite></p>
+          <a class="cta-button" href="${escapeAttribute(serial.archiveUrl)}" target="_blank" rel="noopener noreferrer">Read for free</a>
+        </div>
+      </article>
+${siteFooter(rootPrefix)}
+    </main>`;
+  return documentShell({ head, bodyClass: "detail-page serial-sample-page", content, rootPrefix, selectable: true });
 }
 
 function readerNavigation(serial, installment) {
@@ -411,6 +469,9 @@ function renderSitemapEntries(entries) {
     const lastmod = ordered.at(-1)?.published ?? serial.updated;
     urls.push([`${siteUrl}/serial/`, lastmod]);
     urls.push([`${siteUrl}${serialPath(serial)}`, lastmod]);
+    if (serial.samplePath && serial.sampleSource) {
+      urls.push([`${siteUrl}${serial.samplePath}`, serial.sampleUpdated || lastmod]);
+    }
     for (const installment of ordered) {
       urls.push([`${siteUrl}${installmentPath(serial, installment)}`, installment.published]);
     }
@@ -450,6 +511,10 @@ export async function generateSerialSite(entries = serials) {
 
   for (const serial of entries) {
     await writePage(`serial/${serial.slug}/index.html`, renderStoryHome(serial));
+    if (serial.samplePath && serial.sampleSource) {
+      const markdown = await readFile(resolve(root, serial.sampleSource), "utf8");
+      await writePage(serial.samplePath.replace(/^\//, ""), renderSamplePage(serial, markdown));
+    }
     for (const installment of orderedInstallments(serial)) {
       const sourcePath = resolve(root, installment.source);
       const manuscript = await readFile(sourcePath, "utf8");

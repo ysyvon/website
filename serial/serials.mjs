@@ -11,9 +11,15 @@ export const serials = [
     publicationSchedule: "New chapter every Friday",
     updated: "2026-08-28",
     metadataDescription:
-      "Eîra has been alone for eleven hundred years. Then she hears footsteps. How Long Things Hold is a science-fantasy novel about fragile memories and what refuses to be forgotten. Read the instalments for free in the archive.",
+      "Read How Long Things Hold, a free science-fantasy web serial by Ys Goldt about memory, loss, and an impossible meeting. Free sign-in gives access to the chapters.",
     archiveUrl: "https://buttondown.com/how-long-things-hold/archive",
     samplePath: "/sample-how-long-things-hold.html",
+    sampleSource: "serial/content/how-long-things-hold-chapter-one.md",
+    sampleUpdated: "2026-10-16",
+    relatedArticle: {
+      url: "https://ysgoldt.com/journal-posts/2026-10-15-untitled-95cbd233.html",
+      id: "https://ysgoldt.com/journal-posts/2026-10-15-untitled-95cbd233.html#article",
+    },
     blurb: [
       "For eleven hundred years, Eîra has lived alone among the ruins of a dead civilisation.",
       "She was made to remember it.",
