@@ -10,9 +10,9 @@
     ]
   },
   "publisher": {
-    "id": "https://ysgoldt.com/press.html#nachtljocht-press",
+    "id": "https://nachtljocht.com/#nachtljocht-press",
     "name": "Nachtljocht Press",
-    "url": "https://ysgoldt.com/press.html#nachtljocht-press"
+    "url": "https://nachtljocht.com/"
   },
   "works": [
     {
@@ -32,7 +32,7 @@
       "series": "Even if the Light Forgets",
       "volumeNumber": 1,
       "publicationDate": "2026-05-20",
-      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "publisherId": "https://nachtljocht.com/#nachtljocht-press",
       "sampleUrl": "https://ysgoldt.com/sample-even-if-the-light-forgets.html",
       "pressSheetUrl": "https://ysgoldt.com/assets/even-if-the-light-forgets-volume-i-pr-sheet.pdf",
       "sameAs": "https://openlibrary.org/works/OL45193142W",
@@ -73,7 +73,7 @@
       "series": "An Index of Vanishing",
       "volumeNumber": 1,
       "publicationDate": "2026-07-22",
-      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "publisherId": "https://nachtljocht.com/#nachtljocht-press",
       "sampleUrl": "https://ysgoldt.com/sample-an-index-of-vanishing.html",
       "pressSheetUrl": "https://ysgoldt.com/assets/an-index-of-vanishing-part-i-pr-sheet.pdf",
       "sameAs": "https://openlibrary.org/works/OL45737213W",
@@ -112,7 +112,7 @@
       "keywords": ["dark romantic fiction", "quiet devotion", "East Prussia 1935"],
       "language": "en",
       "publicationDate": "2026",
-      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "publisherId": "https://nachtljocht.com/#nachtljocht-press",
       "sampleUrl": "https://ysgoldt.com/sample-the-strange-mercy-of-listening.html",
       "pressSheetUrl": "https://ysgoldt.com/assets/the-strange-mercy-of-listening-pr-sheet.pdf",
       "sameAs": "https://openlibrary.org/works/OL44712610W",
@@ -199,7 +199,7 @@
       "genre": ["Literary short story", "Coastal fiction"],
       "language": "en",
       "publicationDate": "2026-11-06",
-      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "publisherId": "https://nachtljocht.com/#nachtljocht-press",
       "pressSheetUrl": "https://ysgoldt.com/assets/one-small-proof-pr-sheet.pdf",
       "editions": [
         {

@@ -82,11 +82,7 @@ await update("sitemap.xml", (xml) => {
 });
 
 await update("press.html", (html) => {
-  let next = replaceGeneratedBlock(html, "press-cards", catalogue.works.map(pressCard).join("\n"));
-  next = replaceGeneratedBlock(next, "publisher-jsonld", jsonLd([{
-    "@type": "Organization", "@id": catalogue.publisher.id, name: catalogue.publisher.name, url: catalogue.publisher.url,
-  }]));
-  return next;
+  return replaceGeneratedBlock(html, "press-cards", catalogue.works.map(pressCard).join("\n"));
 });
 
 console.log(check ? "Book metadata matches books.json." : "Synced book metadata from books.json.");

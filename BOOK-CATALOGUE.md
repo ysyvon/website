@@ -4,6 +4,8 @@
 
 The site is static. The scripts copy catalogue facts into checked-in HTML so readers and search crawlers see them immediately, without waiting for JavaScript. The homepage’s visible layout is unchanged; its existing JSON-LD list is generated from the catalogue. The Press page provides a readable directory of all seven works.
 
+The `publisher` record identifies Nachtljocht Press and links to its official site, `https://nachtljocht.com/`. Nachtljocht is also a quarterly literary journal there. Keep the publisher identity and the journal’s name distinct when updating book metadata.
+
 ## Ordinary updates
 
 1. Edit `books.json` with the new or corrected facts. Keep `id` values stable. Use full `https://ysgoldt.com/...` URLs for official destinations. `status` is `published`, `forthcoming`, or `ongoing`.

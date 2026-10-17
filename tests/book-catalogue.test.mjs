@@ -93,6 +93,14 @@ test("public HTML contains matching structured data and crawlable edition facts"
   }
   const press = await readFile(resolve(root, "press.html"), "utf8");
   for (const work of catalogue.works) assert.ok(press.includes(work.title), work.title);
+  assert.doesNotMatch(press, /id="nachtljocht-press"|publisher-jsonld/);
+  assert.equal(catalogue.publisher.url, "https://nachtljocht.com/");
+  for (const work of catalogue.works.filter((item) => item.publisherId)) {
+    assert.equal(work.publisherId, catalogue.publisher.id);
+    const page = work.id === "one-small-proof" ? "coming-soon.html" : new URL(work.canonicalUrl).pathname.slice(1) + "index.html";
+    const html = await readFile(resolve(root, page), "utf8");
+    assert.match(html, /href="https:\/\/nachtljocht\.com\/"[^>]*>Nachtljocht Press<\/a>/, page);
+  }
   for (const isbn of expected.keys()) {
     const work = catalogue.works.find((item) => item.editions.some((edition) => edition.isbn13 === isbn));
     const page = work.id === "one-small-proof" ? "coming-soon.html" : new URL(work.canonicalUrl).pathname.slice(1) + "index.html";
