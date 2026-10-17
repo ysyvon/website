@@ -35,6 +35,12 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Check Content Security Policies
         run: python3 scripts/check-csp.py
+      - name: Check book catalogue and generated pages
+        run: |
+          node scripts/sync-books.mjs --check
+          node scripts/generate-product-pages.mjs --check
+          node scripts/generate-serial.mjs --check
+          node --test tests/*.test.mjs
       - name: Prepare public site
         run: |
           mkdir -p _site

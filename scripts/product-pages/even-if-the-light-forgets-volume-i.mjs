@@ -23,66 +23,10 @@ export default String.raw`<!doctype html>
     <meta name="twitter:description" content="Nefra and Aurel travel through a ruined world of alchemy, hunted for an artefact neither fully understands. An adult fantasy romance by Ys Goldt.">
     <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg">
     <meta name="twitter:image:alt" content="Cover of Even if the Light Forgets — Volume I by Ys Goldt">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Book",
-        "@id": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/#work",
-        "name": "Even if the Light Forgets — Volume I",
-        "url": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
-        "mainEntityOfPage": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
-        "description": "An adult fantasy of alchemy, ruin, slow-burn romance, found family, and fragile hope.",
-        "image": "https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg",
-        "inLanguage": "en",
-        "genre": ["Adult fantasy", "Post-apocalyptic fiction", "Romance"],
-        "keywords": ["adult fantasy", "alchemy", "ruin", "slow burn romance", "found family", "fragile hope"],
-        "about": [
-          { "@type": "Thing", "name": "Memory" },
-          { "@type": "Thing", "name": "Devotion" },
-          { "@type": "Thing", "name": "Found family" }
-        ],
-        "author": {
-          "@type": "Person",
-          "@id": "https://ysgoldt.com/about.html#ys-goldt",
-          "name": "Ys Goldt",
-          "url": "https://ysgoldt.com/about.html"
-        },
-        "publisher": { "@type": "Organization", "name": "Nachtljocht Press", "url": "https://www.nachtljocht.com/" },
-        "sameAs": "https://openlibrary.org/works/OL45193142W",
-        "workExample": {
-          "@type": "Book",
-          "@id": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/#paperback",
-          "url": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
-          "sameAs": "https://openlibrary.org/books/OL61620204M",
-          "isbn": "9798996205202",
-          "numberOfPages": 298,
-          "bookEdition": "First Nachtljocht Press edition",
-          "bookFormat": "https://schema.org/Paperback",
-          "inLanguage": "en",
-          "datePublished": "2026"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ysgoldt.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Even if the Light Forgets — Volume I",
-            "item": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/"
-          }
-        ]
-      }
-    </script>
+    <!-- BOOKS-GENERATED:book-jsonld:START -->
+    <!-- BOOKS-GENERATED:book-jsonld:END -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:START -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:END -->
     <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../disable-context-menu.js" defer></script>
@@ -102,14 +46,10 @@ export default String.raw`<!doctype html>
             <span class="forthcoming-rating-star" aria-hidden="true">★</span>
             <span><strong>4.75</strong> stars on Goodreads</span>
           </a>
-          <div class="product-purchase-actions">
-            <a class="cta-button product-buy-button" href="https://ysgoldt.com/#!/Even-If-the-Light-Forgets-Volume-I-Digital-Edition/p/848382763">Digital Edition →</a>
-            <a class="cta-button product-buy-button" href="https://www.lulu.com/shop/ys-goldt/even-if-the-light-forgets-volume-i/paperback/product-w484jym.html?page=1&amp;pageSize=4" target="_blank" rel="noopener noreferrer">PRINT EDITION →</a>
-          </div>
-          <dl class="book-publication-details" aria-label="Print edition details">
-            <div><dt>Print length</dt><dd>298 pages</dd></div>
-            <div><dt>ISBN</dt><dd>9798996205202</dd></div>
-          </dl>
+          <!-- BOOKS-GENERATED:purchase-actions:START -->
+          <!-- BOOKS-GENERATED:purchase-actions:END -->
+          <!-- BOOKS-GENERATED:edition-facts:START -->
+          <!-- BOOKS-GENERATED:edition-facts:END -->
         </div>
       </article>
       <section class="product-about" aria-labelledby="even-if-about-title">

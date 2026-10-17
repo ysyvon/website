@@ -23,67 +23,10 @@ export default String.raw`<!doctype html>
     <meta name="twitter:description" content="An atmospheric historical novel set in East Prussia, 1935, where a quiet devotion becomes something far more dangerous.">
     <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/strange-mercy-digital.jpg">
     <meta name="twitter:image:alt" content="Cover of The Strange Mercy of Listening by Ys Goldt">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Book",
-        "@id": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/#work",
-        "name": "The Strange Mercy of Listening",
-        "url": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/",
-        "mainEntityOfPage": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/",
-        "description": "An atmospheric historical novel with a dark romantic core.",
-        "image": "https://ysgoldt.com/shop-assets/strange-mercy-digital.jpg",
-        "genre": ["Historical fiction", "Psychological fiction", "Literary romance"],
-        "keywords": ["atmospheric historical novel", "dark romantic fiction", "quiet devotion", "silence", "East Prussia 1935"],
-        "about": [
-          { "@type": "Thing", "name": "Devotion" },
-          { "@type": "Thing", "name": "Obsession" },
-          { "@type": "Thing", "name": "Silence" }
-        ],
-        "spatialCoverage": { "@type": "Place", "name": "East Prussia" },
-        "temporalCoverage": "1935",
-        "author": {
-          "@type": "Person",
-          "@id": "https://ysgoldt.com/about.html#ys-goldt",
-          "name": "Ys Goldt",
-          "url": "https://ysgoldt.com/about.html"
-        },
-        "publisher": { "@type": "Organization", "name": "Nachtljocht Press", "url": "https://www.nachtljocht.com/" },
-        "sameAs": "https://openlibrary.org/works/OL44712610W",
-        "workExample": {
-          "@type": "Book",
-          "@id": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/#paperback",
-          "url": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/",
-          "sameAs": "https://openlibrary.org/books/OL61060266M",
-          "isbn": "9798996205226",
-          "numberOfPages": 162,
-          "bookEdition": "First Nachtljocht Press edition",
-          "bookFormat": "https://schema.org/Paperback",
-          "inLanguage": "en",
-          "datePublished": "2026"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ysgoldt.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "The Strange Mercy of Listening",
-            "item": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/"
-          }
-        ]
-      }
-    </script>
+    <!-- BOOKS-GENERATED:book-jsonld:START -->
+    <!-- BOOKS-GENERATED:book-jsonld:END -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:START -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:END -->
     <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../disable-context-menu.js" defer></script>
@@ -103,14 +46,10 @@ export default String.raw`<!doctype html>
             <span class="forthcoming-rating-star" aria-hidden="true">★</span>
             <span><strong>5</strong> stars on Goodreads</span>
           </a>
-          <div class="product-purchase-actions">
-            <a class="cta-button product-buy-button" href="https://ysgoldt.com/#!/The-Strange-Mercy-of-Listening-Digital-Edition/p/848382842">Digital Edition →</a>
-            <a class="cta-button product-buy-button" href="https://www.lulu.com/shop/ys-goldt/the-strange-mercy-of-listening/paperback/product-65kw6wg.html?page=1&amp;pageSize=4" target="_blank" rel="noopener noreferrer">PRINT EDITION →</a>
-          </div>
-          <dl class="book-publication-details" aria-label="Print edition details">
-            <div><dt>Print length</dt><dd>162 pages</dd></div>
-            <div><dt>ISBN</dt><dd>9798996205226</dd></div>
-          </dl>
+          <!-- BOOKS-GENERATED:purchase-actions:START -->
+          <!-- BOOKS-GENERATED:purchase-actions:END -->
+          <!-- BOOKS-GENERATED:edition-facts:START -->
+          <!-- BOOKS-GENERATED:edition-facts:END -->
         </div>
       </article>
       <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>

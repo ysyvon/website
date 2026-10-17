@@ -23,53 +23,10 @@ export default String.raw`<!doctype html>
     <meta name="twitter:description" content="A contemporary poetry collection by Ys Goldt about grief, longing, love, memory, and the moments that resist being named.">
     <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/shelves-of-memory-digital.jpg">
     <meta name="twitter:image:alt" content="Cover of Shelves of Memory by Ys Goldt">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Book",
-        "@id": "https://ysgoldt.com/shop/shelves-of-memory-digital/#book",
-        "name": "Shelves of Memory",
-        "url": "https://ysgoldt.com/shop/shelves-of-memory-digital/",
-        "mainEntityOfPage": "https://ysgoldt.com/shop/shelves-of-memory-digital/",
-        "description": "A contemporary poetry collection about grief, longing, love, memory, and the moments that resist being named.",
-        "image": "https://ysgoldt.com/shop-assets/shelves-of-memory-digital.jpg",
-        "genre": ["Poetry", "Contemporary poetry"],
-        "keywords": ["poetry collection", "grief", "longing", "love", "memory", "letters"],
-        "about": [
-          { "@type": "Thing", "name": "Grief" },
-          { "@type": "Thing", "name": "Longing" },
-          { "@type": "Thing", "name": "Memory" }
-        ],
-        "author": {
-          "@type": "Person",
-          "@id": "https://ysgoldt.com/about.html#ys-goldt",
-          "name": "Ys Goldt",
-          "url": "https://ysgoldt.com/about.html"
-        },
-        "numberOfPages": 32,
-        "inLanguage": "en"
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ysgoldt.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Shelves of Memory",
-            "item": "https://ysgoldt.com/shop/shelves-of-memory-digital/"
-          }
-        ]
-      }
-    </script>
+    <!-- BOOKS-GENERATED:book-jsonld:START -->
+    <!-- BOOKS-GENERATED:book-jsonld:END -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:START -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:END -->
     <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../disable-context-menu.js" defer></script>
@@ -84,10 +41,10 @@ export default String.raw`<!doctype html>
           <h1>Shelves of Memory</h1>
           <p class="product-landing-description">Poems for the moments you cannot name aloud, the faces you still search for, and the letters you are still waiting to receive.</p>
           <p>A 32-page collection living in the quiet spaces between grief, longing, and love.</p>
-          <div class="product-purchase-actions">
-            <a class="cta-button product-buy-button" href="https://ysgoldt.com/#!/Shelves-of-Memory-Digital-Edition/p/848382898">Digital Edition →</a>
-            <span class="cta-button product-coming-soon" aria-disabled="true">Print Edition Coming Soon</span>
-          </div>
+          <!-- BOOKS-GENERATED:purchase-actions:START -->
+          <!-- BOOKS-GENERATED:purchase-actions:END -->
+          <!-- BOOKS-GENERATED:edition-facts:START -->
+          <!-- BOOKS-GENERATED:edition-facts:END -->
         </div>
       </article>
       <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>

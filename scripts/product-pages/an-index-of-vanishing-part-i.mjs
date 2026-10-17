@@ -23,68 +23,10 @@ export default String.raw`<!doctype html>
     <meta name="twitter:description" content="Tibet, 1938. Matthias Krüger is sent to observe Leise, a young woman the regime sees as a weapon. A slow-burn historical romance novella by Ys Goldt.">
     <meta name="twitter:image" content="https://ysgoldt.com/shop-assets/an-index-digital.jpg">
     <meta name="twitter:image:alt" content="Cover of An Index of Vanishing — Part I by Ys Goldt">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Book",
-        "@id": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/#work",
-        "name": "An Index of Vanishing — Part I",
-        "url": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
-        "mainEntityOfPage": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
-        "description": "A slow-burn historical romance about obsession, longing, and the cost of being seen, set in Tibet in 1938.",
-        "image": "https://ysgoldt.com/shop-assets/an-index-digital.jpg",
-        "inLanguage": "en",
-        "genre": ["Historical fiction", "Historical romance", "Literary fiction"],
-        "keywords": ["slow burn historical romance", "obsession", "longing", "the cost of being seen", "Tibet 1938"],
-        "about": [
-          { "@type": "Thing", "name": "Devotion" },
-          { "@type": "Thing", "name": "Obsession" },
-          { "@type": "Thing", "name": "The cost of being seen" }
-        ],
-        "spatialCoverage": { "@type": "Place", "name": "Tibet" },
-        "temporalCoverage": "1938",
-        "author": {
-          "@type": "Person",
-          "@id": "https://ysgoldt.com/about.html#ys-goldt",
-          "name": "Ys Goldt",
-          "url": "https://ysgoldt.com/about.html"
-        },
-        "publisher": { "@type": "Organization", "name": "Nachtljocht Press", "url": "https://www.nachtljocht.com/" },
-        "sameAs": "https://openlibrary.org/works/OL45737213W",
-        "workExample": {
-          "@type": "Book",
-          "@id": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/#paperback",
-          "url": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
-          "sameAs": "https://openlibrary.org/books/OL62262615M",
-          "isbn": "9798996205219",
-          "numberOfPages": 110,
-          "bookEdition": "First Nachtljocht Press edition",
-          "bookFormat": "https://schema.org/Paperback",
-          "inLanguage": "en",
-          "datePublished": "2026-07-22"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ysgoldt.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "An Index of Vanishing — Part I",
-            "item": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/"
-          }
-        ]
-      }
-    </script>
+    <!-- BOOKS-GENERATED:book-jsonld:START -->
+    <!-- BOOKS-GENERATED:book-jsonld:END -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:START -->
+    <!-- BOOKS-GENERATED:breadcrumbs-jsonld:END -->
     <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../disable-context-menu.js" defer></script>
@@ -104,14 +46,10 @@ export default String.raw`<!doctype html>
             <span class="forthcoming-rating-star" aria-hidden="true">★</span>
             <span><strong>4</strong> stars on Goodreads</span>
           </a>
-          <div class="product-purchase-actions">
-            <a class="cta-button product-buy-button" href="https://ysgoldt.com/#!/An-Index-of-Vanishing-Part-I-Digital-Edition/p/848367974">Digital Edition →</a>
-            <a class="cta-button product-buy-button" href="https://www.lulu.com/shop/ys-goldt/an-index-of-vanishing-part-i/paperback/product-65kjnd6.html?page=1&amp;pageSize=4" target="_blank" rel="noopener noreferrer">PRINT EDITION →</a>
-          </div>
-          <dl class="book-publication-details" aria-label="Print edition details">
-            <div><dt>Print length</dt><dd>110 pages</dd></div>
-            <div><dt>ISBN</dt><dd>9798996205219</dd></div>
-          </dl>
+          <!-- BOOKS-GENERATED:purchase-actions:START -->
+          <!-- BOOKS-GENERATED:purchase-actions:END -->
+          <!-- BOOKS-GENERATED:edition-facts:START -->
+          <!-- BOOKS-GENERATED:edition-facts:END -->
         </div>
       </article>
       <section class="product-about" aria-labelledby="an-index-about-title">

@@ -1,0 +1,246 @@
+{
+  "version": 1,
+  "author": {
+    "id": "https://ysgoldt.com/about.html#ys-goldt",
+    "name": "Ys Goldt",
+    "url": "https://ysgoldt.com/about.html",
+    "sameAs": [
+      "https://openlibrary.org/authors/OL16092713A/Ys_Goldt",
+      "https://www.goodreads.com/author/show/61776542.Ys_Goldt"
+    ]
+  },
+  "publisher": {
+    "id": "https://ysgoldt.com/press.html#nachtljocht-press",
+    "name": "Nachtljocht Press",
+    "url": "https://ysgoldt.com/press.html#nachtljocht-press"
+  },
+  "works": [
+    {
+      "id": "even-if-the-light-forgets-volume-i",
+      "title": "Even if the Light Forgets — Volume I",
+      "type": "Novel",
+      "status": "published",
+      "canonicalUrl": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+      "image": "https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg",
+      "imageType": "image/jpeg",
+      "imageWidth": 1604,
+      "imageHeight": 2560,
+      "description": "An adult fantasy of alchemy, ruin, slow-burn romance, found family, and fragile hope.",
+      "genre": ["Adult fantasy", "Post-apocalyptic fiction", "Romance"],
+      "keywords": ["alchemy", "slow-burn romance", "found family"],
+      "language": "en",
+      "series": "Even if the Light Forgets",
+      "volumeNumber": 1,
+      "publicationDate": "2026-05-20",
+      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "sampleUrl": "https://ysgoldt.com/sample-even-if-the-light-forgets.html",
+      "pressSheetUrl": "https://ysgoldt.com/assets/even-if-the-light-forgets-volume-i-pr-sheet.pdf",
+      "sameAs": "https://openlibrary.org/works/OL45193142W",
+      "editions": [
+        {
+          "id": "paperback",
+          "format": "Paperback",
+          "binding": "Paperback",
+          "isbn13": "9798996205202",
+          "pages": 298,
+          "publicationDate": "2026-05-20",
+          "canonicalUrl": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+          "purchaseUrl": "https://www.lulu.com/shop/ys-goldt/even-if-the-light-forgets-volume-i/paperback/product-w484jym.html?page=1&pageSize=4",
+          "sameAs": "https://openlibrary.org/books/OL61620204M"
+        },
+        {
+          "id": "digital",
+          "format": "Digital",
+          "canonicalUrl": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+          "purchaseUrl": "https://ysgoldt.com/#!/Even-If-the-Light-Forgets-Volume-I-Digital-Edition/p/848382763"
+        }
+      ]
+    },
+    {
+      "id": "an-index-of-vanishing-part-i",
+      "title": "An Index of Vanishing — Part I",
+      "type": "Novella",
+      "status": "published",
+      "canonicalUrl": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
+      "image": "https://ysgoldt.com/shop-assets/an-index-digital.jpg",
+      "imageType": "image/jpeg",
+      "imageWidth": 486,
+      "imageHeight": 800,
+      "description": "A slow-burn historical romance about obsession, longing, and the cost of being seen, set in Tibet in 1938.",
+      "genre": ["Historical fiction", "Historical romance", "Literary fiction"],
+      "keywords": ["slow-burn historical romance", "obsession", "Tibet 1938"],
+      "language": "en",
+      "series": "An Index of Vanishing",
+      "volumeNumber": 1,
+      "publicationDate": "2026-07-22",
+      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "sampleUrl": "https://ysgoldt.com/sample-an-index-of-vanishing.html",
+      "pressSheetUrl": "https://ysgoldt.com/assets/an-index-of-vanishing-part-i-pr-sheet.pdf",
+      "sameAs": "https://openlibrary.org/works/OL45737213W",
+      "editions": [
+        {
+          "id": "paperback",
+          "format": "Paperback",
+          "binding": "Paperback",
+          "isbn13": "9798996205219",
+          "pages": 110,
+          "publicationDate": "2026-07-22",
+          "canonicalUrl": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
+          "purchaseUrl": "https://www.lulu.com/shop/ys-goldt/an-index-of-vanishing-part-i/paperback/product-65kjnd6.html?page=1&pageSize=4",
+          "sameAs": "https://openlibrary.org/books/OL62262615M"
+        },
+        {
+          "id": "digital",
+          "format": "Digital",
+          "canonicalUrl": "https://ysgoldt.com/shop/an-index-of-vanishing-part-i/",
+          "purchaseUrl": "https://ysgoldt.com/#!/An-Index-of-Vanishing-Part-I-Digital-Edition/p/848367974"
+        }
+      ]
+    },
+    {
+      "id": "the-strange-mercy-of-listening",
+      "title": "The Strange Mercy of Listening",
+      "type": "Novel",
+      "status": "published",
+      "canonicalUrl": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/",
+      "image": "https://ysgoldt.com/shop-assets/strange-mercy-digital.jpg",
+      "imageType": "image/jpeg",
+      "imageWidth": 501,
+      "imageHeight": 800,
+      "description": "An atmospheric historical novel with a dark romantic core.",
+      "genre": ["Historical fiction", "Psychological fiction", "Literary romance"],
+      "keywords": ["dark romantic fiction", "quiet devotion", "East Prussia 1935"],
+      "language": "en",
+      "publicationDate": "2026",
+      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "sampleUrl": "https://ysgoldt.com/sample-the-strange-mercy-of-listening.html",
+      "pressSheetUrl": "https://ysgoldt.com/assets/the-strange-mercy-of-listening-pr-sheet.pdf",
+      "sameAs": "https://openlibrary.org/works/OL44712610W",
+      "editions": [
+        {
+          "id": "paperback",
+          "format": "Paperback",
+          "binding": "Paperback",
+          "isbn13": "9798996205226",
+          "pages": 162,
+          "publicationDate": "2026",
+          "canonicalUrl": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/",
+          "purchaseUrl": "https://www.lulu.com/shop/ys-goldt/the-strange-mercy-of-listening/paperback/product-65kw6wg.html?page=1&pageSize=4",
+          "sameAs": "https://openlibrary.org/books/OL61060266M"
+        },
+        {
+          "id": "digital",
+          "format": "Digital",
+          "canonicalUrl": "https://ysgoldt.com/shop/the-strange-mercy-of-listening/",
+          "purchaseUrl": "https://ysgoldt.com/#!/The-Strange-Mercy-of-Listening-Digital-Edition/p/848382842"
+        }
+      ]
+    },
+    {
+      "id": "shelves-of-memory",
+      "title": "Shelves of Memory",
+      "type": "Poetry collection",
+      "status": "published",
+      "canonicalUrl": "https://ysgoldt.com/shop/shelves-of-memory-digital/",
+      "image": "https://ysgoldt.com/shop-assets/shelves-of-memory-digital.jpg",
+      "imageType": "image/jpeg",
+      "imageWidth": 501,
+      "imageHeight": 800,
+      "description": "A contemporary poetry collection about grief, longing, love, memory, and the moments that resist being named.",
+      "genre": ["Poetry", "Contemporary poetry"],
+      "keywords": ["grief", "longing", "love", "memory"],
+      "language": "en",
+      "forthcomingFormats": ["Paperback"],
+      "editions": [
+        {
+          "id": "digital",
+          "format": "Digital",
+          "pages": 32,
+          "canonicalUrl": "https://ysgoldt.com/shop/shelves-of-memory-digital/",
+          "purchaseUrl": "https://ysgoldt.com/#!/Shelves-of-Memory-Digital-Edition/p/848382898"
+        }
+      ]
+    },
+    {
+      "id": "how-long-things-hold",
+      "title": "How Long Things Hold",
+      "type": "Serial novel",
+      "status": "ongoing",
+      "canonicalUrl": "https://ysgoldt.com/serial/how-long-things-hold/",
+      "image": "https://ysgoldt.com/serial/assets/how-long-things-hold-cover.jpg?v=20260828",
+      "imageType": "image/jpeg",
+      "imageWidth": 1410,
+      "imageHeight": 2250,
+      "description": "A free science-fantasy web serial about memory, loss, and an impossible meeting.",
+      "genre": ["Science fantasy"],
+      "language": "en",
+      "readUrl": "https://buttondown.com/how-long-things-hold/archive",
+      "sampleUrl": "https://ysgoldt.com/sample-how-long-things-hold.html",
+      "editions": [
+        {
+          "id": "web-serial",
+          "format": "Web serial",
+          "canonicalUrl": "https://ysgoldt.com/serial/how-long-things-hold/"
+        }
+      ]
+    },
+    {
+      "id": "one-small-proof",
+      "entityId": "https://ysgoldt.com/books.json#one-small-proof",
+      "title": "One Small Proof",
+      "type": "Short story",
+      "status": "forthcoming",
+      "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title",
+      "image": "https://ysgoldt.com/assets/one-small-proof-cover.jpg",
+      "imageType": "image/jpeg",
+      "imageWidth": 1604,
+      "imageHeight": 2560,
+      "description": "A quiet short story about grief, tenderness, and the strange ways a brief connection can outlast the people who made it.",
+      "genre": ["Literary short story", "Coastal fiction"],
+      "language": "en",
+      "publicationDate": "2026-11-06",
+      "publisherId": "https://ysgoldt.com/press.html#nachtljocht-press",
+      "pressSheetUrl": "https://ysgoldt.com/assets/one-small-proof-pr-sheet.pdf",
+      "editions": [
+        {
+          "id": "paperback",
+          "entityId": "https://ysgoldt.com/books.json#one-small-proof-paperback",
+          "format": "Paperback",
+          "binding": "Paperback",
+          "isbn13": "9798996205240",
+          "pages": 32,
+          "publicationDate": "2026-11-06",
+          "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title"
+        },
+        {
+          "id": "ebook",
+          "entityId": "https://ysgoldt.com/books.json#one-small-proof-ebook",
+          "format": "Ebook",
+          "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title"
+        },
+        {
+          "id": "pdf",
+          "entityId": "https://ysgoldt.com/books.json#one-small-proof-pdf",
+          "format": "PDF",
+          "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title"
+        }
+      ]
+    },
+    {
+      "id": "if-not-heaven",
+      "entityId": "https://ysgoldt.com/books.json#if-not-heaven",
+      "title": "If Not Heaven",
+      "type": "Book",
+      "status": "forthcoming",
+      "canonicalUrl": "https://ysgoldt.com/coming-soon.html#if-not-heaven-title",
+      "image": "https://ysgoldt.com/assets/if-not-heaven-cover.png",
+      "imageType": "image/png",
+      "imageWidth": 720,
+      "imageHeight": 1116,
+      "description": "An intimate historical romance about two lonely people who learn to be known, and what it costs to finally let someone in.",
+      "genre": ["Historical romance", "Historical fiction"],
+      "language": "en",
+      "editions": []
+    }
+  ]
+}

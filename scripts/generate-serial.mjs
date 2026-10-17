@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { serials } from "../serial/serials.mjs";
+import { bookGraph, catalogue, workById } from "./book-catalogue.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const root = resolve(dirname(scriptPath), "..");
@@ -66,6 +67,9 @@ export function validateSerials(entries) {
     }
     if (serialSlugs.has(serial.slug)) throw new Error(`Duplicate serial slug: ${serial.slug}`);
     serialSlugs.add(serial.slug);
+    if (workById(serial.slug).canonicalUrl !== `${siteUrl}${serialPath(serial)}`) {
+      throw new Error(`${serial.slug}: catalogue and serial destination differ`);
+    }
 
     if (!Array.isArray(serial.blurb) || serial.blurb.length === 0) {
       throw new Error(`${serial.title} requires a story-home blurb.`);
@@ -311,6 +315,9 @@ ${ordered
 export function renderStoryHome(serial) {
   const rootPrefix = "../../";
   const canonical = `${siteUrl}${serialPath(serial)}`;
+  const book = workById(serial.slug);
+  const graph = bookGraph(book);
+  if (serial.relatedArticle) graph[0].subjectOf = { "@type": "BlogPosting", "@id": serial.relatedArticle.id, url: serial.relatedArticle.url };
   const head = metadata({
     title: `${serial.title} | Free Science-Fantasy Web Serial`,
     description: serial.metadataDescription,
@@ -318,7 +325,7 @@ export function renderStoryHome(serial) {
     image: serial.socialImage,
     type: "book",
   }) + `\n${structuredData({ "@graph": [
-    { "@type": "Book", "@id": `${canonical}#book`, name: serial.title, url: canonical, description: serial.metadataDescription, image: serial.socialImage.url, author: { "@id": authorId }, genre: "Science fantasy", inLanguage: "en", ...(serial.relatedArticle ? { subjectOf: { "@type": "BlogPosting", "@id": serial.relatedArticle.id, url: serial.relatedArticle.url } } : {}) },
+    ...graph,
     breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`], [serial.title, canonical]]),
   ] })}`;
   const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
@@ -347,6 +354,7 @@ ${coverActions}
             <div class="serial-story-introduction">
               <p class="serial-status">${escapeHtml(serial.status)}</p>
               <h1>${escapeHtml(serial.title)}</h1>
+              <p class="book-inline-facts">By <a href="../../about.html">${escapeHtml(catalogue.author.name)}</a> · Free web serial · No ISBN listed</p>
               <div class="serial-story-blurb">
 ${blurb}
               </div>
@@ -488,7 +496,7 @@ function renderSitemapEntries(entries) {
     .join("\n");
 }
 
-async function updateSitemap(entries) {
+async function updateSitemap(entries, check = false) {
   const sitemapPath = resolve(root, "sitemap.xml");
   const sitemap = await readFile(sitemapPath, "utf8");
   const start = "  <!-- SERIAL-GENERATED:START -->";
@@ -497,24 +505,33 @@ async function updateSitemap(entries) {
   const next = sitemap.includes(start)
     ? sitemap.replace(new RegExp(`${start}[\\s\\S]*?${end}`), block)
     : sitemap.replace("</urlset>", `${block}\n</urlset>`);
-  await writeFile(sitemapPath, next);
+  if (check) {
+    if (sitemap !== next) throw new Error("sitemap.xml differs from the serial generator");
+  } else {
+    await writeFile(sitemapPath, next);
+  }
 }
 
-async function writePage(relativePath, html) {
+async function writePage(relativePath, html, check = false) {
   const target = resolve(root, relativePath);
-  await mkdir(dirname(target), { recursive: true });
-  await writeFile(target, html);
+  if (check) {
+    const published = await readFile(target, "utf8");
+    if (published !== html) throw new Error(`${relativePath} differs from the serial generator`);
+  } else {
+    await mkdir(dirname(target), { recursive: true });
+    await writeFile(target, html);
+  }
 }
 
-export async function generateSerialSite(entries = serials) {
+export async function generateSerialSite(entries = serials, { check = false } = {}) {
   validateSerials(entries);
-  await writePage("serial/index.html", renderSerialIndex(entries));
+  await writePage("serial/index.html", renderSerialIndex(entries), check);
 
   for (const serial of entries) {
-    await writePage(`serial/${serial.slug}/index.html`, renderStoryHome(serial));
+    await writePage(`serial/${serial.slug}/index.html`, renderStoryHome(serial), check);
     if (serial.samplePath && serial.sampleSource) {
       const markdown = await readFile(resolve(root, serial.sampleSource), "utf8");
-      await writePage(serial.samplePath.replace(/^\//, ""), renderSamplePage(serial, markdown));
+      await writePage(serial.samplePath.replace(/^\//, ""), renderSamplePage(serial, markdown), check);
     }
     for (const installment of orderedInstallments(serial)) {
       const sourcePath = resolve(root, installment.source);
@@ -528,16 +545,18 @@ export async function generateSerialSite(entries = serials) {
       await writePage(
         `serial/${serial.slug}/${installment.slug}/index.html`,
         renderInstallmentPage(serial, installment, manuscript),
+        check,
       );
     }
   }
 
-  await updateSitemap(entries);
+  await updateSitemap(entries, check);
 }
 
 const invokedPath = process.argv[1] ? pathToFileURL(resolve(process.argv[1])).href : "";
 if (import.meta.url === invokedPath) {
-  await generateSerialSite();
+  const check = process.argv.includes("--check");
+  await generateSerialSite(serials, { check });
   const installmentCount = serials.reduce((sum, serial) => sum + serial.installments.length, 0);
-  console.log(`Generated ${serials.length} serial and ${installmentCount} instalment page.`);
+  console.log(check ? "Serial pages match their generator." : `Generated ${serials.length} serial and ${installmentCount} instalment page.`);
 }

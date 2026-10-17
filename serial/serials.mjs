@@ -1,8 +1,12 @@
+import { workById } from "../scripts/book-catalogue.mjs";
+
+const book = workById("how-long-things-hold");
+
 export const serials = [
   {
     slug: "how-long-things-hold",
-    title: "How Long Things Hold",
-    status: "Ongoing",
+    title: book.title,
+    status: book.status === "ongoing" ? "Ongoing" : book.status,
     subtitle: "A novel in instalments",
     shelfDescription: [
       "The Vasentia were built to endure, to preserve, to remember, and to outlast humanity itself.",
@@ -10,10 +14,9 @@ export const serials = [
     ],
     publicationSchedule: "New chapter every Friday",
     updated: "2026-08-28",
-    metadataDescription:
-      "Read How Long Things Hold, a free science-fantasy web serial by Ys Goldt about memory, loss, and an impossible meeting. Free sign-in gives access to the chapters.",
-    archiveUrl: "https://buttondown.com/how-long-things-hold/archive",
-    samplePath: "/sample-how-long-things-hold.html",
+    metadataDescription: book.description,
+    archiveUrl: book.readUrl,
+    samplePath: new URL(book.sampleUrl).pathname,
     sampleSource: "serial/content/how-long-things-hold-chapter-one.md",
     sampleUpdated: "2026-10-16",
     relatedArticle: {
@@ -34,17 +37,17 @@ export const serials = [
       "What refuses to be forgotten?",
     ],
     cover: {
-      path: "/serial/assets/how-long-things-hold-cover.jpg?v=20260828",
+      path: new URL(book.image).pathname + new URL(book.image).search,
       alt: "Illustrated cover of How Long Things Hold showing Eîra seated on a tree branch beneath the title.",
-      width: 1410,
-      height: 2250,
+      width: book.imageWidth,
+      height: book.imageHeight,
     },
     socialImage: {
-      url: "https://ysgoldt.com/serial/assets/how-long-things-hold-cover.jpg?v=20260828",
+      url: book.image,
       alt: "Cover of How Long Things Hold by Ys Goldt, featuring white-haired Eîra seated on a tree branch",
-      type: "image/jpeg",
-      width: 1410,
-      height: 2250,
+      type: book.imageType,
+      width: book.imageWidth,
+      height: book.imageHeight,
     },
     installments: [],
   },

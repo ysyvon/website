@@ -15,7 +15,7 @@ def main():
     errors = []
     pages = sorted(ROOT.rglob("*.html"))
     for page in pages:
-        if ".git" in page.parts or "_site" in page.parts:
+        if any(part in page.parts for part in (".git", "_site", "node_modules")):
             continue
         html = page.read_text()
         policies = POLICY.findall(html)
