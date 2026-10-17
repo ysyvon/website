@@ -1636,7 +1636,12 @@ try {
 function readLibrary() {
   try {
     const value = JSON.parse(localStorage.getItem(LIBRARY_KEY) || "[]");
-    return Array.isArray(value) ? value.slice(0, 10) : [];
+    return Array.isArray(value)
+      ? value.filter((item) => item && typeof item.name === "string" &&
+          typeof item.mode === "string" && typeof item.scaleName === "string" &&
+          (typeof item.bpm === "string" || typeof item.bpm === "number") &&
+          Array.isArray(item.events)).slice(0, 10)
+      : [];
   } catch {
     return [];
   }
@@ -1691,7 +1696,11 @@ function renderLibrary() {
     row.className = "library-item";
     load.className = "library-load";
     remove.className = "library-delete";
-    load.innerHTML = `<strong>▶ ${item.name}</strong><small>${item.mode.toUpperCase()} · ${item.scaleName} · ${item.bpm} BPM</small>`;
+    const title = document.createElement("strong"),
+      details = document.createElement("small");
+    title.textContent = `▶ ${item.name}`;
+    details.textContent = `${item.mode.toUpperCase()} · ${item.scaleName} · ${item.bpm} BPM`;
+    load.append(title, details);
     load.onclick = () => loadSavedLoop(index);
     remove.textContent = "×";
     remove.title = "Delete saved loop";
