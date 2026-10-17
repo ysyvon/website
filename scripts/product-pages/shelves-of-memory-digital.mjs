@@ -2,6 +2,7 @@ export default String.raw`<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shelves of Memory | A Book by Ys Goldt</title>
     <meta name="description" content="A contemporary poetry collection by Ys Goldt about grief, longing, love, memory, and the moments that resist being named.">

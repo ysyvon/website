@@ -62,6 +62,7 @@ def render_page(source):
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chapter One | Even if the Light Forgets — Volume I by Ys Goldt</title>
     <meta name="description" content="Read Chapter One of Even if the Light Forgets — Volume I, an adult fantasy romance by Ys Goldt.">
