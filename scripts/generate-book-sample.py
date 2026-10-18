@@ -119,7 +119,7 @@ def render_page(source):
         </div>
       </article>
       <footer class="site-footer">
-        <p><a href="./press.html">Press</a> · <a href="./privacy-policy.html">Privacy Policy</a></p>
+        <p><a href="./privacy-policy.html">Privacy Policy</a></p>
         <p>©2026 Ys Goldt</p>
       </footer>
     </main>

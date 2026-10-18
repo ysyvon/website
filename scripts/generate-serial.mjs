@@ -214,7 +214,7 @@ function siteHero(titleTag = "h1") {
 
 function siteFooter(rootPrefix) {
   return `      <footer class="site-footer">
-        <p><a href="${rootPrefix}press.html">Press</a> · <a href="${rootPrefix}privacy-policy.html">Privacy Policy</a></p>
+        <p><a href="${rootPrefix}privacy-policy.html">Privacy Policy</a></p>
         <p>©2026 Ys Goldt</p>
       </footer>`;
 }
