@@ -24,8 +24,19 @@ const homeGraph = jsonLd([
   itemList(),
 ]);
 
+const catalogGrid = `<div class="books-grid">\n${catalogue.works.filter((work) => work.status === "published" && work.image).map((work) => {
+  const href = escapeHtml(localHref(work.canonicalUrl, "/index.html").replace(/\/$/, "/index.html"));
+  const cover = escapeHtml(localHref(work.image, "/index.html"));
+  return `  <article class="books-grid-card">
+    <a class="books-grid-card-link" href="${href}">
+      <img src="${cover}" alt="Cover of ${escapeHtml(work.title)} by Ys Goldt" width="${work.imageWidth}" height="${work.imageHeight}" loading="lazy">
+      <h2>${escapeHtml(work.title)}</h2>
+    </a>
+  </article>`;
+}).join("\n")}\n</div>`;
+
 for (const file of ["index.html", "books.html"]) {
-  await update(file, (html) => replaceGeneratedBlock(html, "page-jsonld", homeGraph));
+  await update(file, (html) => replaceGeneratedBlock(replaceGeneratedBlock(html, "page-jsonld", homeGraph), "catalog-grid", catalogGrid));
 }
 
 const authorGraph = jsonLd([{

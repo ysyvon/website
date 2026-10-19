@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-eval' 'sha256-8fIlYQKe+A3uU97vwzkwGii1D3UVtE88+VuRmCZpjdA=' 'sha256-o2rP/CaxztEGDYV64fyJhptBa0qhdBtRRof6Mcv8wR8=' https://app.ecwid.com https://*.cloudfront.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://*.cloudfront.net https://app.ecwid.com; img-src 'self' data: blob: https://*.cloudfront.net https://*.ecwid.com; font-src 'self' data: https://*.cloudfront.net; connect-src 'self' https://*.ecwid.com https://*.cloudfront.net https://*.stripe.com; frame-src https://*.ecwid.com https://*.stripe.com; form-action 'self' https://*.ecwid.com https://*.stripe.com; worker-src 'self' blob:">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'none'; form-action 'self'">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Books by Ys Goldt | Literary Fiction & Novellas</title>
     <meta name="description" content="Books by Ys Goldt, available in digital and print editions.">
@@ -102,7 +102,7 @@
 </script>
 <!-- BOOKS-GENERATED:page-jsonld:END -->
     <link rel="icon" type="image/png" href="./favicon.png?v=20260818">
-    <link rel="stylesheet" href="./styles.css?v=20261015-1">
+    <link rel="stylesheet" href="./styles.css?v=20261019-2">
     <script src="./disable-context-menu.js" defer></script>
   </head>
   <body class="books-page" data-disable-context-menu>
@@ -130,16 +130,35 @@
         <p>Digital and print editions by Ys Goldt.</p>
       </header>
 
-      <div class="books-catalog-navigation" data-books-catalog-navigation hidden>
-        <a class="books-back-to-catalog" href="./index.html">← Back to Catalog</a>
-      </div>
-
-      <div class="books-cart" aria-label="Shopping bag">
-        <div class="ec-cart-widget"></div>
-      </div>
-
       <section class="books-store" aria-label="Books by Ys Goldt">
-        <div id="my-store-139267004"></div>
+        <!-- BOOKS-GENERATED:catalog-grid:START -->
+<div class="books-grid">
+  <article class="books-grid-card">
+    <a class="books-grid-card-link" href="shop/even-if-the-light-forgets-volume-i/index.html">
+      <img src="shop-assets/even-if-the-light-forgets-generic.jpg" alt="Cover of Even if the Light Forgets — Volume I by Ys Goldt" width="1604" height="2560" loading="lazy">
+      <h2>Even if the Light Forgets — Volume I</h2>
+    </a>
+  </article>
+  <article class="books-grid-card">
+    <a class="books-grid-card-link" href="shop/an-index-of-vanishing-part-i/index.html">
+      <img src="shop-assets/an-index-digital.jpg" alt="Cover of An Index of Vanishing — Part I by Ys Goldt" width="486" height="800" loading="lazy">
+      <h2>An Index of Vanishing — Part I</h2>
+    </a>
+  </article>
+  <article class="books-grid-card">
+    <a class="books-grid-card-link" href="shop/the-strange-mercy-of-listening/index.html">
+      <img src="shop-assets/strange-mercy-digital.jpg" alt="Cover of The Strange Mercy of Listening by Ys Goldt" width="501" height="800" loading="lazy">
+      <h2>The Strange Mercy of Listening</h2>
+    </a>
+  </article>
+  <article class="books-grid-card">
+    <a class="books-grid-card-link" href="shop/shelves-of-memory-digital/index.html">
+      <img src="shop-assets/shelves-of-memory-digital.jpg" alt="Cover of Shelves of Memory by Ys Goldt" width="501" height="800" loading="lazy">
+      <h2>Shelves of Memory</h2>
+    </a>
+  </article>
+</div>
+<!-- BOOKS-GENERATED:catalog-grid:END -->
       </section>
 
       <footer class="site-footer">
@@ -148,75 +167,5 @@
       </footer>
     </main>
 
-    <script>
-      const ecwidDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-      const ecwidPalettes = {
-        light: {
-          'color-background': '#ffffff',
-          'color-foreground': '#111111',
-          'color-link': '#111111',
-          'color-button': '#111111',
-          'color-price': '#111111'
-        },
-        dark: {
-          'color-background': '#10100f',
-          'color-foreground': '#eeeeea',
-          'color-link': '#eeeeea',
-          'color-button': '#eeeeea',
-          'color-price': '#eeeeea'
-        }
-      };
-      let ecwidPaletteMode = ecwidDarkScheme.matches ? 'dark' : 'light';
-      let ecwidCheckoutNeedsLightPalette = false;
-
-      const updateEcwidDarkModePalette = (useLightCheckout = ecwidCheckoutNeedsLightPalette) => {
-        ecwidCheckoutNeedsLightPalette = useLightCheckout;
-        const nextMode = ecwidDarkScheme.matches && !useLightCheckout ? 'dark' : 'light';
-        document.body.classList.toggle('ecwid-light-checkout', ecwidDarkScheme.matches && useLightCheckout);
-        if (nextMode === ecwidPaletteMode) return;
-
-        ecwidPaletteMode = nextMode;
-        window.ec = window.ec || {};
-        window.ec.config = window.ec.config || {};
-        window.ec.config.chameleon = window.ec.config.chameleon || {};
-        window.ec.config.chameleon.colors = ecwidPalettes[nextMode];
-        window.Ecwid?.refreshConfig?.();
-      };
-
-      window.ec = window.ec || {};
-      window.ec.config = window.ec.config || {};
-      window.ec.config.chameleon = window.ec.config.chameleon || {};
-      window.ec.config.chameleon.colors = ecwidPalettes[ecwidPaletteMode];
-      ecwidDarkScheme.addEventListener('change', () => updateEcwidDarkModePalette());
-    </script>
-    <script data-cfasync="false" src="https://app.ecwid.com/script.js?139267004&amp;data_platform=code&amp;data_date=2026-07-24" charset="utf-8"></script>
-    <script src="./product-landing-links.js?v=20260724-1" defer></script>
-    <script>
-      Ecwid.OnAPILoaded.add(() => {
-        Ecwid.OnPageLoaded.add((page) => {
-          updateEcwidDarkModePalette(page.type === 'CHECKOUT_PAYMENT_DETAILS');
-        });
-      });
-
-      Ecwid.init();
-      xProductBrowser(
-        "categoriesPerRow=3",
-        "views=grid(20,3) list(60) table(60)",
-        "categoryView=grid",
-        "searchView=list",
-        "defaultCategoryId=203498829",
-        "id=my-store-139267004"
-      );
-
-      const catalogNavigation = document.querySelector('[data-books-catalog-navigation]');
-
-      const updateCatalogNavigation = () => {
-        if (!catalogNavigation) return;
-        catalogNavigation.hidden = !/\/p\/\d+/.test(window.location.hash);
-      };
-
-      window.addEventListener('hashchange', updateCatalogNavigation);
-      updateCatalogNavigation();
-    </script>
   </body>
 </html>

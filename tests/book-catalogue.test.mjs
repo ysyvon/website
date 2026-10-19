@@ -131,3 +131,22 @@ test("generated internal links and catalogue destinations resolve locally", asyn
   }
   assert.equal(localHref("https://ysgoldt.com/shop/shelves-of-memory-digital/", "/press.html"), "shop/shelves-of-memory-digital/");
 });
+
+test("the book grid is local and digital editions open the matching Ko-fi listings", async () => {
+  const listings = new Map([
+    ["even-if-the-light-forgets-volume-i", "https://ko-fi.com/s/fa8470f912"],
+    ["an-index-of-vanishing-part-i", "https://ko-fi.com/s/e6ff77dab8"],
+    ["the-strange-mercy-of-listening", "https://ko-fi.com/s/de7446af75"],
+    ["shelves-of-memory-digital", "https://ko-fi.com/s/d89808e9fb"],
+  ]);
+  for (const file of ["index.html", "books.html"]) {
+    const html = await readFile(resolve(root, file), "utf8");
+    assert.equal(html.match(/class="books-grid-card"/g)?.length, listings.size);
+    assert.doesNotMatch(html, /app\.ecwid\.com|xProductBrowser|ec-cart-widget/);
+    for (const slug of listings.keys()) assert.match(html, new RegExp(`href="shop/${slug}/index\\.html"`));
+  }
+  for (const [slug, url] of listings) {
+    const html = await readFile(resolve(root, "shop", slug, "index.html"), "utf8");
+    assert.ok(html.includes(`href="${url}" target="_blank" rel="noopener noreferrer"`), slug);
+  }
+});

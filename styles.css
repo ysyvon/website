@@ -130,38 +130,6 @@ button {
   font-size: 12px;
 }
 
-.books-cart {
-  display: flex;
-  justify-content: flex-end;
-  min-height: 42px;
-  margin: 0 0 12px;
-}
-
-.books-catalog-navigation {
-  width: 100%;
-  margin: 4px 0 16px;
-}
-
-.books-catalog-navigation[hidden] {
-  display: none;
-}
-
-.books-back-to-catalog {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  padding: 0 14px;
-  border: 1px solid var(--line-strong);
-  background: var(--button-bg);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.books-back-to-catalog:hover {
-  background: var(--button-hover);
-}
-
 .books-store {
   width: 100%;
   min-height: 360px;
@@ -170,155 +138,63 @@ button {
   border-bottom: 1px solid var(--line);
 }
 
-#my-store-139267004,
-#my-store-139267004 * {
-  font-family: inherit !important;
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px 24px;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 
-.books-page #my-store-139267004 .ec-page-title,
-.books-page #my-store-139267004 .ec-breadcrumbs {
-  display: none !important;
+.books-grid-card {
+  min-width: 0;
+  text-align: center;
 }
 
-.books-page #my-store-139267004 .grid__products {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
+.books-grid-card-link {
+  display: block;
 }
 
-.books-page #my-store-139267004 .grid-product {
-  flex: 0 1 280px !important;
-  width: 280px !important;
-  max-width: 100% !important;
+.books-grid-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 8;
+  margin: 0 auto 14px;
+  object-fit: contain;
 }
 
-.books-page #my-store-139267004 .grid-product__price {
-  display: none !important;
+.books-grid-card h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
-.books-page #my-store-139267004 .grid-product__wrap,
-.books-page #my-store-139267004 .grid-product__wrap-inner,
-.books-page #my-store-139267004 .grid-product__image,
-.books-page #my-store-139267004 .grid-product__image-wrap {
-  width: 100% !important;
-}
-
-.books-page #my-store-139267004 .grid-product,
-.books-page #my-store-139267004 .grid-product:hover,
-.books-page #my-store-139267004 .grid-product__wrap,
-.books-page #my-store-139267004 .grid-product__wrap:hover,
-.books-page #my-store-139267004 .grid-product__image,
-.books-page #my-store-139267004 .grid-product__image:hover,
-.books-page #my-store-139267004 .grid-product__image-wrap,
-.books-page #my-store-139267004 .grid-product__image-wrap:hover,
-.books-page #my-store-139267004 .grid-product__picture,
-.books-page #my-store-139267004 .grid-product__picture:hover {
-  transform: none !important;
-  transition: none !important;
-  animation: none !important;
-}
-
-.books-page #my-store-139267004 .details-gallery__image-wrapper {
-  width: min(100%, 340px) !important;
-  margin-right: auto !important;
-  margin-left: auto !important;
-}
-
-.books-page #my-store-139267004 .details-gallery__images-zoom {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  background-image: none !important;
-}
-
-.books-page #my-store-139267004 .product-details__general-info > .product-details-module__title {
-  display: none !important;
-}
-
-@media (min-width: 721px) {
-  .books-page #my-store-139267004 .product-details__gallery,
-  .books-page #my-store-139267004 .product-details__description {
-    width: 42% !important;
-  }
-
-  .books-page #my-store-139267004 .product-details__sidebar {
-    width: 54% !important;
-  }
-
-  .books-page #my-store-139267004 .details-gallery__wrap,
-  .books-page #my-store-139267004 .details-gallery__wrap-inner,
-  .books-page #my-store-139267004 .details-gallery__images,
-  .books-page #my-store-139267004 .details-gallery__images-container,
-  .books-page #my-store-139267004 .details-gallery__images-carousel,
-  .books-page #my-store-139267004 .details-gallery__image {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-  }
-}
-
-.books-page #my-store-139267004 .details-gallery__image-wrapper-inner,
-.books-page #my-store-139267004 .details-gallery__main-image-wrapper {
-  width: 100% !important;
-  height: auto !important;
-}
-
-.books-page #my-store-139267004 .details-gallery__picture {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  max-height: none !important;
-  object-fit: contain !important;
-}
-
-.books-page #my-store-139267004 .details-gallery__main-image-wrapper,
-.books-page #my-store-139267004 .details-gallery__image-wrapper-inner,
-.books-page #my-store-139267004 .details-gallery__picture {
-  cursor: default !important;
-  pointer-events: none !important;
-  transform: none !important;
+.books-grid-card-link:hover h2,
+.books-grid-card-link:focus-visible h2 {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 @media (prefers-color-scheme: dark) {
-  .books-page.ecwid-light-checkout #my-store-139267004 {
-    color-scheme: light;
-    background: #ffffff;
-  }
-
-  .books-page #my-store-139267004 .grid-product__picture {
-    opacity: 1;
-    filter: none;
-  }
-
-  .books-page #my-store-139267004 .grid-product__image {
-    position: relative !important;
-  }
-
-  .books-page #my-store-139267004 .grid-product__image::after {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    content: "";
-    pointer-events: none;
-    background: rgba(16, 16, 15, 0.28);
-  }
-
-  .books-page #my-store-139267004 .details-gallery__picture {
-    opacity: 1;
+  .books-grid-card img {
     filter: brightness(0.72) contrast(0.94);
   }
 }
 
-.books-page #my-store-139267004 .details-gallery__image,
-.books-page #my-store-139267004 .details-gallery__image:hover,
-.books-page #my-store-139267004 .details-gallery__image *,
-.books-page #my-store-139267004 .details-gallery__picture:hover {
-  cursor: default !important;
-  pointer-events: none !important;
-  transform: none !important;
-  transition: none !important;
-  animation: none !important;
-  background-size: contain !important;
+@media (max-width: 900px) {
+  .books-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 600px) {
+  .books-grid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 280px;
+  }
 }
 
 .hero {
@@ -1465,11 +1341,6 @@ img {
 .book-reviews {
   width: min(100%, 680px);
   margin: 44px auto 0;
-}
-
-#my-store-139267004,
-#my-store-139267004 * {
-  font-family: inherit !important;
 }
 
 .sample-section h2::after {
