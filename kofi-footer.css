@@ -1,0 +1,60 @@
+footer .kofi-footer {
+  display: block;
+  margin-top: 14px;
+  text-align: center;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+footer .kofi-footer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 40px;
+  min-width: 160px;
+  padding: 2px 12px;
+  border-radius: 7px;
+  background: #000;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+  color: #fff !important;
+  font: 700 14px/36px Helvetica, Arial, sans-serif;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+footer .kofi-footer-button:hover,
+footer .kofi-footer-button:focus-visible {
+  opacity: .85;
+  color: #fff !important;
+}
+
+footer .kofi-footer-button img {
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+  margin-right: 5px;
+  border: 0;
+  object-fit: contain;
+}
+
+footer.standalone-site-footer {
+  flex-wrap: wrap;
+}
+
+footer.standalone-site-footer .kofi-footer {
+  flex-basis: 100%;
+}
+
+footer.kofi-compact-footer {
+  height: auto;
+  min-height: 36px;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+footer.kofi-compact-footer .kofi-footer {
+  margin-top: 0;
+}

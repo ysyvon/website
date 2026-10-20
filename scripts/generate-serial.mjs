@@ -174,6 +174,7 @@ function documentShell({ head, bodyClass, content, rootPrefix, selectable = fals
 ${head}
     <link rel="icon" type="image/png" href="${rootPrefix}favicon.png?v=20260818">
     <link rel="stylesheet" href="${rootPrefix}styles.css">
+    <link rel="stylesheet" href="${rootPrefix}kofi-footer.css">
     <script src="${rootPrefix}disable-context-menu.js" defer></script>
   </head>
   <body class="${escapeAttribute(bodyClass)}" data-disable-context-menu${selectable ? "" : " data-disable-selection"}>
@@ -216,6 +217,7 @@ function siteFooter(rootPrefix) {
   return `      <footer class="site-footer">
         <p><a href="${rootPrefix}privacy-policy.html">Privacy Policy</a></p>
         <p>©2026 Ys Goldt</p>
+        <div class="kofi-footer"><a class="kofi-footer-button" href="https://ko-fi.com/V7P6292FJW" target="_blank" rel="noopener noreferrer"><img src="${rootPrefix}assets/kofi-cup-border.png" alt="" aria-hidden="true">Support me on Ko-fi</a></div>
       </footer>`;
 }
 

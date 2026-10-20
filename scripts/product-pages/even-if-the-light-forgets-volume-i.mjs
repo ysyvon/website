@@ -29,6 +29,7 @@ export default String.raw`<!doctype html>
     <!-- BOOKS-GENERATED:breadcrumbs-jsonld:END -->
     <link rel="icon" type="image/png" href="../../favicon.png?v=20260818">
     <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../kofi-footer.css">
     <script src="../../disable-context-menu.js" defer></script>
   </head>
   <body class="product-landing-page" data-disable-context-menu>
@@ -58,7 +59,7 @@ export default String.raw`<!doctype html>
         <p>Then she meets Aurel, known as Half-Made: part flesh, part crystal, and carrying an artefact that has drawn the attention of Körperlicht. Their uneasy alliance becomes harder to leave behind as they travel through a world of alchemy, grief, and dangerous faith.</p>
         <p><em>Even if the Light Forgets</em> is a character-driven adult fantasy novel with a slow-burn romance, found family, and a ruined world to cross.</p>
       </section>
-      <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p></footer>
+      <footer class="site-footer"><p><a href="https://ysgoldt.com/privacy-policy.html">Privacy Policy</a></p><p>©2026 Ys Goldt</p><div class="kofi-footer"><a class="kofi-footer-button" href="https://ko-fi.com/V7P6292FJW" target="_blank" rel="noopener noreferrer"><img src="../../assets/kofi-cup-border.png" alt="" aria-hidden="true">Support me on Ko-fi</a></div></footer>
     </main>
   </body>
 </html>
