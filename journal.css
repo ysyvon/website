@@ -74,11 +74,11 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .skip-link { position: absolute; top: -100px; left: 12px; z-index: 10; padding: 10px; background: var(--fg); color: var(--bg); font: 12px var(--mono); }
 .skip-link:focus { top: 12px; }
 
-.masthead { max-width: 1200px; margin: 0 auto; padding: 52px 20px 0; text-align: center; font-family: var(--mono); }
+.masthead { max-width: 1200px; margin: 0 auto; padding: 20px 20px 0; text-align: center; font-family: var(--mono); }
 .site-name { display: block; font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace; font-size: clamp(34px, 6.5vw, 48px); font-weight: 300; letter-spacing: .16em; line-height: 1.05; text-transform: uppercase; }
-.masthead p { margin: 4px 0 0; color: var(--muted); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
-.site-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; width: min(100%, 680px); margin: 18px auto 0; padding-top: 6px; border-bottom: 1px solid var(--line); }
-.site-tabs a { position: relative; padding: 0 0 13px; color: var(--muted); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; }
+.masthead p { margin: 7px 0 0; color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.site-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 22px; width: min(100%, 780px); margin: 22px auto 0; border-bottom: 1px solid var(--line); }
+.site-tabs a { position: relative; padding: 0 0 13px; color: var(--muted); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; }
 .site-tabs a:hover, .site-tabs a.active { color: var(--fg); }
 .site-tabs a.active::after { content: ""; position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: var(--fg); }
 .study-nav { display: flex; align-items: center; gap: 4px; width: min(calc(100% - 40px), 1200px); margin: 16px auto 0; font: 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
@@ -88,10 +88,8 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 .theme-button { margin-left: 10px; padding: 7px 9px; border: 1px solid var(--line); background: var(--paper); color: var(--fg); font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
 .theme-button:hover { border-color: var(--line-strong); }
 .eyebrow { font: 600 10px/1.6 var(--mono); letter-spacing: .15em; text-transform: uppercase; }
-.footer { width: min(calc(100% - 40px), 520px); margin: 72px auto 0; padding: 0 0 96px; color: var(--muted); font: 11px/1.7 var(--mono); text-align: center; letter-spacing: .08em; text-transform: uppercase; }
-.footer p { margin: 0; }
-.footer p + p { margin-top: 8px; }
-.footer a { text-decoration: underline; text-underline-offset: 2px; }
+.footer { display: flex; justify-content: space-between; gap: 20px; width: min(calc(100% - 40px), 1200px); margin: 72px auto 0; padding: 18px 0 32px; border-top: 1px solid var(--line); color: var(--muted); font: 10px/1.5 var(--mono); letter-spacing: .05em; }
+.footer a { text-decoration: underline; text-underline-offset: 3px; }
 
 /* Comparison page */
 .compare-shell { width: min(calc(100% - 40px), 1120px); margin: 62px auto 0; }
@@ -296,7 +294,7 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
 }
 
 @media (max-width: 680px) {
-  .masthead { padding: 46px 12px 0; }
+  .masthead { padding: 17px 12px 0; }
   .site-tabs { gap: 0 16px; max-width: 390px; }
   .site-tabs a { padding-bottom: 9px; font-size: 10px; }
   .study-nav { flex-wrap: wrap; width: calc(100% - 24px); }
@@ -332,7 +330,7 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--fg); outline-o
   .full-entry { margin-top: 55px; }
   .entry-prose { font-size: 18px; line-height: 1.72; }
   .entry-figure { margin-top: 36px; margin-bottom: 40px; }
-  .footer { width: calc(100% - 32px); margin-top: 64px; padding-bottom: 80px; }
+  .footer { width: calc(100% - 32px); flex-direction: column; gap: 8px; margin-top: 50px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
