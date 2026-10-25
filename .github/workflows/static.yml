@@ -48,7 +48,7 @@ jobs:
           mkdir -p _site
           rsync -a --exclude='.*' --exclude='_site/' --exclude='scripts/' --exclude='tests/' --exclude='*.md' --exclude='*.mjs' --exclude='*.py' --exclude='journal-export.json' ./ _site/
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '_site'
       - name: Deploy to GitHub Pages
