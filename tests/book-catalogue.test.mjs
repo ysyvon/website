@@ -15,7 +15,7 @@ const expected = new Map([
   ["9798996205202", "/shop/even-if-the-light-forgets-volume-i/"],
   ["9798996205219", "/shop/an-index-of-vanishing-part-i/"],
   ["9798996205226", "/shop/the-strange-mercy-of-listening/"],
-  ["9798996205240", "/coming-soon.html#one-small-proof-title"],
+  ["9798996205240", "/shop/one-small-proof/"],
 ]);
 
 test("catalogue has all seven works and valid unique edition ISBNs", () => {
@@ -60,7 +60,7 @@ test("lookup rejects external and recursive destinations", () => {
   assert.equal(lookup.resolveIsbn(poisoned, "9798996205202", origin), null);
 });
 
-test("ISBN-less works and unavailable purchases remain distinct", () => {
+test("ISBN-less works and available purchases remain distinct", () => {
   const shelves = catalogue.works.find((work) => work.id === "shelves-of-memory");
   const serial = catalogue.works.find((work) => work.id === "how-long-things-hold");
   const heaven = catalogue.works.find((work) => work.id === "if-not-heaven");
@@ -68,7 +68,7 @@ test("ISBN-less works and unavailable purchases remain distinct", () => {
   assert.equal(serial.editions[0].isbn13, undefined);
   assert.deepEqual(heaven.editions, []);
   const proof = catalogue.works.find((work) => work.id === "one-small-proof");
-  assert.equal(proof.editions[0].purchaseUrl, undefined);
+  assert.equal(proof.editions[0].purchaseUrl, "https://www.lulu.com/shop/ys-goldt/one-small-proof/paperback/product-je8nq5p.html?page=1&pageSize=4");
   assert.equal(lookup.resolveIsbn(catalogue, proof.editions[0].isbn13, origin).destination, proof.canonicalUrl);
   assert.equal(bookGraph(serial).some((node) => node["@type"] === "Product"), false);
 });
@@ -93,17 +93,20 @@ test("public HTML contains matching structured data and crawlable edition facts"
   }
   const press = await readFile(resolve(root, "press.html"), "utf8");
   for (const work of catalogue.works) assert.ok(press.includes(work.title), work.title);
+  const comingSoon = await readFile(resolve(root, "coming-soon.html"), "utf8");
+  assert.match(comingSoon, /<h2 class="forthcoming-title" id="if-not-heaven-title">/);
+  assert.doesNotMatch(comingSoon, /One Small Proof|one-small-proof/);
   assert.doesNotMatch(press, /id="nachtljocht-press"|publisher-jsonld/);
   assert.equal(catalogue.publisher.url, "https://nachtljocht.com/");
   for (const work of catalogue.works.filter((item) => item.publisherId)) {
     assert.equal(work.publisherId, catalogue.publisher.id);
-    const page = work.id === "one-small-proof" ? "coming-soon.html" : new URL(work.canonicalUrl).pathname.slice(1) + "index.html";
+    const page = new URL(work.canonicalUrl).pathname.slice(1) + "index.html";
     const html = await readFile(resolve(root, page), "utf8");
     assert.match(html, /href="https:\/\/nachtljocht\.com\/"[^>]*>Nachtljocht Press<\/a>/, page);
   }
   for (const isbn of expected.keys()) {
     const work = catalogue.works.find((item) => item.editions.some((edition) => edition.isbn13 === isbn));
-    const page = work.id === "one-small-proof" ? "coming-soon.html" : new URL(work.canonicalUrl).pathname.slice(1) + "index.html";
+    const page = new URL(work.canonicalUrl).pathname.slice(1) + "index.html";
     const html = await readFile(resolve(root, page), "utf8");
     assert.match(html.slice(html.indexOf("<body")), new RegExp(isbn), page);
   }
@@ -138,10 +141,12 @@ test("the book grid is local and digital editions open the matching Ko-fi listin
     ["an-index-of-vanishing-part-i", "https://ko-fi.com/s/e6ff77dab8"],
     ["the-strange-mercy-of-listening", "https://ko-fi.com/s/de7446af75"],
     ["shelves-of-memory-digital", "https://ko-fi.com/s/d89808e9fb"],
+    ["one-small-proof", "https://ko-fi.com/s/aaafde10ae"],
   ]);
   for (const file of ["index.html", "books.html"]) {
     const html = await readFile(resolve(root, file), "utf8");
     assert.equal(html.match(/class="books-grid-card"/g)?.length, listings.size);
+    assert.match(html, /<div class="books-grid">\s*<article class="books-grid-card">\s*<a class="books-grid-card-link" href="shop\/one-small-proof\/index\.html">/);
     assert.doesNotMatch(html, /app\.ecwid\.com|xProductBrowser|ec-cart-widget/);
     for (const slug of listings.keys()) assert.match(html, new RegExp(`href="shop/${slug}/index\\.html"`));
   }

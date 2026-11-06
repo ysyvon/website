@@ -2,7 +2,7 @@
 
 `books.json` is the public source of truth for Ys Goldt’s book and serial bibliography. Each item in `works` describes a literary work; its `editions` array describes formats. Put an ISBN only on the edition to which it belongs. An ISBN-less edition still has a stable `id` and `canonicalUrl`. Leave unknown facts out rather than guessing.
 
-The site is static. The scripts copy catalogue facts into checked-in HTML so readers and search crawlers see them immediately, without waiting for JavaScript. The homepage and `books.html` show a generated cover grid for published works; their JSON-LD lists are generated from the catalogue. The Press page provides a readable directory of all seven works.
+The site is static. The scripts copy catalogue facts into checked-in HTML so readers and search crawlers see them immediately, without waiting for JavaScript. The homepage and `books.html` show a generated cover grid for published works; set `storefrontPriority` above zero to place a work before the default catalogue order. Their JSON-LD lists are generated from the catalogue. The Press page provides a readable directory of all seven works.
 
 The `publisher` record identifies Nachtljocht Press and links to its official site, `https://nachtljocht.com/`. Nachtljocht is also a quarterly literary journal there. Keep the publisher identity and the journal’s name distinct when updating book metadata.
 
@@ -16,9 +16,9 @@ The `publisher` record identifies Nachtljocht Press and links to its official si
 
 The existing product-page templates under `scripts/product-pages/` hold presentation and prose. Their Book JSON-LD, edition facts, and purchase actions are generated from `books.json`. For a new product landing page, add a template and its slug to `scripts/generate-product-pages.mjs`, then add the canonical page to `sitemap.xml`. Keep the old announcement link or anchor pointing readers to the new page.
 
-### One Small Proof on release
+### One Small Proof
 
-Its current official destination is `https://ysgoldt.com/coming-soon.html#one-small-proof-title`. The verified ISBN `9798996205240` belongs to the paperback; the ebook and PDF have no verified ISBN. When the book is released, first create or identify its real official landing and purchase URLs. In `books.json`, change the work `status` to `published`, change the work and paperback `canonicalUrl` to the new official landing page, and add a verified `purchaseUrl` to the appropriate edition. Generate and check the site. The existing Coming Soon anchor will gain a link to the new official page, and the sitemap will list that new canonical URL. Do not point the paperback ISBN at a digital-only purchase page. The confirmed paperback length is 32 pages.
+The official destination is `https://ysgoldt.com/shop/one-small-proof/`. The verified ISBN `9798996205240` belongs to the 32-page paperback; the ebook and PDF have no verified ISBN. The paperback purchase link goes to Lulu and the ebook link goes to Ko-fi.
 
 ## ISBN lookup and LibraryThing
 

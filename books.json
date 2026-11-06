@@ -189,8 +189,9 @@
       "entityId": "https://ysgoldt.com/books.json#one-small-proof",
       "title": "One Small Proof",
       "type": "Short story",
-      "status": "forthcoming",
-      "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title",
+      "status": "published",
+      "storefrontPriority": 1,
+      "canonicalUrl": "https://ysgoldt.com/shop/one-small-proof/",
       "image": "https://ysgoldt.com/assets/one-small-proof-cover.jpg",
       "imageType": "image/jpeg",
       "imageWidth": 1604,
@@ -201,6 +202,7 @@
       "publicationDate": "2026-11-06",
       "publisherId": "https://nachtljocht.com/#nachtljocht-press",
       "pressSheetUrl": "https://ysgoldt.com/assets/one-small-proof-pr-sheet.pdf",
+      "sameAs": "https://www.goodreads.com/book/show/258599226-one-small-proof",
       "editions": [
         {
           "id": "paperback",
@@ -210,19 +212,21 @@
           "isbn13": "9798996205240",
           "pages": 32,
           "publicationDate": "2026-11-06",
-          "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title"
+          "canonicalUrl": "https://ysgoldt.com/shop/one-small-proof/",
+          "purchaseUrl": "https://www.lulu.com/shop/ys-goldt/one-small-proof/paperback/product-je8nq5p.html?page=1&pageSize=4"
         },
         {
           "id": "ebook",
           "entityId": "https://ysgoldt.com/books.json#one-small-proof-ebook",
           "format": "Ebook",
-          "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title"
+          "canonicalUrl": "https://ysgoldt.com/shop/one-small-proof/",
+          "purchaseUrl": "https://ko-fi.com/s/aaafde10ae"
         },
         {
           "id": "pdf",
           "entityId": "https://ysgoldt.com/books.json#one-small-proof-pdf",
           "format": "PDF",
-          "canonicalUrl": "https://ysgoldt.com/coming-soon.html#one-small-proof-title"
+          "canonicalUrl": "https://ysgoldt.com/shop/one-small-proof/"
         }
       ]
     },

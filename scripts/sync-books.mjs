@@ -24,7 +24,10 @@ const homeGraph = jsonLd([
   itemList(),
 ]);
 
-const catalogGrid = `<div class="books-grid">\n${catalogue.works.filter((work) => work.status === "published" && work.image).map((work) => {
+const storefrontBooks = catalogue.works
+  .filter((work) => work.status === "published" && work.image)
+  .sort((a, b) => (b.storefrontPriority ?? 0) - (a.storefrontPriority ?? 0));
+const catalogGrid = `<div class="books-grid">\n${storefrontBooks.map((work) => {
   const href = escapeHtml(localHref(work.canonicalUrl, "/index.html").replace(/\/$/, "/index.html"));
   const cover = escapeHtml(localHref(work.image, "/index.html"));
   return `  <article class="books-grid-card">
@@ -54,7 +57,7 @@ function upcomingFacts(work) {
   const editions = work.editions.length
     ? work.editions.map((edition) => `${edition.format}${edition.isbn13 ? ` · ISBN ${edition.isbn13}` : ""}${edition.pages ? ` · ${edition.pages} pages` : ""}`).join("; ")
     : "Edition details to be announced";
-  const date = work.publicationDate ? `<time datetime="${work.publicationDate}">${escapeHtml(statusLabel(work).split(" · ")[1])}</time>` : "";
+  const date = work.publicationDate ? `<time datetime="${work.publicationDate}">${escapeHtml(new Date(`${work.publicationDate}T12:00:00Z`).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }))}</time>` : "";
   const publisher = work.publisherId ? ` · <a href="${escapeHtml(localHref(catalogue.publisher.url, "/coming-soon.html"))}">${escapeHtml(catalogue.publisher.name)}</a>` : "";
   const destination = work.editions.find((edition) => edition.purchaseUrl && new URL(edition.purchaseUrl).origin === "https://ysgoldt.com")?.purchaseUrl;
   const action = destination && work.status === "published" ? `<p><a href="${escapeHtml(destination)}">Purchase from Ys Goldt →</a></p>` : "";
@@ -63,7 +66,7 @@ function upcomingFacts(work) {
   return `<p class="forthcoming-status">${work.status === "forthcoming" ? "Forthcoming" : escapeHtml(statusLabel(work))}${date ? ` · ${date}` : ""}</p>\n<p class="book-inline-facts">By <a href="${escapeHtml(localHref(catalogue.author.url, "/coming-soon.html"))}">${escapeHtml(catalogue.author.name)}</a>${publisher}<br>${escapeHtml(editions)}</p>${newPage}${action}`;
 }
 
-const announced = ["if-not-heaven", "one-small-proof"].map((id) => catalogue.works.find((work) => work.id === id));
+const announced = ["if-not-heaven"].map((id) => catalogue.works.find((work) => work.id === id));
 await update("coming-soon.html", (html) => {
   let next = replaceGeneratedBlock(html, "page-jsonld", jsonLd(announced.flatMap(bookGraph)));
   for (const work of announced) {
