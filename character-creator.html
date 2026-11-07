@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'">
+    <title>Character Creator | Ys Goldt</title>
+    <meta name="description" content="A free character creation template by Ys Goldt. Draft your character privately and download a PDF.">
+    <link rel="canonical" href="https://ysgoldt.com/character-creator.html">
+    <link rel="icon" type="image/png" href="./favicon.png?v=20260818">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./character-creator.css">
+    <script src="./assets/character-creator/jspdf.umd.min.js" defer></script>
+    <script src="./assets/character-creator/fonts.js" defer></script>
+    <script src="./character-creator.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to Character Creator</a>
+    <main class="site" id="main">
+      <section class="hero" aria-label="Ys Goldt">
+        <p class="page-title">Ys Goldt</p>
+        <p class="page-subtitle">creator of strange and tender things</p>
+      </section>
+      <nav class="tabs" aria-label="Sections">
+        <a class="tab" href="./index.html">Books</a>
+        <a class="tab" href="./coming-soon.html">Coming Soon</a>
+        <a class="tab" href="./serial/how-long-things-hold/index.html">Serial</a>
+        <a class="tab active" href="./works.html">Works</a>
+        <a class="tab" href="./journal.html">Journal</a>
+        <a class="tab" href="./about.html">About</a>
+        <a class="tab" href="./contact.html">Contact</a>
+        <a class="tab" href="./press.html">Press</a>
+      </nav>
+      <div class="panel-shell">
+        <article class="panel character-panel">
+          <div class="panel-inner">
+            <header class="creator-header">
+              <p class="creator-kicker">A writing tool</p>
+              <h1>Character Creator</h1>
+              <p>This template is free to use. The characters you create with it belong entirely to you, the writer.</p>
+              <p>Your answers stay in this browser. You can download a PDF whenever you are ready.</p>
+            </header>
+            <form id="character-form" novalidate>
+              <div class="creator-field quote-field">
+                <label for="quote">Optional character quotation</label>
+                <p class="field-hint">“Optional quote that captures their voice or essence.”</p>
+                <textarea id="quote" name="quote" rows="3"></textarea>
+              </div>
+
+              <section class="creator-section" aria-labelledby="core-heading" data-pdf-section="Core">
+                <h2 id="core-heading">Core</h2>
+                <p class="section-intro">These are the basic facts that establish who your character is, where they come from, and how they exist within their world. I find it useful to establish these details before writing, both for consistency and to better understand the character's cultural and social identity. Not every field will be relevant to every character or setting, so leave anything unnecessary blank.</p>
+                <div class="field-grid">
+                  <div class="creator-field"><label for="full-name">Full Name:</label><input id="full-name" name="full-name" type="text" autocomplete="off"></div>
+                  <div class="creator-field"><label for="nicknames">Nickname(s):</label><input id="nicknames" name="nicknames" type="text"></div>
+                  <div class="creator-field"><label for="age">Age:</label><input id="age" name="age" type="text"></div>
+                  <div class="creator-field"><label for="gender">Gender:</label><input id="gender" name="gender" type="text"></div>
+                  <div class="creator-field"><label for="birthday">Birthday:</label><input id="birthday" name="birthday" type="text"></div>
+                  <div class="creator-field"><label for="nationality">Nationality:</label><input id="nationality" name="nationality" type="text"></div>
+                  <div class="creator-field"><label for="languages">Languages:</label><input id="languages" name="languages" type="text"></div>
+                  <div class="creator-field"><label for="current-location">Current Location:</label><input id="current-location" name="current-location" type="text"></div>
+                  <div class="creator-field"><label for="origin-location">Origin Location:</label><input id="origin-location" name="origin-location" type="text"></div>
+                </div>
+              </section>
+
+              <section class="creator-section" aria-labelledby="physical-heading" data-pdf-section="Physical">
+                <h2 id="physical-heading">Physical</h2>
+                <p class="section-intro">A character's appearance is more than a description of what they look like. It can tell us something about their personality, circumstances, and how they move through the world. Clothing might reflect their culture, social standing, personal tastes, or even how they want others to perceive them. Include as much or as little detail as you find useful for understanding and visualising the character.</p>
+                <div class="field-grid">
+                  <div class="creator-field"><label for="height">Height:</label><input id="height" name="height" type="text"></div>
+                  <div class="creator-field"><label for="build">Build:</label><input id="build" name="build" type="text"></div>
+                  <div class="creator-field field-wide"><label for="features">Features:</label><textarea id="features" name="features" rows="3"></textarea></div>
+                  <div class="creator-field"><label for="eyes">Eyes:</label><input id="eyes" name="eyes" type="text"></div>
+                  <div class="creator-field"><label for="hair">Hair:</label><input id="hair" name="hair" type="text"></div>
+                  <div class="creator-field field-wide"><label for="style-clothing">Style / Clothing:</label><textarea id="style-clothing" name="style-clothing" rows="3"></textarea></div>
+                </div>
+              </section>
+
+              <section class="creator-section" aria-labelledby="background-heading" data-pdf-section="Background">
+                <h2 id="background-heading">Background</h2>
+                <p class="section-intro">This section explores the experiences and circumstances that have shaped your character into the person they are when the story begins. Their upbringing, past experiences, and present situation can help explain their beliefs, behaviours, and decisions. A formative wound does not necessarily mean a traumatic event. It might be a loss, an absence, an unmet need, or any experience that fundamentally changed how they understand themselves or the world.</p>
+                <div class="field-grid">
+                  <div class="creator-field field-wide"><label for="summary">Summary:</label><textarea id="summary" name="summary" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="upbringing">Upbringing:</label><textarea id="upbringing" name="upbringing" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="wound">Wound (formative trauma):</label><textarea id="wound" name="wound" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="current-situation">Current Situation:</label><textarea id="current-situation" name="current-situation" rows="5"></textarea></div>
+                </div>
+              </section>
+
+              <section class="creator-section" aria-labelledby="psychology-heading" data-pdf-section="Psychology (Character Engine)">
+                <h2 id="psychology-heading">Psychology (Character Engine)</h2>
+                <p class="section-intro">I think of this section as the character's engine because it explores what drives their decisions, creates internal conflict, and ultimately influences the direction of the story. Desire is what a character consciously wants, while what they would do anything for may reveal something deeper, perhaps even something they do not fully recognise in themselves. Their fears, flaws, and contradictions help make them believable, particularly when these qualities influence their relationships and lead them to act against their own interests.</p>
+                <div class="field-grid">
+                  <div class="creator-field field-wide"><label for="desire">Desire:</label><textarea id="desire" name="desire" rows="4"></textarea></div>
+                  <div class="creator-field field-wide"><label for="fear">Fear:</label><textarea id="fear" name="fear" rows="4"></textarea></div>
+                  <div class="creator-field field-wide"><label for="flaw">Flaw:</label><textarea id="flaw" name="flaw" rows="4"></textarea></div>
+                  <div class="creator-field field-wide"><label for="contradiction">Contradiction:</label><textarea id="contradiction" name="contradiction" rows="4"></textarea></div>
+                  <div class="creator-field field-wide"><label for="what-they-hide">What they hide:</label><textarea id="what-they-hide" name="what-they-hide" rows="4"></textarea></div>
+                  <div class="creator-field field-wide"><label for="anything-for">What they would do anything for:</label><textarea id="anything-for" name="anything-for" rows="4"></textarea></div>
+                </div>
+              </section>
+
+              <section class="creator-section" aria-labelledby="role-heading" data-pdf-section="Role in Story">
+                <h2 id="role-heading">Role in Story</h2>
+                <p class="section-intro">This section considers what your character contributes to the narrative. Their function might be as a protagonist, antagonist, foil, or another role, but it also concerns how they influence the central conflict and the people around them. An arc describes what happens to the character internally as the story progresses, whether they change, resist change, or remain fundamentally the same. Consider which relationships are particularly important to the plot and how those connections influence the characters' choices and development.</p>
+                <div class="field-grid">
+                  <div class="creator-field field-wide"><label for="function">Function (protagonist, antagonist, foil, etc.):</label><textarea id="function" name="function" rows="3"></textarea></div>
+                  <div class="creator-field field-wide"><label for="arc">Arc:</label><textarea id="arc" name="arc" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="key-relationships">Key relationships to plot:</label><textarea id="key-relationships" name="key-relationships" rows="5"></textarea></div>
+                </div>
+              </section>
+
+              <section class="creator-section" aria-labelledby="relationships-heading" data-pdf-section="Relationships">
+                <h2 id="relationships-heading">Relationships</h2>
+                <p class="section-intro">Relationships can reveal aspects of a character that might not otherwise emerge. Think beyond simply identifying who these people are. Consider their shared history, emotional attachments, conflicts, dependencies, and the ways they influence one another. A character might behave very differently around a family member than they do around a friend or enemy. These categories are flexible, and some may remain empty. What matters is understanding how these connections shape the character and their decisions.</p>
+                <div class="field-grid">
+                  <div class="creator-field field-wide"><label for="family">Family:</label><textarea id="family" name="family" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="allies">Allies:</label><textarea id="allies" name="allies" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="love-interests">Love Interests:</label><textarea id="love-interests" name="love-interests" rows="5"></textarea></div>
+                  <div class="creator-field field-wide"><label for="enemies">Enemies:</label><textarea id="enemies" name="enemies" rows="5"></textarea></div>
+                </div>
+              </section>
+
+              <section class="creator-section" aria-labelledby="notes-heading" data-pdf-section="Notes">
+                <h2 id="notes-heading">Notes</h2>
+                <p class="section-intro">Use this space for anything that does not fit neatly elsewhere: observations, fragments of dialogue, unanswered questions, ideas, or details you discover while writing. Organise it however you find useful.</p>
+                <p class="section-intro">Remember that this template is a tool, not a checklist of requirements. Characters can change as you come to understand them, and not every question needs an answer. The purpose is to help you think more deeply about the people you are creating, not to confine them to a set of predetermined characteristics.</p>
+                <div class="creator-field"><label for="notes">Notes</label><textarea id="notes" name="notes" rows="9"></textarea></div>
+              </section>
+
+              <div class="creator-actions">
+                <button id="download-pdf" type="button">Download PDF</button>
+                <button id="clear-form" type="button" class="clear-button">Clear Form</button>
+              </div>
+              <p id="form-status" class="creator-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </article>
+      </div>
+      <footer class="site-footer">
+        <p><a href="./privacy-policy.html">Privacy Policy</a></p>
+        <p>©2026 Ys Goldt</p>
+      </footer>
+    </main>
+  </body>
+</html>

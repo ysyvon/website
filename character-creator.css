@@ -1,0 +1,187 @@
+.character-panel {
+  padding: clamp(20px, 4vw, 34px);
+}
+
+.character-panel .panel-inner {
+  padding: 0;
+}
+
+.creator-header {
+  max-width: 620px;
+  margin: 0 auto 30px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.creator-kicker {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.creator-header h1 {
+  margin: 0 0 16px;
+  font-size: clamp(27px, 5vw, 36px);
+  font-weight: 300;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.creator-header p:not(.creator-kicker) {
+  margin: 0 0 10px;
+  line-height: 1.7;
+}
+
+.creator-header p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.quote-field {
+  padding: 0 0 30px;
+}
+
+.creator-section {
+  padding: 28px 0 32px;
+  border-top: 1px solid var(--line);
+}
+
+.creator-section h2 {
+  margin: 0 0 12px;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.section-intro {
+  margin: 0 0 17px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 22px;
+}
+
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.creator-field {
+  min-width: 0;
+}
+
+.creator-field label {
+  display: block;
+  margin: 0 0 7px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.field-hint {
+  margin: -3px 0 9px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.creator-field input,
+.creator-field textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 10px 12px;
+}
+
+.creator-field input {
+  min-height: 43px;
+}
+
+.creator-field textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.creator-field :is(input, textarea):focus-visible,
+.creator-actions button:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+.creator-field :is(input, textarea)[aria-invalid="true"] {
+  border-color: #a83931;
+}
+
+.creator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.creator-actions button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--line-strong);
+  background: var(--button-bg);
+  color: var(--fg);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.creator-actions button:hover {
+  background: var(--button-hover);
+}
+
+.creator-actions .clear-button {
+  border-color: var(--line);
+}
+
+.creator-status {
+  min-height: 1.6em;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.creator-status[data-error="true"] {
+  color: #a83931;
+}
+
+@media (prefers-color-scheme: dark) {
+  .creator-field :is(input, textarea)[aria-invalid="true"] {
+    border-color: #e9a39c;
+  }
+
+  .creator-status[data-error="true"] {
+    color: #e9a39c;
+  }
+}
+
+@media (max-width: 600px) {
+  .field-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .creator-section {
+    padding: 25px 0 28px;
+  }
+
+  .creator-actions button {
+    flex: 1 1 100%;
+  }
+}
