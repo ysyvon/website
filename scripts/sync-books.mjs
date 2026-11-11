@@ -66,7 +66,7 @@ function upcomingFacts(work) {
   return `<p class="forthcoming-status">${work.status === "forthcoming" ? "Forthcoming" : escapeHtml(statusLabel(work))}${date ? ` · ${date}` : ""}</p>\n<p class="book-inline-facts">By <a href="${escapeHtml(localHref(catalogue.author.url, "/coming-soon.html"))}">${escapeHtml(catalogue.author.name)}</a>${publisher}<br>${escapeHtml(editions)}</p>${newPage}${action}`;
 }
 
-const announced = ["if-not-heaven"].map((id) => catalogue.works.find((work) => work.id === id));
+const announced = ["if-not-heaven", "how-long-things-hold"].map((id) => catalogue.works.find((work) => work.id === id));
 await update("coming-soon.html", (html) => {
   let next = replaceGeneratedBlock(html, "page-jsonld", jsonLd(announced.flatMap(bookGraph)));
   for (const work of announced) {

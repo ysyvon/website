@@ -164,25 +164,17 @@
     {
       "id": "how-long-things-hold",
       "title": "How Long Things Hold",
-      "type": "Serial novel",
-      "status": "ongoing",
-      "canonicalUrl": "https://ysgoldt.com/serial/how-long-things-hold/",
+      "type": "Novel",
+      "status": "forthcoming",
+      "canonicalUrl": "https://ysgoldt.com/coming-soon.html#how-long-things-hold-title",
       "image": "https://ysgoldt.com/serial/assets/how-long-things-hold-cover.jpg?v=20260828",
       "imageType": "image/jpeg",
       "imageWidth": 1410,
       "imageHeight": 2250,
-      "description": "A free science-fantasy web serial about memory, loss, and an impossible meeting.",
+      "description": "A science-fantasy novel about memory, loss, and an impossible meeting.",
       "genre": ["Science fantasy"],
       "language": "en",
-      "readUrl": "https://buttondown.com/how-long-things-hold/archive",
-      "sampleUrl": "https://ysgoldt.com/sample-how-long-things-hold.html",
-      "editions": [
-        {
-          "id": "web-serial",
-          "format": "Web serial",
-          "canonicalUrl": "https://ysgoldt.com/serial/how-long-things-hold/"
-        }
-      ]
+      "editions": []
     },
     {
       "id": "one-small-proof",

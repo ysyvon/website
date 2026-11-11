@@ -122,7 +122,6 @@ def render_page(source):
       <nav class="tabs" aria-label="Sections">
         <a class="tab active" href="./index.html" aria-current="page">Books</a>
         <a class="tab" href="./coming-soon.html">Coming Soon</a>
-        <a class="tab" href="./serial/how-long-things-hold/index.html">Serial</a>
         <a class="tab" href="./works.html">Works</a>
         <a class="tab" href="./journal.html">Journal</a>
         <a class="tab" href="./about.html">About</a>

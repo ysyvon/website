@@ -70,26 +70,13 @@
     <loc>https://ysgoldt.com/shop/shelves-of-memory-digital/</loc>
   </url>
   <url>
-    <loc>https://ysgoldt.com/shop/one-small-proof/</loc>
-  </url>
-  <url>
     <loc>https://ysgoldt.com/coming-soon.html</loc>
   </url>
+  <url>
+    <loc>https://ysgoldt.com/shop/one-small-proof/</loc>
+  </url>
 <!-- BOOKS-GENERATED:sitemap:END -->
-  <!-- SERIAL-GENERATED:START -->
-  <url>
-    <loc>https://ysgoldt.com/serial/</loc>
-    <lastmod>2026-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://ysgoldt.com/serial/how-long-things-hold/</loc>
-    <lastmod>2026-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://ysgoldt.com/sample-how-long-things-hold.html</loc>
-    <lastmod>2026-10-16</lastmod>
-  </url>
-  <!-- SERIAL-GENERATED:END -->
+
   <!-- JOURNAL-GENERATED:START -->
   <url>
     <loc>https://ysgoldt.com/journal.html</loc>

@@ -532,6 +532,9 @@ async function writePage(relativePath, html, check = false) {
 }
 
 export async function generateSerialSite(entries = serials, { check = false } = {}) {
+  if (entries.some((serial) => serial.status !== "Ongoing")) {
+    throw new Error("The serial is not published; generation is disabled until its catalogue status is ongoing.");
+  }
   validateSerials(entries);
   await writePage("serial/index.html", renderSerialIndex(entries), check);
 

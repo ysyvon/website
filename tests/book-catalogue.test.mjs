@@ -65,7 +65,7 @@ test("ISBN-less works and available purchases remain distinct", () => {
   const serial = catalogue.works.find((work) => work.id === "how-long-things-hold");
   const heaven = catalogue.works.find((work) => work.id === "if-not-heaven");
   assert.equal(shelves.editions[0].isbn13, undefined);
-  assert.equal(serial.editions[0].isbn13, undefined);
+  assert.deepEqual(serial.editions, []);
   assert.deepEqual(heaven.editions, []);
   const proof = catalogue.works.find((work) => work.id === "one-small-proof");
   assert.equal(proof.editions[0].purchaseUrl, "https://www.lulu.com/shop/ys-goldt/one-small-proof/paperback/product-je8nq5p.html?page=1&pageSize=4");
@@ -85,7 +85,7 @@ test("verified prices can produce edition-specific Product and Offer markup", ()
 });
 
 test("public HTML contains matching structured data and crawlable edition facts", async () => {
-  const pages = ["index.html", "books.html", "about.html", "coming-soon.html", "press.html", "serial/how-long-things-hold/index.html", ...catalogue.works.filter((work) => work.canonicalUrl.includes("/shop/")).map((work) => new URL(work.canonicalUrl).pathname.slice(1) + "index.html")];
+  const pages = ["index.html", "books.html", "about.html", "coming-soon.html", "press.html", ...catalogue.works.filter((work) => work.canonicalUrl.includes("/shop/")).map((work) => new URL(work.canonicalUrl).pathname.slice(1) + "index.html")];
   for (const page of pages) {
     const html = await readFile(resolve(root, page), "utf8");
     for (const [, source] of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) assert.doesNotThrow(() => JSON.parse(source), page);
@@ -95,6 +95,7 @@ test("public HTML contains matching structured data and crawlable edition facts"
   for (const work of catalogue.works) assert.ok(press.includes(work.title), work.title);
   const comingSoon = await readFile(resolve(root, "coming-soon.html"), "utf8");
   assert.match(comingSoon, /<h2 class="forthcoming-title" id="if-not-heaven-title">/);
+  assert.match(comingSoon, /<h2 class="forthcoming-title" id="how-long-things-hold-title">/);
   assert.doesNotMatch(comingSoon, /One Small Proof|one-small-proof/);
   assert.doesNotMatch(press, /id="nachtljocht-press"|publisher-jsonld/);
   assert.equal(catalogue.publisher.url, "https://nachtljocht.com/");

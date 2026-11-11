@@ -12,7 +12,7 @@ The `publisher` record identifies Nachtljocht Press and links to its official si
 2. For a new publication, add a work with a unique `id`, title, type, description, status, canonical URL, and `editions` array. Add only verified dates, genres, images, series details, and publisher information. If the work is free to read, use `readUrl`; do not invent a purchase URL.
 3. Add each edition separately. A paperback can have `format: "Paperback"`, `isbn13`, page count, publication date, and its existing `purchaseUrl`. Add EPUB, ebook, or PDF editions as separate records only when those formats are confirmed; omit `isbn13` unless that exact edition has one. For an ISBN-less work, leave `isbn13` out entirely.
 4. To change a price or availability, update the relevant edition’s `price`, `currency`, and `availability` together with its verified `purchaseUrl`. The generator emits Product and Offer markup only when all four facts are present. If the site does not visibly show the price and availability, do not add these fields yet. To change a purchase link, edit that edition’s `purchaseUrl`. To change an ISBN destination, edit its `canonicalUrl` or eligible on-site `purchaseUrl`.
-5. Run `node scripts/sync-books.mjs` and `node scripts/generate-product-pages.mjs`. For serial metadata, also run `node scripts/generate-serial.mjs`. Review the resulting HTML and `sitemap.xml`, then run the checks below. The GitHub Pages workflow checks generated files before deployment; it does not regenerate them.
+5. Run `node scripts/sync-books.mjs` and `node scripts/generate-product-pages.mjs`. Review the resulting HTML and `sitemap.xml`, then run the checks below. The GitHub Pages workflow checks generated files before deployment; it does not regenerate them.
 
 The existing product-page templates under `scripts/product-pages/` hold presentation and prose. Their Book JSON-LD, edition facts, and purchase actions are generated from `books.json`. For a new product landing page, add a template and its slug to `scripts/generate-product-pages.mjs`, then add the canonical page to `sitemap.xml`. Keep the old announcement link or anchor pointing readers to the new page.
 
@@ -46,7 +46,6 @@ Run these from the repository root:
 ```sh
 node scripts/sync-books.mjs --check
 node scripts/generate-product-pages.mjs --check
-node scripts/generate-serial.mjs --check
 node --test tests/*.test.mjs
 python3 scripts/check-csp.py
 ```

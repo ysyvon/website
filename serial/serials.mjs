@@ -16,7 +16,7 @@ export const serials = [
     updated: "2026-08-28",
     metadataDescription: book.description,
     archiveUrl: book.readUrl,
-    samplePath: new URL(book.sampleUrl).pathname,
+    samplePath: book.sampleUrl ? new URL(book.sampleUrl).pathname : null,
     sampleSource: "serial/content/how-long-things-hold-chapter-one.md",
     sampleUpdated: "2026-10-16",
     relatedArticle: {

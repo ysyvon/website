@@ -77,7 +77,7 @@ export function validateCatalogue(data = catalogue) {
 
 export function workId(work) {
   if (work.entityId) return work.entityId;
-  if (work.id === "how-long-things-hold" || work.id === "shelves-of-memory") return `${canonicalPage(work.canonicalUrl)}#book`;
+  if (work.id === "shelves-of-memory") return `${canonicalPage(work.canonicalUrl)}#book`;
   if (work.canonicalUrl.includes("#")) return `${canonicalPage(work.canonicalUrl)}#${work.id}-work`;
   return `${work.canonicalUrl}#work`;
 }
