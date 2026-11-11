@@ -329,6 +329,21 @@ img {
   min-width: 0;
 }
 
+.forthcoming-book:only-child {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 72px);
+  width: min(100%, 930px);
+  margin: 0 auto;
+}
+
+.forthcoming-book:only-child .forthcoming-cover-frame {
+  width: 100%;
+  margin: 0;
+}
+
 .forthcoming-book + .forthcoming-book {
   padding-left: clamp(34px, 5vw, 64px);
   border-left: 1px solid var(--line);
@@ -502,6 +517,15 @@ img {
     padding: 42px 0 0;
     border-top: 1px solid var(--line);
     border-left: 0;
+  }
+
+  .forthcoming-book:only-child {
+    display: block;
+  }
+
+  .forthcoming-book:only-child .forthcoming-cover-frame {
+    width: min(100%, 330px);
+    margin: 0 auto clamp(28px, 4vw, 38px);
   }
 
   .forthcoming-copy {
