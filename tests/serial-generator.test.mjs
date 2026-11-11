@@ -109,7 +109,9 @@ test("launch pages keep the story public without chapter links", () => {
   assert.match(shelf, /The Vasentia were built to endure, to preserve, to remember/);
   assert.match(shelf, /They back up their memories and restore themselves from death/);
   assert.match(shelf, /href="\.\/how-long-things-hold\/index\.html"/);
-  assert.match(story, /For eleven hundred years, Eîra has lived alone among the ruins of a dead civilisation\./);
+  assert.match(story, /For eleven hundred years, Eîra has lived alone among the ruins of a forgotten civilisation\./);
+  assert.match(story, /Sâel with two days missing from his memory/);
+  assert.match(story, /<p><em>How Long Things Hold<\/em> is a speculative fantasy about memory, grief/);
   assert.match(
     story,
     /href="\.\.\/\.\.\/sample-how-long-things-hold\.html">Read a Sample →<\/a>/,
@@ -128,6 +130,8 @@ test("launch pages keep the story public without chapter links", () => {
   assert.match(story, /<p class="page-title">Ys Goldt<\/p>/);
   assert.match(story, /<a class="tab active" href="\.\.\/\.\.\/serial\/how-long-things-hold\/index\.html" aria-current="page">Serial<\/a>/);
   assert.match(story, /<h1>How Long Things Hold<\/h1>/);
+  assert.match(story, /<p class="book-inline-facts">By <a href="\.\.\/\.\.\/about\.html">Ys Goldt<\/a><\/p>/);
+  assert.doesNotMatch(story, /Free web serial|No ISBN listed/);
   assert.doesNotMatch(story, /class="serial-format"/);
   assert.doesNotMatch(story, /class="back-link"/);
   assert.doesNotMatch(story, /class="serial-related"/);

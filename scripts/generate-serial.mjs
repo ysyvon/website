@@ -330,7 +330,13 @@ export function renderStoryHome(serial) {
     ...graph,
     breadcrumbs([["Home", `${siteUrl}/`], ["Serial", `${siteUrl}/serial/`], [serial.title, canonical]]),
   ] })}`;
-  const blurb = serial.blurb.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
+  const blurb = serial.blurb.map((paragraph) => {
+    if (typeof paragraph === "string") return `              <p>${escapeHtml(paragraph)}</p>`;
+    const content = paragraph.title
+      ? `<em>${escapeHtml(serial.title)}</em>${escapeHtml(paragraph.text.slice(serial.title.length))}`
+      : escapeHtml(paragraph.text);
+    return `              <p>${content}</p>`;
+  }).join("\n");
   const coverActions = [
     serial.archiveUrl
       ? `                <a class="cta-button" href="${escapeAttribute(serial.archiveUrl)}" target="_blank" rel="noopener noreferrer">Read for free</a>`
@@ -356,7 +362,7 @@ ${coverActions}
             <div class="serial-story-introduction">
               <p class="serial-status">${escapeHtml(serial.status)}</p>
               <h1>${escapeHtml(serial.title)}</h1>
-              <p class="book-inline-facts">By <a href="../../about.html">${escapeHtml(catalogue.author.name)}</a> · Free web serial · No ISBN listed</p>
+              <p class="book-inline-facts">By <a href="../../about.html">${escapeHtml(catalogue.author.name)}</a></p>
               <div class="serial-story-blurb">
 ${blurb}
               </div>
