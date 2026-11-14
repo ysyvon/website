@@ -2837,6 +2837,15 @@ body.sample-reader-open {
   font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 }
 
+.serial-sample-page .serial-sample-prose p {
+  white-space: pre-wrap;
+}
+
+.serial-sample-prose .hlth-smallcaps {
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+}
+
 .index-sample-prose .index-sample-document-label,
 .index-sample-prose .index-sample-identity,
 .index-sample-prose .index-sample-date,
