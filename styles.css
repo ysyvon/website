@@ -1974,33 +1974,9 @@ body.sample-reader-open {
   line-height: 1.6;
 }
 
-.newsletter-form {
+.newsletter-subscribe-link {
   display: grid;
-  gap: 10px;
-}
-
-.newsletter-form label {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.newsletter-form input[type="email"] {
-  width: 100%;
-  min-height: 42px;
-  padding: 0 12px;
-  border: 1px solid var(--line-strong);
-  background: var(--bg);
-  color: var(--fg);
-  font: inherit;
-}
-
-.newsletter-form input[type="email"]::placeholder {
-  color: var(--muted);
-  opacity: 0.9;
-}
-
-.newsletter-form input[type="submit"] {
+  place-items: center;
   min-height: 42px;
   border: 1px solid var(--line-strong);
   background: var(--fg);
@@ -2009,22 +1985,12 @@ body.sample-reader-open {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.newsletter-form input[type="submit"]:hover {
+.newsletter-subscribe-link:hover {
   opacity: 0.92;
-}
-
-.newsletter-powered {
-  margin: 0;
-  font-size: 10px;
-  color: var(--muted);
-}
-
-.newsletter-powered a {
-  color: inherit;
-  text-decoration: underline;
 }
 
 @media (prefers-color-scheme: dark) {
