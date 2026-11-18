@@ -190,7 +190,7 @@ function mainNavigation(active, rootPrefix) {
     ["Coming Soon", `${rootPrefix}coming-soon.html`, "coming-soon"],
     ["Serial", `${rootPrefix}serial/how-long-things-hold/index.html`, "serial"],
     ["Works", `${rootPrefix}works.html`, "works"],
-    ["Journal", `${rootPrefix}journal.html`, "journal"],
+    ["Journal", "https://indefenceofnonsense.substack.com", "journal"],
     ["About", `${rootPrefix}about.html`, "about"],
     ["Contact", `${rootPrefix}contact.html`, "contact"],
     ["Press", `${rootPrefix}press.html`, "press"],
@@ -198,7 +198,7 @@ function mainNavigation(active, rootPrefix) {
   const links = items
     .map(([label, href, key]) => {
       const current = key === active;
-      return `        <a class="tab${current ? " active" : ""}" href="${href}"${current ? ' aria-current="page"' : ""}>${label}</a>`;
+      return `        <a class="tab${current ? " active" : ""}" href="${href}"${current ? ' aria-current="page"' : ""}${key === "journal" ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`;
     })
     .join("\n");
   return `      <nav class="tabs" aria-label="Sections">
