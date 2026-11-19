@@ -136,9 +136,8 @@ test("generated internal links and catalogue destinations resolve locally", asyn
   assert.equal(localHref("https://ysgoldt.com/shop/shelves-of-memory-digital/", "/press.html"), "shop/shelves-of-memory-digital/");
 });
 
-test("the book grid is local and digital editions open the matching Ko-fi listings", async () => {
+test("the book grid is local and available digital editions open the matching Ko-fi listings", async () => {
   const listings = new Map([
-    ["even-if-the-light-forgets-volume-i", "https://ko-fi.com/s/fa8470f912"],
     ["an-index-of-vanishing-part-i", "https://ko-fi.com/s/e6ff77dab8"],
     ["the-strange-mercy-of-listening", "https://ko-fi.com/s/de7446af75"],
     ["shelves-of-memory-digital", "https://ko-fi.com/s/d89808e9fb"],
@@ -146,13 +145,16 @@ test("the book grid is local and digital editions open the matching Ko-fi listin
   ]);
   for (const file of ["index.html", "books.html"]) {
     const html = await readFile(resolve(root, file), "utf8");
-    assert.equal(html.match(/class="books-grid-card"/g)?.length, listings.size);
+    assert.equal(html.match(/class="books-grid-card"/g)?.length, listings.size + 1);
     assert.match(html, /<div class="books-grid">\s*<article class="books-grid-card">\s*<a class="books-grid-card-link" href="shop\/one-small-proof\/index\.html">/);
     assert.doesNotMatch(html, /app\.ecwid\.com|xProductBrowser|ec-cart-widget/);
-    for (const slug of listings.keys()) assert.match(html, new RegExp(`href="shop/${slug}/index\\.html"`));
+    for (const slug of ["even-if-the-light-forgets-volume-i", ...listings.keys()]) assert.match(html, new RegExp(`href="shop/${slug}/index\\.html"`));
   }
   for (const [slug, url] of listings) {
     const html = await readFile(resolve(root, "shop", slug, "index.html"), "utf8");
     assert.ok(html.includes(`href="${url}" target="_blank" rel="noopener noreferrer"`), slug);
   }
+  const volume = await readFile(resolve(root, "shop/even-if-the-light-forgets-volume-i/index.html"), "utf8");
+  assert.match(volume, /<span class="cta-button product-coming-soon">Back in print soon<\/span>/);
+  assert.doesNotMatch(volume, /href="https:\/\/(?:www\.lulu\.com\/shop\/ys-goldt\/even-if-the-light-forgets|ko-fi\.com\/s\/fa8470f912)/);
 });

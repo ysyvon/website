@@ -180,6 +180,7 @@ export function purchaseActions(work) {
     const label = external ? `${edition.format} edition` : `Buy directly from Ys Goldt — ${edition.format}`;
     return `<a class="cta-button product-buy-button" href="${escapeHtml(edition.purchaseUrl)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(label)} →</a>`;
   });
+  if (work.purchaseNotice) actions.push(`<span class="cta-button product-coming-soon">${escapeHtml(work.purchaseNotice)}</span>`);
   for (const format of work.forthcomingFormats || []) actions.push(`<span class="cta-button product-coming-soon" aria-disabled="true">${escapeHtml(format)} edition coming soon</span>`);
   if (!actions.length && work.readUrl) actions.push(`<a class="cta-button product-buy-button" href="${escapeHtml(work.readUrl)}">Read for free →</a>`);
   return `<div class="product-purchase-actions">\n${actions.map((action) => `  ${action}`).join("\n")}\n</div>`;
