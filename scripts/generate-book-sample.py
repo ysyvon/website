@@ -10,7 +10,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "books/content/even-if-the-light-forgets-chapter-one.md"
 OUTPUT = ROOT / "sample-even-if-the-light-forgets.html"
-SOURCE_SHA256 = "86baa93bfe2d7b6ba8c137774559be4d7bab37f5435ad7b98e3a57fe92020a25"
+SOURCE_SHA256 = "96eee4abe168952ab06844baf40dd2949749510aa2af26b4c4c798efbacfb593"
 BOOK_URL = "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/"
 SAMPLE_URL = "https://ysgoldt.com/sample-even-if-the-light-forgets.html"
 COVER_URL = "https://ysgoldt.com/shop-assets/even-if-the-light-forgets-generic.jpg"
