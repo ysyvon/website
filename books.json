@@ -36,7 +36,6 @@
       "sampleUrl": "https://ysgoldt.com/sample-even-if-the-light-forgets.html",
       "pressSheetUrl": "https://ysgoldt.com/assets/even-if-the-light-forgets-volume-i-pr-sheet.pdf",
       "sameAs": "https://openlibrary.org/works/OL45193142W",
-      "purchaseNotice": "Back in print soon",
       "editions": [
         {
           "id": "paperback",
@@ -46,12 +45,14 @@
           "pages": 298,
           "publicationDate": "2026-05-20",
           "canonicalUrl": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+          "purchaseUrl": "https://www.lulu.com/shop/ys-goldt/even-if-the-light-forgets-volume-i/paperback/product-w484jym.html?page=1&pageSize=4",
           "sameAs": "https://openlibrary.org/books/OL61620204M"
         },
         {
           "id": "digital",
           "format": "Digital",
-          "canonicalUrl": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/"
+          "canonicalUrl": "https://ysgoldt.com/shop/even-if-the-light-forgets-volume-i/",
+          "purchaseUrl": "https://ko-fi.com/s/fa8470f912"
         }
       ]
     },

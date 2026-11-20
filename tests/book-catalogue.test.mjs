@@ -155,6 +155,14 @@ test("the book grid is local and available digital editions open the matching Ko
     assert.ok(html.includes(`href="${url}" target="_blank" rel="noopener noreferrer"`), slug);
   }
   const volume = await readFile(resolve(root, "shop/even-if-the-light-forgets-volume-i/index.html"), "utf8");
-  assert.match(volume, /<span class="cta-button product-coming-soon">Back in print soon<\/span>/);
-  assert.doesNotMatch(volume, /href="https:\/\/(?:www\.lulu\.com\/shop\/ys-goldt\/even-if-the-light-forgets|ko-fi\.com\/s\/fa8470f912)/);
+  const volumeWork = catalogue.works.find((work) => work.id === "even-if-the-light-forgets-volume-i");
+  const volumeLinks = new Map([
+    ["paperback", "https://www.lulu.com/shop/ys-goldt/even-if-the-light-forgets-volume-i/paperback/product-w484jym.html?page=1&pageSize=4"],
+    ["digital", "https://ko-fi.com/s/fa8470f912"],
+  ]);
+  for (const [format, url] of volumeLinks) {
+    assert.equal(volumeWork.editions.find((edition) => edition.id === format)?.purchaseUrl, url);
+    assert.ok(volume.includes(`href="${url.replaceAll("&", "&amp;")}" target="_blank" rel="noopener noreferrer"`));
+  }
+  assert.doesNotMatch(volume, /Back in print soon/);
 });
